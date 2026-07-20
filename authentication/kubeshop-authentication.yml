@@ -1,0 +1,60 @@
+generated: '2026-07-19'
+method: searched
+source: openapi/kubeshop-testkube-control-plane-openapi-original.yml
+docs: https://docs.testkube.io/articles/mcp-security
+summary:
+  types: [http, oauth2]
+  http_schemes: [bearer]
+  oauth2_flows: [authorizationCode]
+  oauth2_scope: mcp:full
+  note: >-
+    The REST surface is bearer-token authenticated with a long-lived API token. OAuth 2.1
+    applies to the MCP endpoint only; it is not an alternative for the REST API.
+schemes:
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  header: 'Authorization: Bearer <API_TOKEN>'
+  applies_to: REST API (control plane and agent)
+  token_issuance: Organization Settings → API Tokens in the Testkube dashboard
+  sources:
+  - openapi/kubeshop-testkube-control-plane-openapi-original.yml
+  note: >-
+    Only the control-plane spec declares this scheme. The standalone-agent and
+    open-source specs declare no securitySchemes at all, though the deployed API is
+    bearer-authenticated the same way.
+- name: TestkubeMCPOAuth
+  type: oauth2
+  applies_to: https://api.testkube.io/mcp
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://api.testkube.io/mcp/auth/authorize
+    tokenUrl: https://api.testkube.io/mcp/auth/token
+    revocationUrl: https://api.testkube.io/mcp/auth/revoke
+    registrationUrl: https://api.testkube.io/mcp/auth/register
+    pkce: S256
+    scopes:
+      mcp:full: Full access to the Testkube MCP endpoint for the authorized organization and environment
+  dynamic_client_registration: true
+  standards: [RFC 8414, RFC 9728, RFC 7591, OAuth 2.1]
+  sources:
+  - https://api.testkube.io/.well-known/oauth-authorization-server
+  - https://api.testkube.io/.well-known/oauth-protected-resource
+  note: >-
+    Discovered live. An unauthenticated request to /mcp returns a WWW-Authenticate Bearer
+    challenge carrying resource_metadata and scope="mcp:full". Shipped in v2.10.0 and
+    hardened in v2.11.1.
+authorization:
+  model: rbac
+  boundaries: [organization, environment, resource group, team]
+  note: >-
+    Permissions are scoped through organization membership roles, teams and resource
+    groups. HTTP 403 signals a permission or feature-disabled condition; HTTP 402 signals a
+    missing Pro subscription rather than an authorization failure.
+  audit_logs: >-
+    The control plane exposes application audit logs (listApplicationAuditLogs,
+    exportApplicationAuditLog); audit logs are listed as a paid entitlement on the pricing page.
+cross_ref:
+  scopes: scopes/kubeshop-scopes.yml
+  conventions: conventions/kubeshop-conventions.yml
+  mcp: mcp/kubeshop-mcp.yml
