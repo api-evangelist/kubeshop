@@ -1,0 +1,106 @@
+openapi: 3.0.1
+info:
+  title: Testkube Standalone Agent api keymap API
+  description: API for Testkube Standalone Agent
+  contact:
+    email: info@testkube.io
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  version: 1.0.0
+servers:
+- url: https://api.testkube.io
+  description: Testkube Cloud Control Plane API Endpoint
+- url: https://<your-testkube-api-host>
+  description: Testkube On-Prem API Endpoint
+tags:
+- name: keymap
+  description: Keymap for fields in a form
+paths:
+  /keymap/triggers:
+    get:
+      tags:
+      - keymap
+      summary: Test triggers keymap
+      description: Returns a keymap (supported/allowed fields) for the test trigger UI screen
+      operationId: getKeyMap
+      responses:
+        200:
+          description: successful get operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestTriggerKeyMap'
+components:
+  schemas:
+    TestTriggerKeyMap:
+      type: object
+      required:
+      - resources
+      - actions
+      - executions
+      - events
+      - concurrencyPolicies
+      properties:
+        resources:
+          type: array
+          items:
+            type: string
+          description: list of supported values for resources
+          example:
+          - pod
+          - deployment
+          - statefulset
+          - daemonset
+          - service
+          - ingress
+          - event
+          - configmap
+        actions:
+          type: array
+          items:
+            type: string
+          description: list of supported values for actions
+          example:
+          - run
+        executions:
+          type: array
+          items:
+            type: string
+          description: list of supported values for executions
+          example:
+          - test
+          - testsuite
+        events:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: mapping between resources and supported events
+          example:
+            pod:
+            - created
+            - modified
+            - deleted
+            deployment:
+            - created
+            - modified
+            - deleted
+        conditions:
+          type: array
+          items:
+            type: string
+          description: list of supported values for conditions
+          example:
+          - Available
+          - Progressing
+        concurrencyPolicies:
+          type: array
+          items:
+            type: string
+          description: list of supported values for concurrency policies
+          example:
+          - allow
+          - forbid
+          - replace

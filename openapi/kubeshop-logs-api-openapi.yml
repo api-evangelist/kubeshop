@@ -1,0 +1,266 @@
+openapi: 3.0.1
+info:
+  title: Testkube Standalone Agent api logs API
+  description: API for Testkube Standalone Agent
+  contact:
+    email: info@testkube.io
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  version: 1.0.0
+servers:
+- url: https://api.testkube.io
+  description: Testkube Cloud Control Plane API Endpoint
+- url: https://<your-testkube-api-host>
+  description: Testkube On-Prem API Endpoint
+tags:
+- name: logs
+  description: Log operations
+paths:
+  /executions/{id}/logs:
+    get:
+      parameters:
+      - $ref: '#/components/parameters/ID'
+      tags:
+      - logs
+      summary: Get execution's logs by ID
+      description: Returns logs of the given executionID
+      operationId: getExecutionLogs
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExecutorOutput'
+        500:
+          description: problem with getting execution's logs
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+  /executions/{id}/logs/v2:
+    get:
+      parameters:
+      - $ref: '#/components/parameters/ID'
+      tags:
+      - logs
+      summary: Get execution's logs by ID version 2
+      description: Returns logs of the given executionID version 2
+      operationId: getExecutionLogsV2
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LogV2'
+        500:
+          description: problem with getting execution's logs version 2
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+components:
+  schemas:
+    LogV1:
+      description: Log format version 1
+      type: object
+      required:
+      - type
+      properties:
+        result:
+          $ref: '#/components/schemas/ExecutionResult'
+          description: output for previous log format
+    ExecutionStatus:
+      type: string
+      enum:
+      - queued
+      - running
+      - passed
+      - failed
+      - aborted
+      - timeout
+      - skipped
+      - canceled
+    LogV2:
+      description: Log format version 2
+      type: object
+      required:
+      - logVersion
+      - source
+      properties:
+        time:
+          type: string
+          format: date-time
+          description: Timestamp of log
+          example: '2018-03-20T09:12:28Z'
+        content:
+          type: string
+          description: Message/event data passed from executor (like log lines etc)
+        type:
+          type: string
+          description: One of possible log types
+        source:
+          type: string
+          description: One of possible log sources
+          enum:
+          - job-pod
+          - test-scheduler
+          - container-executor
+          - job-executor
+        error:
+          type: boolean
+          description: indicates a log error
+        version:
+          type: string
+          description: One of possible log versions
+          enum:
+          - v1
+          - v2
+        metadata:
+          type: object
+          description: additional log details
+          additionalProperties:
+            type: string
+          example:
+            argsl: passed command arguments
+        v1:
+          $ref: '#/components/schemas/LogV1'
+          description: Old output - for backwards compatibility - will be removed for non-structured logs
+    ExecutionResult:
+      description: execution result returned from executor
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          $ref: '#/components/schemas/ExecutionStatus'
+        output:
+          type: string
+          description: RAW Test execution output, depends of reporter used in particular tool
+        outputType:
+          type: string
+          description: output type depends of reporter used in particular tool
+          enum:
+          - text/plain
+          - application/junit+xml
+          - application/json
+        errorMessage:
+          type: string
+          description: error message when status is error, separate to output as output can be partial in case of error
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExecutionStepResult'
+          description: execution steps (for collection of requests)
+        reports:
+          type: object
+          properties:
+            junit:
+              type: string
+    AssertionResult:
+      description: execution result data
+      type: object
+      properties:
+        name:
+          type: string
+          example: assertion1
+        status:
+          type: string
+          enum:
+          - passed
+          - failed
+        errorMessage:
+          type: string
+          nullable: true
+    Problem:
+      description: problem response in case of error
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type contains a URI that identifies the problem type.
+          example: https://kubeshop.io/testkube/problems/invalidtestname
+        title:
+          type: string
+          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          example: Invalid test name
+        status:
+          type: integer
+          description: HTTP status code for this occurrence of the problem.
+          example: 500
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem.
+          example: Your test name can't contain forbidden characters like "}}}" passed
+        instance:
+          type: string
+          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
+          example: http://10.23.23.123:8088/tests
+    ExecutorOutput:
+      description: CRD based executor data
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          description: One of possible output types
+          enum:
+          - error
+          - log
+          - event
+          - result
+        content:
+          type: string
+          description: Message/event data passed from executor (like log lines etc)
+        result:
+          $ref: '#/components/schemas/ExecutionResult'
+          description: Execution result when job is finished
+        time:
+          type: string
+          format: date-time
+          description: Timestamp of log
+          example: '2018-03-20T09:12:28Z'
+    ExecutionStepResult:
+      description: execution result data
+      type: object
+      required:
+      - name
+      - status
+      properties:
+        name:
+          type: string
+          description: step name
+          example: step1
+        duration:
+          type: string
+          format: duration
+          example: 10m0s
+        status:
+          type: string
+          description: execution step status
+          enum:
+          - passed
+          - failed
+        assertionResults:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssertionResult'
+  parameters:
+    ID:
+      in: path
+      name: id
+      schema:
+        type: string
+      required: true
+      description: unique id of the object

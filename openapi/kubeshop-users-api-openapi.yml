@@ -1,0 +1,246 @@
+openapi: 3.0.1
+info:
+  title: Testkube Standalone Agent api Users API
+  description: API for Testkube Standalone Agent
+  contact:
+    email: info@testkube.io
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  version: 1.0.0
+servers:
+- url: https://api.testkube.io
+  description: Testkube Cloud Control Plane API Endpoint
+- url: https://<your-testkube-api-host>
+  description: Testkube On-Prem API Endpoint
+tags:
+- name: Users
+paths:
+  /users/{id}/settings:
+    parameters:
+    - $ref: '#/components/parameters/ID'
+    get:
+      summary: User settings, global for Testkube Pro or Enterprise
+      description: Get API info like current version
+      operationId: getUserSettings
+      responses:
+        '200':
+          $ref: '#/components/responses/Settings'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      tags:
+      - Users
+    patch:
+      summary: Update setting for given parameter
+      description: Update setting for given user
+      operationId: updateUserSettings
+      requestBody:
+        $ref: '#/components/requestBodies/SettingUpsert'
+      responses:
+        '200':
+          $ref: '#/components/responses/Setting'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      tags:
+      - Users
+  /users/preferences:
+    post:
+      summary: Create user preferences
+      description: Create user preferences
+      operationId: createUserPreferences
+      requestBody:
+        $ref: '#/components/requestBodies/Preferences'
+      responses:
+        '201':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+      security:
+      - BearerAuth: []
+      tags:
+      - Users
+components:
+  responses:
+    Setting:
+      description: Setting for organization/environment/user
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Setting'
+    Settings:
+      description: Settings for organization/environment/user
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Settings'
+    ForbiddenError:
+      description: 403 Forbidden
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    NoContent:
+      description: No content after resource created
+    MethodNotAllowedError:
+      description: 405 Method Not Allowed
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    BadRequestError:
+      description: 400 Bad Request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    UnauthorizedError:
+      description: 401 Unauthorized
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+  schemas:
+    Any: {}
+    Settings:
+      type: object
+      properties:
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Setting'
+      required:
+      - elements
+    Problem:
+      description: problem response in case of error
+      type: object
+      properties:
+        type:
+          description: Type contains a URI that identifies the problem type.
+          type: string
+          example: https://kubeshop.io/testkube/problems/invalidtestname
+        title:
+          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+          example: Invalid test name
+        status:
+          description: HTTP status code for this occurrence of the problem.
+          type: integer
+          example: 500
+        errorCode:
+          description: A more specific type of the error
+          type: string
+          example: user-limit
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+          example: Your test name can't contain forbidden characters like "}}}" passed
+        instance:
+          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
+          type: string
+          example: http://10.23.23.123:8088/tests
+      required:
+      - type
+      - title
+      - status
+      - detail
+      - instance
+    Setting:
+      description: Generic Settings
+      type: object
+      properties:
+        key:
+          type: string
+          enum:
+          - aiCopilotEnabled
+          - aiCopilotPrompted
+          - logsSearchKeywords
+          - logsSearchKeywordsVersion
+          - webhookUrlMaskEnabled
+          - agentTokenMaskEnabled
+          - insightsEnabled
+          - currentOnboardingStep
+          - salesOnboardingStatus
+          - hostedRunnerEligibility
+          - pinnedEnvironments
+          - pinnedAgents
+          - scimEnabled
+          - scimManagePermissionsInTestkube
+          - scimRolesEntitlementsFormat
+          - eventsEnabled
+        valueType:
+          description: value type for given settings
+          type: string
+          enum:
+          - boolean
+          - string
+          - number
+          - logsSearchKeywords
+          - array
+        value:
+          $ref: '#/components/schemas/Any'
+        organizationId:
+          type: string
+        environmentId:
+          type: string
+        userId:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        metadata:
+          description: Additional metadata for the specific setting
+          type: object
+          additionalProperties:
+            type: string
+      required:
+      - key
+      - valueType
+    UserPreferences:
+      type: object
+      properties:
+        id:
+          description: preference id
+          type: string
+        values:
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - values
+  requestBodies:
+    Preferences:
+      description: User preferences upsert
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserPreferences'
+    SettingUpsert:
+      description: Settings upsert request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Setting'
+      required: true
+  parameters:
+    ID:
+      name: id
+      in: path
+      description: unique id of the object
+      required: true
+      schema:
+        type: string

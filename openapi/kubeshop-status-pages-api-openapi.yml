@@ -1,0 +1,319 @@
+openapi: 3.0.1
+info:
+  title: Testkube Standalone Agent api Status Pages API
+  description: API for Testkube Standalone Agent
+  contact:
+    email: info@testkube.io
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  version: 1.0.0
+servers:
+- url: https://api.testkube.io
+  description: Testkube Cloud Control Plane API Endpoint
+- url: https://<your-testkube-api-host>
+  description: Testkube On-Prem API Endpoint
+tags:
+- name: Status Pages
+paths:
+  /status-pages/{statusPageID}:
+    get:
+      summary: Get status pages by ID
+      description: Returns a status page for the given statusPageID
+      operationId: getPublicStatusPageByID
+      parameters:
+      - name: statusPageID
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusPage'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      tags:
+      - Status Pages
+  /status-pages/{statusPageID}/incidents:
+    get:
+      summary: Get incidents for status page
+      description: Returns the list of incidents for the given statusPageID
+      operationId: getPublicIncidentsByStatusPageID
+      parameters:
+      - $ref: '#/components/parameters/StatusPageID'
+      responses:
+        '200':
+          $ref: '#/components/responses/Incidents'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      tags:
+      - Status Pages
+components:
+  schemas:
+    StatusObservable:
+      type: object
+      properties:
+        name:
+          description: Name of the test or test suite that will be observed
+          type: string
+          example: Backend API
+        type:
+          description: Type of the observed entity
+          type: string
+          enum:
+          - test
+          - test-suite
+          - workflow
+        status:
+          description: the status of the executions
+          type: string
+          enum:
+          - unknown
+          - operational
+          - partial_outage
+          - major_outage
+      required:
+      - name
+      - type
+    Incident:
+      allOf:
+      - $ref: '#/components/schemas/BasicObjectWithOptionalID'
+      - type: object
+        properties:
+          name:
+            description: Name of the incident
+            type: string
+            example: API migration problem
+          severity:
+            description: the severity of the outage caused by the incident
+            type: string
+            enum:
+            - critical
+            - major
+            - minor
+            - low
+            - info
+          visibility:
+            description: specifies how public the incident is
+            type: string
+            enum:
+            - draft
+            - published
+            - archived
+          description:
+            description: incident details in markdown
+            type: string
+            example: API Service was down due to unexpected changes in one of the dependencies.
+          startDate:
+            description: start of the incident
+            type: string
+            format: date-time
+            nullable: true
+          endDate:
+            description: end of the incident
+            type: string
+            format: date-time
+            nullable: true
+        required:
+        - name
+        - severity
+        - visibility
+        - description
+    StatusTimelineSlice:
+      type: object
+      properties:
+        startTime:
+          type: string
+        endTime:
+          type: string
+        status:
+          description: The aggregated status of the Test Workflows, Tests and Test Suites
+          type: string
+          enum:
+          - unknown
+          - operational
+          - partial_outage
+          - major_outage
+        observables:
+          description: Collection of Test Workflows, Tests and Test Suites that are relevant to the service with their status
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            test-1: operational
+            test-2: major_outage
+    Problem:
+      description: problem response in case of error
+      type: object
+      properties:
+        type:
+          description: Type contains a URI that identifies the problem type.
+          type: string
+          example: https://kubeshop.io/testkube/problems/invalidtestname
+        title:
+          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+          example: Invalid test name
+        status:
+          description: HTTP status code for this occurrence of the problem.
+          type: integer
+          example: 500
+        errorCode:
+          description: A more specific type of the error
+          type: string
+          example: user-limit
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+          example: Your test name can't contain forbidden characters like "}}}" passed
+        instance:
+          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
+          type: string
+          example: http://10.23.23.123:8088/tests
+      required:
+      - type
+      - title
+      - status
+      - detail
+      - instance
+    StatusService:
+      type: object
+      properties:
+        name:
+          description: Name of the Service
+          type: string
+          example: API Services
+        contents:
+          description: Collection of Test Workflows, Tests and Test Suites that are relevant to the service
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusObservable'
+        operability:
+          description: Percentage of passed tests
+          type: number
+          example: 99.999
+        status:
+          description: The aggregated status of the Test Workflows, Tests and Test Suites
+          type: string
+          enum:
+          - unknown
+          - operational
+          - partial_outage
+          - major_outage
+        timeline:
+          description: Partial results from test/test suite executions divided by the interval
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusTimelineSlice'
+      required:
+      - name
+    BasicObjectWithOptionalID:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    Incidents:
+      type: object
+      properties:
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Incident'
+      required:
+      - elements
+    StatusPage:
+      allOf:
+      - $ref: '#/components/schemas/BasicObjectWithOptionalID'
+      - type: object
+        properties:
+          organizationId:
+            description: Organization ID
+            type: string
+          environmentId:
+            description: Environment ID
+            type: string
+          description:
+            description: A short description to clarify the purpose of this page
+            type: string
+            example: This page shows the status of the tests running on the production environment of MyService
+          timeScale:
+            description: The periodicity for the aggregated status checks
+            type: string
+            example: 1d1h1m1s
+          services:
+            description: List of services tests are grouped by
+            type: array
+            items:
+              $ref: '#/components/schemas/StatusService'
+          isPublic:
+            description: Flag that marks the accessibility of the page. Public pages are published to the internet
+            type: boolean
+          slug:
+            description: Globally unique chosen identifier for the status page used in the public URL
+            type: string
+            example: mySlugName
+  responses:
+    NotFoundError:
+      description: 404 Not Found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    BadRequestError:
+      description: 400 Bad Request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Incidents:
+      description: list of incidents
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Incidents'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    UnauthorizedError:
+      description: 401 Unauthorized
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+  parameters:
+    StatusPageID:
+      name: statusPageID
+      in: path
+      description: unique id of the status page
+      required: true
+      schema:
+        type: string

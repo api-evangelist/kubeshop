@@ -1,0 +1,322 @@
+openapi: 3.0.1
+info:
+  title: Testkube Standalone Agent api artifacts API
+  description: API for Testkube Standalone Agent
+  contact:
+    email: info@testkube.io
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  version: 1.0.0
+servers:
+- url: https://api.testkube.io
+  description: Testkube Cloud Control Plane API Endpoint
+- url: https://<your-testkube-api-host>
+  description: Testkube On-Prem API Endpoint
+tags:
+- name: artifacts
+  description: Artifact operations
+paths:
+  /executions/{id}/artifacts:
+    get:
+      parameters:
+      - $ref: '#/components/parameters/ID'
+      tags:
+      - artifacts
+      summary: Get execution's artifacts by ID
+      description: Returns artifacts of the given executionID
+      operationId: getExecutionArtifacts
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Artifact'
+        404:
+          description: execution not found
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        500:
+          description: problem with getting execution's artifacts from storage
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+  /executions/{id}/artifacts/{filename}:
+    get:
+      parameters:
+      - $ref: '#/components/parameters/ID'
+      - $ref: '#/components/parameters/Filename'
+      tags:
+      - artifacts
+      summary: Download artifact
+      description: Download the artifact file from the given execution
+      operationId: downloadFile
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        404:
+          description: execution not found
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        500:
+          description: problem with getting artifacts from storage
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+  /executions/{id}/artifact-archive:
+    get:
+      parameters:
+      - $ref: '#/components/parameters/ID'
+      - $ref: '#/components/parameters/Mask'
+      tags:
+      - artifacts
+      summary: Download artifact archive
+      description: Download the artifact archive from the given execution
+      operationId: downloadArchive
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        404:
+          description: execution not found
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        500:
+          description: problem with getting artifact archive from storage
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+  /test-workflow-executions/{executionID}/artifacts:
+    get:
+      parameters:
+      - $ref: '#/components/parameters/executionID'
+      tags:
+      - artifacts
+      summary: Get test workflow execution's artifacts by ID
+      description: Returns artifacts of the given executionID
+      operationId: getTestWorkflowExecutionArtifacts
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Artifact'
+        404:
+          description: execution not found
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        402:
+          description: missing Pro subscription for a commercial feature
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        500:
+          description: problem with getting execution's artifacts from storage
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+  /test-workflow-executions/{executionID}/artifacts/{filename}:
+    get:
+      parameters:
+      - $ref: '#/components/parameters/executionID'
+      - $ref: '#/components/parameters/Filename'
+      tags:
+      - artifacts
+      summary: Download test workflow artifact
+      description: Download the artifact file from the given execution
+      operationId: downloadTestWorkflowArtifact
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        404:
+          description: execution not found
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        402:
+          description: missing Pro subscription for a commercial feature
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        500:
+          description: problem with getting artifacts from storage
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+  /test-workflow-executions/{executionID}/artifact-archive:
+    get:
+      parameters:
+      - $ref: '#/components/parameters/executionID'
+      - $ref: '#/components/parameters/Mask'
+      tags:
+      - artifacts
+      summary: Download test workflow artifact archive
+      description: Download the artifact archive from the given execution
+      operationId: downloadTestWorkflowArtifactArchive
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        404:
+          description: execution not found
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        402:
+          description: missing Pro subscription for a commercial feature
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        500:
+          description: problem with getting artifact archive from storage
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+components:
+  schemas:
+    Artifact:
+      type: object
+      description: API server artifact
+      properties:
+        name:
+          type: string
+          description: artifact file path
+        size:
+          type: integer
+          description: file size in bytes
+        executionName:
+          type: string
+          description: execution name that produced the artifact
+          example: test-1
+        status:
+          type: string
+          enum:
+          - ready
+          - processing
+          - failed
+    Problem:
+      description: problem response in case of error
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type contains a URI that identifies the problem type.
+          example: https://kubeshop.io/testkube/problems/invalidtestname
+        title:
+          type: string
+          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          example: Invalid test name
+        status:
+          type: integer
+          description: HTTP status code for this occurrence of the problem.
+          example: 500
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem.
+          example: Your test name can't contain forbidden characters like "}}}" passed
+        instance:
+          type: string
+          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
+          example: http://10.23.23.123:8088/tests
+  parameters:
+    Filename:
+      in: path
+      name: filename
+      schema:
+        type: string
+      required: true
+      description: filename of the object usually used for artifacts
+    Mask:
+      in: query
+      name: mask
+      schema:
+        type: string
+        description: mask to filter files
+      required: false
+    executionID:
+      in: path
+      name: executionID
+      schema:
+        type: string
+      required: true
+      description: unique id of the object execution
+    ID:
+      in: path
+      name: id
+      schema:
+        type: string
+      required: true
+      description: unique id of the object
