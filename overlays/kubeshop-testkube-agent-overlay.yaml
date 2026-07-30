@@ -1,0 +1,49 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Testkube Standalone Agent API
+  version: 1.0.0
+extends: openapi/kubeshop-testkube-agent-openapi-original.yml
+x-generated: '2026-07-19'
+x-method: generated
+x-source: >-
+  API Evangelist enrichment pass over the published Standalone Agent OpenAPI. The agent
+  spec ships no securitySchemes and no tags; this overlay records the auth model and the
+  cross-cutting semantics without mutating the original.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-19'
+    x-artifact-index:
+      conventions: conventions/kubeshop-conventions.yml
+      errors: errors/kubeshop-problem-types.yml
+      webhooks: asyncapi/kubeshop-testkube-webhooks.yml
+      skills: skills/_index.yml
+      cli: cli/kubeshop-cli.yml
+- target: $.info
+  update:
+    x-error-format: rfc9457
+    x-problem-type-namespace: https://kubeshop.io/testkube/problems/
+    x-plan-gating-status: 402
+- target: $.info
+  update:
+    x-authentication:
+      style: bearer-token
+      header: 'Authorization: Bearer <API_TOKEN>'
+      note: >-
+        The agent spec declares no securitySchemes, but the deployed API is bearer-token
+        authenticated, matching the Control Plane spec's BearerAuth scheme.
+- target: $.info
+  update:
+    x-idempotency:
+      supported: false
+      note: >-
+        executeTestWorkflow and executeTestWorkflows are not idempotent — each call starts
+        a new execution. No Idempotency-Key contract is published.
+- target: $.info
+  update:
+    x-event-surface:
+      kind: webhooks
+      crd: executor.testkube.io/v1 Webhook
+      event_count: 11
+      asyncapi_published: false
+      docs: https://docs.testkube.io/articles/webhooks

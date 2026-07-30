@@ -1,0 +1,67 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.testkube.io/articles/webhooks
+type: Webhooks
+spec_type: null
+spec_note: >-
+  Testkube publishes no AsyncAPI document. It does publish a documented webhook event
+  catalog, configured declaratively through a Kubernetes CRD, which is captured here.
+transport:
+  protocol: http
+  method: POST
+  target: >-
+    HTTPS endpoint set on the Webhook CRD `spec.uri`; both the URI and header values
+    may be Go template strings.
+configuration:
+  kind: kubernetes-crd
+  apiVersion: executor.testkube.io/v1
+  crd_kind: Webhook
+  fields:
+  - {name: uri, description: destination HTTPS endpoint}
+  - {name: events, description: list of event types to subscribe to}
+  - {name: selector, description: optional label selector filtering which resources fire the webhook}
+  - {name: payloadTemplate, description: Go template producing the JSON body}
+  - {name: headers, description: custom HTTP headers, template-expandable}
+  - {name: disabled, description: boolean toggle}
+  docs: https://docs.testkube.io/articles/crds
+authentication:
+  note: >-
+    Testkube does not sign webhook payloads. Authentication to the receiver is
+    caller-configured via the `headers` field (documented examples use Authorization,
+    X-Token and x-api-key).
+events:
+- {name: queue-testworkflow, phase: lifecycle, description: test workflow execution queued}
+- {name: start-testworkflow, phase: lifecycle, description: test workflow execution started}
+- {name: end-testworkflow-success, phase: lifecycle, description: test workflow execution finished successfully}
+- {name: end-testworkflow-failed, phase: lifecycle, description: test workflow execution finished failed}
+- {name: end-testworkflow-aborted, phase: lifecycle, description: test workflow execution aborted}
+- {name: end-testworkflow-canceled, phase: lifecycle, description: test workflow execution canceled}
+- {name: end-testworkflow-not-passed, phase: lifecycle, description: test workflow execution finished not passed}
+- {name: become-testworkflow-up, phase: state-change, description: transition from error to success}
+- {name: become-testworkflow-down, phase: state-change, description: transition from success to error}
+- {name: become-testworkflow-failed, phase: state-change, description: transition into failed state}
+- {name: become-testworkflow-aborted, phase: state-change, description: transition into aborted state}
+payload:
+  format: json
+  fields:
+  - {name: id, description: event identifier}
+  - {name: type, description: event type from the events list}
+  - {name: resource, description: resource type, e.g. testworkflowexecution}
+  - {name: resourceId, description: resource identifier}
+  - {name: testWorkflowExecution, description: execution detail object}
+  - {name: clusterName, description: cluster identifier}
+  template_variables:
+  - '{{ .Id }}'
+  - '{{ .Type_ }}'
+  - '{{ .ClusterName }}'
+  - '{{ .TestWorkflowExecution.TestName }}'
+  - '{{ .TestWorkflowExecution.Number }}'
+  - '{{ .TestWorkflowExecution.ExecutionResult.Status }}'
+  - '{{ index .Envs "VARIABLE_NAME" }}'
+  - '{{ index .Config "key" }}'
+related_surfaces:
+- {kind: kubernetes-events, docs: 'https://docs.testkube.io/articles/integrations'}
+- {kind: cdevents, docs: 'https://docs.testkube.io/articles/integrations'}
+api_operations:
+  source: openapi/kubeshop-testkube-openapi-original.yml
+  tags: [webhook, webhook-templates, test-triggers]

@@ -1,0 +1,51 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.testkube.io/changelog, https://docs.testkube.io/openapi/overview,
+  openapi/kubeshop-testkube-control-plane-openapi-original.yml
+versioning:
+  scheme: uri-path
+  api_version: v1
+  product_scheme: semver
+  current_product_version: 2.11.3
+  cadence: monthly minor releases with interim patch releases
+  docs: https://docs.testkube.io/changelog
+changelog:
+  url: https://docs.testkube.io/changelog
+  releases: https://github.com/kubeshop/testkube/releases
+  cross_ref: changelog/kubeshop-changelog.yml
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    Testkube publishes no written API deprecation policy and declares no RFC 8594
+    Sunset/Deprecation header support in any of its three OpenAPI documents.
+    Breaking-change and migration guidance is communicated per release through the
+    changelog (for example the MongoDB to PostgreSQL migration in 2.11.x) rather than
+    through a standing policy page.
+deprecated_operations: []
+deprecated_operations_note: >-
+  No operation in the three harvested specs carries `deprecated: true`. The legacy
+  Test/TestSuite surface (openapi/kubeshop-testkube-openapi-original.yml) is
+  superseded in practice by TestWorkflows, but is not formally marked deprecated in
+  the spec.
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    Dedicated support with an SLA is listed as a paid-plan entitlement on
+    https://testkube.io/pricing, but no numeric uptime target is published.
+status_page:
+  url: null
+  note: >-
+    No status page found. testkube.statuspage.io resolves but 302-redirects to
+    statuspage.io's own marketing site, i.e. the subdomain is unclaimed rather than a
+    live Testkube status page; status.testkube.io does not resolve.
+support:
+  community: https://testkube.io/contact
+  slack: https://join.slack.com/t/testkubeworkspace/shared_invite/zt-3kfpny0gx-apPMq9_Swu4KG3uwz6Bk2g
+  github_issues: https://github.com/kubeshop/testkube/issues
+editions:
+- {name: Open Source, note: 'Apache/MIT-licensed core, self-hosted'}
+- {name: Pro, note: 'commercial features gated behind HTTP 402 across 82 operations'}
+- {name: Enterprise / On-Prem, note: 'self-hosted control plane'}

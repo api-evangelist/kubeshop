@@ -1,0 +1,148 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/kubeshop-testkube-openapi-original.yml, openapi/kubeshop-testkube-agent-openapi-original.yml,
+  openapi/kubeshop-testkube-control-plane-openapi-original.yml
+format: rfc9457
+envelope:
+  media_type: application/problem+json
+  schema: Problem
+  problem_type_namespace: https://kubeshop.io/testkube/problems/
+  fields:
+  - {name: type, required: true, description: URI identifying the problem type, example: 'https://kubeshop.io/testkube/problems/invalidtestname'}
+  - {name: title, required: true, description: short human-readable summary, stable across occurrences, example: Invalid test name}
+  - {name: status, required: true, description: HTTP status code for this occurrence}
+  - {name: detail, required: true, description: human-readable explanation specific to this occurrence}
+  - {name: instance, required: true, description: URI identifying the specific occurrence}
+  - {name: errorCode, required: false, description: a more specific machine-readable error type, example: user-limit}
+  verified_live: >-
+    An unauthenticated POST to https://api.testkube.io/mcp returns
+    content-type application/problem+json with body
+    {"type":"about:blank","title":"Unauthorized","status":401,...}
+coverage:
+  responses_with_problem_json: 619
+  operations_scanned: 371
+problems:
+- status: 400
+  title: Bad request
+  media_type: application/problem+json
+  occurrences: 141
+  common_details:
+  - problem with selector parsing - probably some bad input occurs
+  - problem with body parsing - probably some bad input occurs
+  - problem with input for CRD generation
+  remediation: Validate the label selector, request body and CRD input before retrying.
+  source_operations:
+  - openapi/kubeshop-testkube-agent-openapi-original.yml#createTestTrigger
+  - openapi/kubeshop-testkube-agent-openapi-original.yml#executeTests
+- status: 401
+  title: Unauthorized
+  occurrences: 113
+  remediation: >-
+    Supply a bearer token via the Authorization header. For the MCP endpoint the 401
+    carries a WWW-Authenticate Bearer challenge with resource_metadata and
+    scope="mcp:full".
+  source_operations:
+  - openapi/kubeshop-testkube-control-plane-openapi-original.yml#listOrganizations
+- status: 402
+  title: Payment required — missing Pro subscription for a commercial feature
+  media_type: application/problem+json
+  occurrences: 82
+  remediation: >-
+    The operation is gated behind a Testkube Pro/Enterprise plan. See
+    https://testkube.io/pricing.
+  source_operations:
+  - openapi/kubeshop-testkube-agent-openapi-original.yml#executeTestWorkflow
+  - openapi/kubeshop-testkube-agent-openapi-original.yml#getTestWorkflowMetrics
+- status: 403
+  title: Forbidden
+  media_type: application/problem+json
+  occurrences: 99
+  common_details:
+  - secret is not controlled by Testkube or secret management or modification are disabled
+  - secret management is disabled
+  remediation: >-
+    Check role/permission assignment, and whether secret management or modification is
+    enabled on the instance.
+  source_operations:
+  - openapi/kubeshop-testkube-control-plane-openapi-original.yml#createAgent
+- status: 404
+  title: Resource not found
+  media_type: application/problem+json
+  occurrences: 108
+  common_details:
+  - execution not found
+  - the resource has not been found
+  - test trigger not found
+  source_operations:
+  - openapi/kubeshop-testkube-agent-openapi-original.yml#getTestTriggerByID
+- status: 405
+  title: Method not allowed
+  occurrences: 1
+  source_operations:
+  - openapi/kubeshop-testkube-control-plane-openapi-original.yml#updateUserSettings
+- status: 409
+  title: Conflict
+  media_type: application/problem+json
+  occurrences: 5
+  common_details:
+  - GitHub organization already connected
+  remediation: The resource already exists; fetch or update it instead of creating it.
+  source_operations:
+  - openapi/kubeshop-testkube-control-plane-openapi-original.yml#addGitHubInstallation
+  - openapi/kubeshop-testkube-control-plane-openapi-original.yml#createCredential
+- status: 410
+  title: Gone
+  occurrences: 7
+  remediation: >-
+    Artifacts and execution logs are retention-bound; the referenced object has expired
+    from storage.
+  source_operations:
+  - openapi/kubeshop-testkube-control-plane-openapi-original.yml#downloadArtifact
+  - openapi/kubeshop-testkube-control-plane-openapi-original.yml#getExecutionLogs
+- status: 413
+  title: Payload too large — export archive exceeds the server-configured size limit
+  media_type: application/problem+json
+  occurrences: 1
+  remediation: Narrow the export filter so the archive fits the server limit.
+  source_operations:
+  - openapi/kubeshop-testkube-openapi-original.yml#exportExecutions
+- status: 429
+  title: Too many requests
+  media_type: application/problem+json
+  occurrences: 6
+  schema: AIBriefRateLimitProblem
+  extended_fields:
+  - {name: code, description: 'machine-readable error code, always "ai_brief_rate_limited" for the AI brief quota response'}
+  - {name: limit, description: the daily LLM-path generation limit that was hit}
+  - {name: used, description: current usage count at the time of the 429}
+  - {name: resetsAt, description: UTC timestamp at which the counter resets, format date-time}
+  remediation: Back off until resetsAt, or reduce request volume.
+  source_operations:
+  - openapi/kubeshop-testkube-control-plane-openapi-original.yml#createOrganization
+  - openapi/kubeshop-testkube-control-plane-openapi-original.yml#createInvites
+- status: 500
+  title: Internal server error
+  media_type: application/problem+json
+  occurrences: 72
+  common_details:
+  - problem with getting test executions from storage
+  - problem with getting execution's artifacts from storage
+  source_operations:
+  - openapi/kubeshop-testkube-agent-openapi-original.yml#getExecutionArtifacts
+- status: 501
+  title: Not implemented — cluster discovery not configured on this instance
+  occurrences: 1
+  source_operations:
+  - openapi/kubeshop-testkube-openapi-original.yml#listClusterResources
+- status: 502
+  title: Bad gateway — problem communicating with the Kubernetes cluster
+  media_type: application/problem+json
+  occurrences: 210
+  common_details:
+  - problem communicating with kubernetes cluster
+  - problem with read information from kubernetes cluster
+  remediation: >-
+    The API could not reach the backing Kubernetes cluster. This is the single most
+    common failure class in the Testkube surface — treat it as retryable.
+  source_operations:
+  - openapi/kubeshop-testkube-agent-openapi-original.yml#listTestTriggers

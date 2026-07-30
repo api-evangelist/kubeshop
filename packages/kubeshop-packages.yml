@@ -1,0 +1,78 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  proxy.golang.org, pkg.go.dev, formulae.brew.sh, hub.docker.com,
+  kubeshop.github.io/helm-charts, https://docs.testkube.io/articles/install
+note: >-
+  Testkube ships no per-language client SDKs on npm, PyPI, RubyGems, Maven Central,
+  NuGet, Packagist or crates.io — all four were probed and returned 404. Distribution
+  is Kubernetes-native: a Go client package, a Homebrew/binary CLI, Helm charts and
+  container images.
+registries_probed_empty:
+- {registry: npm, queries: ['testkube', '@testkube/api', '@kubeshop/testkube', 'testkube-cli'], status: 404}
+- {registry: pypi, queries: ['testkube', 'testkube-api-client'], status: 404}
+- {registry: rubygems, queries: ['testkube'], status: 404}
+packages:
+- language: go
+  registry: go-modules
+  name: github.com/kubeshop/testkube/pkg/api/v1/client
+  url: https://pkg.go.dev/github.com/kubeshop/testkube/pkg/api/v1/client
+  install: go get github.com/kubeshop/testkube
+  official: true
+  kind: client-library
+  description: First-party Go API client for the Testkube API, published from the main testkube repository.
+- language: go
+  registry: go-modules
+  name: github.com/kubeshop/testkube
+  url: https://pkg.go.dev/github.com/kubeshop/testkube
+  install: go get github.com/kubeshop/testkube
+  official: true
+  kind: module
+  latest_tagged: v1.17.65
+  note: >-
+    The Go module proxy's @latest resolves to the pre-2.x tag line; current product
+    releases (2.11.x) are distributed as CLI binaries, Helm charts and images rather
+    than Go module tags.
+- language: shell
+  registry: homebrew
+  name: testkube
+  url: https://formulae.brew.sh/formula/testkube
+  install: brew install testkube
+  official: true
+  kind: cli
+  version: 2.11.2
+  description: Kubernetes-native framework for test definition and execution
+- registry: docker-hub
+  name: kubeshop/testkube-cli
+  url: https://hub.docker.com/r/kubeshop/testkube-cli
+  install: docker pull kubeshop/testkube-cli
+  official: true
+  kind: cli-image
+  pull_count: 53002
+- registry: docker-hub
+  name: kubeshop/testkube-api-server
+  url: https://hub.docker.com/r/kubeshop/testkube-api-server
+  install: docker pull kubeshop/testkube-api-server
+  official: true
+  kind: server-image
+- registry: helm
+  name: testkube
+  url: https://kubeshop.github.io/helm-charts
+  install: helm repo add kubeshop https://kubeshop.github.io/helm-charts && helm install testkube kubeshop/testkube
+  official: true
+  kind: chart
+  version: 2.11.2
+  description: Umbrella chart deploying the Testkube platform
+- registry: helm
+  name: testkube-api
+  url: https://kubeshop.github.io/helm-charts
+  official: true
+  kind: chart
+  version: 2.1.162
+- registry: helm
+  name: testkube-operator
+  url: https://kubeshop.github.io/helm-charts
+  official: true
+  kind: chart
+  version: 2.1.154
+  description: Installs the Testkube CRDs and operator

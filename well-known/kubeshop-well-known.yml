@@ -1,0 +1,86 @@
+generated: '2026-07-19'
+method: searched
+source: live probes of /.well-known/* across Testkube hosts
+notes: >-
+  app.testkube.io returns HTTP 200 with the Angular single-page-app shell for every
+  /.well-known/ path (content-type text/html). Those are catch-all responses, not real
+  discovery documents, and are recorded as spa-catchall rather than as hits.
+hosts:
+- host: https://api.testkube.io
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    file: kubeshop-oauth-authorization-server.json
+    standard: RFC 8414
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: application/json
+    file: kubeshop-oauth-protected-resource.json
+    standard: RFC 9728
+  - path: /.well-known/oauth-protected-resource/mcp
+    status: 200
+    standard: RFC 9728
+    note: MCP-endpoint-scoped protected resource metadata
+  - path: /.well-known/security.txt
+    status: 401
+  - path: /.well-known/openid-configuration
+    status: 401
+  - path: /.well-known/api-catalog
+    status: 401
+  - path: /.well-known/ai-plugin.json
+    status: 401
+- host: https://testkube.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://docs.testkube.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://app.testkube.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    result: spa-catchall
+  - path: /.well-known/openid-configuration
+    status: 200
+    result: spa-catchall
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    result: spa-catchall
+  - path: /.well-known/api-catalog
+    status: 200
+    result: spa-catchall
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    result: spa-catchall
+- host: https://kubeshop.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+security_txt: null

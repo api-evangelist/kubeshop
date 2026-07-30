@@ -1,0 +1,105 @@
+generated: '2026-07-19'
+method: searched
+status: published
+source: https://docs.testkube.io/articles/mcp-overview
+docs: https://docs.testkube.io/articles/mcp-overview
+server:
+  name: testkube
+  transport: http
+  url: https://api.testkube.io/organizations/{organization_id}/environments/{environment_id}/mcp
+  discovery_base: https://api.testkube.io/mcp
+  protocol: Model Context Protocol
+  description: >-
+    Testkube's hosted MCP server lets AI assistants list and run test workflows,
+    inspect executions, fetch logs and artifacts, and query results. The endpoint is
+    scoped per organization and environment; organization and environment IDs come
+    from the Testkube dashboard.
+deployments:
+- kind: hosted
+  recommended: true
+  url: https://api.testkube.io/organizations/{organization_id}/environments/{environment_id}/mcp
+  auth: oauth
+  docs: https://docs.testkube.io/articles/mcp-hosted
+- kind: cli
+  command: testkube mcp serve
+  transports: [stdio, shttp]
+  docs: https://docs.testkube.io/articles/mcp-cli
+- kind: docker
+  transports: [stdio, shttp]
+  docs: https://docs.testkube.io/articles/mcp-docker
+authorization:
+  standard: OAuth 2.1 with RFC 8414 + RFC 9728 discovery metadata
+  methods:
+  - kind: oauth
+    recommended: true
+    note: browser login; no API keys to create, copy, or rotate
+  - kind: api_token
+    header: 'Authorization: Bearer <API_TOKEN>'
+    note: for automation where browser auth is impractical; tokens issued from Organization Settings → API Tokens
+  authorization_servers:
+  - https://api.testkube.io
+  authorization_endpoint: https://api.testkube.io/mcp/auth/authorize
+  token_endpoint: https://api.testkube.io/mcp/auth/token
+  registration_endpoint: https://api.testkube.io/mcp/auth/register
+  revocation_endpoint: https://api.testkube.io/mcp/auth/revoke
+  dynamic_client_registration: true
+  client_id_metadata_document_supported: true
+  grant_types_supported: [authorization_code, refresh_token]
+  code_challenge_methods_supported: [S256]
+  token_endpoint_auth_methods_supported: [none]
+  scopes_supported: [mcp:full]
+  bearer_methods_supported: [header]
+  docs: https://docs.testkube.io/articles/mcp-security
+tool_count: 30
+tools:
+- {name: list_workflows, description: List workflows with filtering, group: workflow-management}
+- {name: get_workflow, description: Get workflow details, group: workflow-management}
+- {name: get_workflow_definition, description: Get workflow YAML, group: workflow-management}
+- {name: get_workflow_metrics, description: Get workflow performance metrics, group: workflow-management}
+- {name: create_workflow, description: Create new workflow, group: workflow-management}
+- {name: update_workflow, description: Update existing workflow, group: workflow-management}
+- {name: run_workflow, description: Execute workflow, group: workflow-management}
+- {name: list_workflowtemplates, description: List templates with optional label filtering, group: workflow-templates}
+- {name: get_workflowtemplate_definition, description: Get template YAML, group: workflow-templates}
+- {name: create_workflowtemplate, description: Create new template, group: workflow-templates}
+- {name: update_workflowtemplate, description: Update existing template, group: workflow-templates}
+- {name: list_agents, description: List available agents for targeting, group: agent-management}
+- {name: list_executions, description: List workflow executions, group: execution-management}
+- {name: get_execution_info, description: Get execution details, group: execution-management}
+- {name: get_workflow_execution_metrics, description: Get resource consumption metrics, group: execution-management}
+- {name: get_workflow_resource_history, description: Analyze resource patterns, group: execution-management}
+- {name: fetch_execution_logs, description: Get execution logs, group: execution-management}
+- {name: lookup_execution_id, description: Resolve execution name to ID, group: execution-management}
+- {name: wait_for_executions, description: Wait for completion, group: execution-management}
+- {name: abort_workflow_execution, description: Cancel running execution, group: execution-management}
+- {name: update_execution_tags, description: Update execution tags, group: execution-management}
+- {name: list_artifacts, description: List execution artifacts, group: artifact-management}
+- {name: read_artifact, description: Read artifact content, group: artifact-management}
+- {name: query_workflows, description: Query definitions via JSONPath, group: query}
+- {name: query_executions, description: Query execution records via JSONPath, group: query}
+- {name: get_workflow_schema, description: Get TestWorkflow YAML schema, group: schema}
+- {name: get_execution_schema, description: Get TestWorkflowExecution schema, group: schema}
+- {name: build_dashboard_url, description: Generate dashboard URLs, group: utility}
+- {name: list_labels, description: List available labels, group: utility}
+- {name: list_resource_groups, description: List resource groups, group: utility}
+evidence:
+- source: https://api.testkube.io/.well-known/oauth-authorization-server
+  status: 200
+  kind: RFC 8414 authorization server metadata
+- source: https://api.testkube.io/.well-known/oauth-protected-resource
+  status: 200
+  kind: RFC 9728 protected resource metadata
+- source: https://api.testkube.io/mcp
+  status: 401
+  kind: >-
+    unauthenticated POST returns application/problem+json plus a WWW-Authenticate
+    Bearer challenge carrying resource_metadata and scope="mcp:full"
+- source: https://docs.testkube.io/changelog
+  kind: changelog
+  note: >-
+    v2.10.0 (2026-06-01) shipped "OAuth authentication for MCP servers"; v2.11.1
+    (2026-07-02) strengthened authorization across the MCP endpoint.
+cli:
+  command: testkube mcp
+  description: MCP server enables AI assistants to run workflows, analyze results (Preview)
+  source: https://docs.testkube.io/cli/testkube

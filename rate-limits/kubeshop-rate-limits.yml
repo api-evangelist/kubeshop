@@ -1,0 +1,44 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/kubeshop-testkube-control-plane-openapi-original.yml
+docs: https://docs.testkube.io/changelog
+summary: >-
+  Testkube publishes no global rate-limit table and no X-RateLimit-* or Retry-After
+  response headers. HTTP 429 is declared on six control-plane operations — all
+  organization/membership mutations — plus an AI brief generation quota that returns
+  its limit context in the problem+json body rather than in headers.
+signaling:
+  headers: []
+  headers_note: no X-RateLimit-* or Retry-After header is declared in any published spec
+  body_fields:
+  - {name: limit, description: the daily LLM-path generation limit that was hit}
+  - {name: used, description: current usage count at the time of the 429}
+  - {name: resetsAt, description: UTC timestamp at which the counter resets}
+  problem_schema: AIBriefRateLimitProblem
+  error_code: ai_brief_rate_limited
+rate_limits:
+- name: AI brief generation
+  scope: daily quota per LLM path
+  limit_count: null
+  limit_note: >-
+    The numeric limit is instance/plan-configured and returned in the 429 body as
+    `limit`; Testkube does not publish a fixed number.
+  status: 429
+- name: Organization and membership mutations
+  scope: control-plane
+  limit_count: null
+  status: 429
+  operations:
+  - createOrganization
+  - createInvites
+  - addManyEnvironmentCollaborators
+  - addManyResourceGroupCollaborators
+  - addTeamMembers
+  - updateOrganizationMemberRole
+related:
+  plan_gating:
+    status: 402
+    note: >-
+      82 operations return HTTP 402 "missing Pro subscription for a commercial
+      feature". This is licensing, not throttling.
+  cross_ref: errors/kubeshop-problem-types.yml

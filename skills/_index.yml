@@ -1,0 +1,26 @@
+generated: '2026-07-19'
+method: generated
+source: >-
+  Grounded in the operationIds published in openapi/kubeshop-testkube-agent-openapi-original.yml
+  and openapi/kubeshop-testkube-control-plane-openapi-original.yml, plus the conventions and
+  error semantics captured in conventions/ and errors/. No provider-published Agent Skills or
+  AGENTS.md were found on testkube.io, docs.testkube.io or the kubeshop GitHub organization.
+skills:
+- file: kubeshop-run-test-workflow.md
+  name: Run a Testkube test workflow and collect the result
+  api: openapi/kubeshop-testkube-agent-openapi-original.yml
+  operations: [listTestWorkflows, getTestWorkflow, executeTestWorkflow, getTestWorkflowExecution,
+    getTestWorkflowExecutionArtifacts, downloadTestWorkflowArtifact, abortTestWorkflowExecution]
+- file: kubeshop-triage-failed-execution.md
+  name: Triage a failed Testkube execution
+  api: openapi/kubeshop-testkube-control-plane-openapi-original.yml
+  operations: [listTestWorkflowExecutions, getTestWorkflowExecution, getExecutionLogsV2,
+    getExecutionJUnitReports, getExecutionEvents, getTestWorkflowMetrics, rerunTestWorkflowExecution]
+- file: kubeshop-wire-webhook-notifications.md
+  name: Wire Testkube webhook notifications
+  api: openapi/kubeshop-testkube-agent-openapi-original.yml
+  operations: [listWebhooks, createWebhook, getWebhook, updateWebhook, deleteWebhook,
+    listWebhookTemplates, createWebhookTemplate]
+note: >-
+  Testkube also ships a first-party hosted MCP server with 30 tools that covers much of this
+  ground natively — see mcp/kubeshop-mcp.yml. These skills target direct REST consumers.

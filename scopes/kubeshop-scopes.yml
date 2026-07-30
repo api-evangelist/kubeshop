@@ -1,0 +1,33 @@
+generated: '2026-07-19'
+method: searched
+source: https://api.testkube.io/.well-known/oauth-authorization-server
+docs: https://docs.testkube.io/articles/mcp-security
+note: >-
+  Testkube's three published OpenAPI documents declare no oauth2 security scheme — the
+  REST surface is bearer-token authenticated (see authentication/). The only OAuth
+  scope surface Testkube publishes is the OAuth 2.1 authorization server fronting the
+  MCP endpoint, discovered live at /.well-known/oauth-authorization-server and
+  /.well-known/oauth-protected-resource. Those scopes are recorded here verbatim.
+schemes:
+- name: TestkubeMCPOAuth
+  source: https://api.testkube.io/.well-known/oauth-authorization-server
+  issuer: https://api.testkube.io
+  applies_to: https://api.testkube.io/mcp
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://api.testkube.io/mcp/auth/authorize
+    tokenUrl: https://api.testkube.io/mcp/auth/token
+    revocationUrl: https://api.testkube.io/mcp/auth/revoke
+    registrationUrl: https://api.testkube.io/mcp/auth/register
+    pkce: S256
+    refresh_token: true
+scopes:
+- scope: mcp:full
+  description: >-
+    Full access to the Testkube MCP endpoint for the authorized organization and
+    environment. This is the only scope the authorization server advertises; Testkube
+    does not currently publish a finer-grained scope breakdown.
+  flows: [authorizationCode]
+  sources:
+  - https://api.testkube.io/.well-known/oauth-authorization-server
+  - https://api.testkube.io/.well-known/oauth-protected-resource

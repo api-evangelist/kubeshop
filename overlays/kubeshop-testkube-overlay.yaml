@@ -1,0 +1,42 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the open-source Testkube API
+  version: 1.0.0
+extends: openapi/kubeshop-testkube-openapi-original.yml
+x-generated: '2026-07-19'
+x-method: generated
+x-source: >-
+  API Evangelist enrichment pass over the open-source Testkube API spec published in the
+  kubeshop/testkube repository. This is the legacy Test/TestSuite surface plus the
+  TestWorkflow surface; it declares no servers and no securitySchemes.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-19'
+    x-artifact-index:
+      conventions: conventions/kubeshop-conventions.yml
+      errors: errors/kubeshop-problem-types.yml
+      data_model: data-model/kubeshop-data-model.yml
+      packages: packages/kubeshop-packages.yml
+- target: $.info
+  update:
+    x-error-format: rfc9457
+    x-problem-type-namespace: https://kubeshop.io/testkube/problems/
+    x-plan-gating-status: 402
+- target: $.info
+  update:
+    x-source-repository: https://github.com/kubeshop/testkube
+    x-source-path: api/v1/testkube.yaml
+    x-license: MIT
+- target: $.info
+  update:
+    x-surface-note: >-
+      The tests, test-suites and executor tags describe the legacy surface. New
+      integrations should prefer the TestWorkflow operations, which are the supported
+      path going forward. Nothing here is formally marked deprecated in the spec.
+- target: $.servers
+  update:
+  - url: https://api.testkube.io
+    description: >-
+      Testkube Cloud endpoint. The open-source spec declares no servers because it is
+      normally consumed against a self-hosted, in-cluster agent.

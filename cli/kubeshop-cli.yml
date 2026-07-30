@@ -1,0 +1,72 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.testkube.io/cli/testkube
+docs: https://docs.testkube.io/articles/cli
+name: testkube
+description: >-
+  The Testkube CLI manages a Testkube installation and its resources — creating test
+  workflows, starting executions, managing triggers, downloading artifacts, and
+  serving an MCP server for AI assistants.
+install:
+- {method: homebrew, command: brew install testkube}
+- {method: docker, command: docker pull kubeshop/testkube-cli, docs: 'https://docs.testkube.io/articles/mcp-docker'}
+global_flags:
+- {flag: --api-uri, description: Testkube API endpoint}
+- {flag: --client, description: client type used to reach the API}
+- {flag: --header, description: additional HTTP header}
+- {flag: --insecure, description: skip TLS verification}
+- {flag: --namespace, description: Kubernetes namespace}
+- {flag: --verbose, description: verbose output}
+- {flag: --help, description: help for any command}
+commands:
+- group: install-and-lifecycle
+  items:
+  - {name: init, description: 'Init Testkube profiles(standalone-agent|demo|agent)'}
+  - {name: install, description: Install Testkube}
+  - {name: upgrade, description: Upgrade Helm chart, install dependencies and run migrations}
+  - {name: migrate, description: Migrate resources}
+  - {name: purge, description: Uninstall Testkube from your current kubectl context}
+  - {name: version, description: Shows version and build info}
+- group: resources
+  items:
+  - {name: create, description: Create resource}
+  - {name: get, description: Get resources}
+  - {name: update, description: Update resource}
+  - {name: set, description: Set resources}
+  - {name: delete, description: Delete resources}
+  - {name: generate, description: Generate resources commands}
+- group: execution
+  items:
+  - {name: run, description: Run test workflows or re-run executions}
+  - {name: watch, description: Watch test workflows}
+  - {name: cancel, description: Cancel executions}
+  - {name: status, description: Show status of feature or resource}
+  - {name: download, description: Artifacts management commands}
+- group: platform
+  items:
+  - {name: agent, description: Testkube Pro Agent related commands}
+  - {name: pro, description: Testkube Pro commands}
+  - {name: login, description: Login to Testkube Pro}
+  - {name: dashboard, description: Open Testkube dashboard}
+  - {name: docker, description: Testkube Docker commands}
+  - {name: marketplace, description: Browse and install TestWorkflows from the Testkube Marketplace}
+- group: ai-and-agents
+  items:
+  - name: mcp
+    description: MCP server enables AI assistants to run workflows, analyze results (Preview)
+    subcommands:
+    - {name: serve, docs: 'https://docs.testkube.io/cli/testkube-mcp-serve'}
+    cross_ref: mcp/kubeshop-mcp.yml
+- group: configuration-and-diagnostics
+  items:
+  - {name: config, description: Set feature configuration value}
+  - {name: enable, description: Enable feature}
+  - {name: disable, description: Disable feature}
+  - {name: debug, description: Print debugging info}
+  - {name: diagnostics, description: Diagnoze testkube issues with ease}
+  - {name: completion, description: Generate the autocompletion script for the specified shell}
+key_flows:
+- {name: run a test workflow, command: testkube run testworkflow <name>}
+- {name: follow an execution, command: testkube watch testworkflow-execution <id>}
+- {name: pull artifacts, command: testkube download artifacts <execution-id>}
+- {name: serve MCP for an AI assistant, command: testkube mcp serve}

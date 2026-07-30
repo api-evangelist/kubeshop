@@ -1,0 +1,85 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/kubeshop-testkube-control-plane-openapi-original.yml, openapi/kubeshop-testkube-agent-openapi-original.yml,
+  openapi/kubeshop-testkube-openapi-original.yml, https://docs.testkube.io/articles/mcp-hosted
+docs: https://docs.testkube.io/openapi/overview
+authentication:
+  style: bearer-token
+  scheme: BearerAuth
+  header: 'Authorization: Bearer <API_TOKEN>'
+  issuance: Organization Settings → API Tokens in the Testkube dashboard
+  oauth:
+    applies_to: the MCP endpoint only
+    scopes: [mcp:full]
+    discovery: https://api.testkube.io/.well-known/oauth-authorization-server
+  cross_ref: authentication/kubeshop-authentication.yml
+idempotency:
+  supported: false
+  note: >-
+    Testkube publishes no idempotency-key contract. No Idempotency-Key header or
+    parameter appears in any of the three OpenAPI documents, and the docs describe no
+    request-replay semantics. Retry safety instead comes from the declarative
+    Kubernetes-CRD model: applying the same TestWorkflow manifest converges rather
+    than duplicating. Execution-creating operations (executeTestWorkflow, executeTests)
+    are NOT idempotent and will start a new execution on each call.
+pagination:
+  style: page-number
+  params:
+  - {name: pageSize, in: query, description: number of items per page}
+  - {name: page, in: query, description: page index, referenced by the Link header example}
+  response_headers:
+  - name: Link
+    standard: RFC 8288
+    description: web-linking header carrying rel="next" and rel="previous"
+    example: '<https://api.testkube.io/resource?page=3>; rel="next", <https://api.testkube.io/resource?page=1>; rel="previous"'
+  - name: Total-Count
+    description: Total number of items matching the filter, ignoring pagination
+    schema: integer(int64)
+filtering:
+  params:
+  - {name: selector, description: Kubernetes-style label selector}
+  - {name: label, description: include by label}
+  - {name: excludeLabel, description: exclude by label}
+  - {name: textSearch, description: free-text search}
+  - {name: filter, description: generic filter expression}
+  - {name: status, description: filter by execution status}
+  - {name: resourceGroup, description: scope to a resource group}
+  note: >-
+    Label selectors are the primary filtering idiom across the surface and mirror
+    Kubernetes semantics; a malformed selector is the most common source of HTTP 400.
+request_tracing:
+  header: x-request-id
+  observed: >-
+    Returned on live responses from api.testkube.io (verified on the /mcp 401 probe).
+  cors_exposed_headers: [Link]
+error_envelope:
+  format: rfc9457
+  media_type: application/problem+json
+  problem_type_namespace: https://kubeshop.io/testkube/problems/
+  cross_ref: errors/kubeshop-problem-types.yml
+rate_limiting:
+  signaled: partial
+  note: >-
+    HTTP 429 is declared on 6 control-plane operations (organization creation,
+    invites, collaborator and team-member bulk adds). No X-RateLimit-* or Retry-After
+    response headers are declared in the specs. The AI brief quota returns a
+    problem+json body extended with limit, used and resetsAt instead of headers.
+  quota_body_fields: [limit, used, resetsAt]
+versioning:
+  scheme: uri-path
+  api_version: v1
+  product_versioning: semver, monthly minor releases plus patch releases
+  cross_ref: lifecycle/kubeshop-lifecycle.yml
+plan_gating:
+  status: 402
+  note: >-
+    Commercial features return HTTP 402 "missing Pro subscription for a commercial
+    feature" — 82 operations across the three specs are plan-gated. Agents should
+    treat 402 as a licensing signal, not a retryable error.
+resource_model:
+  primary: kubernetes-crd
+  note: >-
+    Testkube is Kubernetes-native. Most API resources have a matching CRD
+    (TestWorkflow, Webhook, TestTrigger), so the same object can be managed through
+    the API, the CLI, or GitOps-applied manifests.
+  cross_ref: data-model/kubeshop-data-model.yml

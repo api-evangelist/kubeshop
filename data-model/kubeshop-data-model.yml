@@ -1,0 +1,90 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/kubeshop-testkube-control-plane-openapi-original.yml, openapi/kubeshop-testkube-agent-openapi-original.yml,
+  openapi/kubeshop-testkube-openapi-original.yml
+docs: https://docs.testkube.io/articles/crds
+summary:
+  schemas_total: 472
+  hierarchy: >-
+    The control-plane surface is strictly tenant-nested: 104 of 108 paths hang off
+    /organizations/{id}, and almost everything below that is scoped to
+    /environments/{environmentID}. Organization is the root aggregate.
+  identity: >-
+    Most Kubernetes-backed resources are identified by `name` within an environment
+    rather than by an opaque id; executions carry an `id`.
+entities:
+- name: Organization
+  root: true
+  path: /organizations/{id}
+  description: Top-level tenant; owns environments, members, teams, resource groups and credentials.
+- name: Environment
+  path: /organizations/{id}/environments/{environmentID}
+  description: A connected cluster/agent scope inside an organization; the unit test workflows execute against.
+- name: Agent
+  description: A Testkube runner installed in a Kubernetes cluster and connected to the control plane.
+- name: TestWorkflow
+  key: name
+  description: The declarative test definition (Kubernetes CRD). The primary product object.
+- name: TestWorkflowTemplate
+  key: name
+  description: Reusable fragment composed into TestWorkflows.
+- name: TestWorkflowExecution
+  key: id
+  fields: [id, groupId, runnerId, name]
+  description: A single run of a TestWorkflow, carrying status, result and metrics.
+- name: Execution
+  key: id
+  description: Legacy Test/TestSuite execution record (pre-TestWorkflow surface).
+- name: Artifact
+  description: File produced by an execution; retrieved via presigned Location redirects and retention-bound (HTTP 410 once expired).
+- name: TestTrigger
+  key: name
+  description: Binds a Kubernetes event or Git event to a TestWorkflow execution.
+- name: Webhook
+  key: name
+  crd: executor.testkube.io/v1
+  description: HTTP callback fired on execution lifecycle and state-change events.
+- name: WebhookTemplate
+  key: name
+  description: Reusable webhook payload/config template.
+- name: Credential
+  key: name
+  fields: [name, environmentId, resourceGroupId, executionId]
+  description: Secret material scoped to an environment, resource group or workflow.
+- name: ResourceGroup
+  description: Grouping used for collaborator and credential scoping (RBAC boundary).
+- name: Team
+  description: Named set of members within an organization.
+- name: Member
+  key: email
+  description: A user's membership and role in an organization.
+- name: User
+  path: /users
+  description: Account-level identity and settings.
+- name: StatusPage
+  path: /organizations/{id}/status-pages
+  description: >-
+    A Testkube product feature — publishable status pages summarizing test results.
+    Not Testkube's own service status page.
+relationships:
+- {from: Organization, to: Environment, kind: has_many, via: environmentID}
+- {from: Organization, to: Member, kind: has_many, via: memberEmail}
+- {from: Organization, to: Team, kind: has_many, via: teamID}
+- {from: Organization, to: ResourceGroup, kind: has_many, via: groupID}
+- {from: Organization, to: Credential, kind: has_many, via: name}
+- {from: Organization, to: StatusPage, kind: has_many}
+- {from: Environment, to: Agent, kind: has_many}
+- {from: Environment, to: TestWorkflow, kind: has_many, via: name}
+- {from: Environment, to: Credential, kind: has_many, via: environmentId}
+- {from: TestWorkflow, to: TestWorkflowExecution, kind: has_many, via: workflowName}
+- {from: TestWorkflow, to: TestWorkflowTemplate, kind: has_many, via: name}
+- {from: TestWorkflowExecution, to: TestWorkflow, kind: belongs_to, via: workflowName}
+- {from: TestWorkflowExecution, to: Artifact, kind: has_many, via: executionId}
+- {from: TestWorkflowExecution, to: Agent, kind: belongs_to, via: runnerId}
+- {from: TestTrigger, to: TestWorkflow, kind: has_one, via: name}
+- {from: Webhook, to: WebhookTemplate, kind: has_one, via: name}
+- {from: Webhook, to: TestWorkflowExecution, kind: observes, via: events}
+- {from: Credential, to: ResourceGroup, kind: belongs_to, via: resourceGroupId}
+- {from: Team, to: Member, kind: has_many}
+- {from: Execution, to: Artifact, kind: has_many, via: downloadArtifactExecutionIDs}
+render: null

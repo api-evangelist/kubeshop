@@ -1,0 +1,65 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Testkube Control Plane API
+  version: 1.0.0
+extends: openapi/kubeshop-testkube-control-plane-openapi-original.yml
+x-generated: '2026-07-19'
+x-method: generated
+x-source: >-
+  API Evangelist enrichment pass over the published Control Plane OpenAPI. Captures
+  discovery, error, pagination and agent-access facts verified live against
+  api.testkube.io. Does not mutate the original spec.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-19'
+    x-artifact-index:
+      authentication: authentication/kubeshop-authentication.yml
+      conventions: conventions/kubeshop-conventions.yml
+      errors: errors/kubeshop-problem-types.yml
+      lifecycle: lifecycle/kubeshop-lifecycle.yml
+      changelog: changelog/kubeshop-changelog.yml
+      data_model: data-model/kubeshop-data-model.yml
+      mcp: mcp/kubeshop-mcp.yml
+      webhooks: asyncapi/kubeshop-testkube-webhooks.yml
+      scopes: scopes/kubeshop-scopes.yml
+      cli: cli/kubeshop-cli.yml
+      packages: packages/kubeshop-packages.yml
+- target: $.info
+  update:
+    x-error-format: rfc9457
+    x-problem-type-namespace: https://kubeshop.io/testkube/problems/
+    x-plan-gating-status: 402
+- target: $.info
+  update:
+    x-pagination:
+      style: page-number
+      params: [page, pageSize]
+      response_headers: [Link, Total-Count]
+      link_standard: RFC 8288
+- target: $.info
+  update:
+    x-idempotency:
+      supported: false
+      note: >-
+        No Idempotency-Key contract is published. Execution-creating operations start
+        a new execution on every call and must not be blindly retried.
+- target: $.info
+  update:
+    x-mcp-server:
+      url: https://api.testkube.io/organizations/{organization_id}/environments/{environment_id}/mcp
+      transport: http
+      auth: oauth2.1
+      scopes: [mcp:full]
+      tool_count: 30
+      docs: https://docs.testkube.io/articles/mcp-overview
+- target: $.info
+  update:
+    x-oauth-discovery:
+      authorization_server_metadata: https://api.testkube.io/.well-known/oauth-authorization-server
+      protected_resource_metadata: https://api.testkube.io/.well-known/oauth-protected-resource
+      standards: [RFC 8414, RFC 9728, RFC 7591]
+- target: $.servers
+  update:
+  - url: https://api.testkube.io
+    description: Testkube Cloud Control Plane API endpoint (verified reachable, TLSv1.3, HSTS max-age=31536000)

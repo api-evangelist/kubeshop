@@ -1,0 +1,51 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.testkube.io/changelog
+url: https://docs.testkube.io/changelog
+scheme: semver
+cadence: monthly minor releases with interim patch releases
+current_version: 2.11.3
+entries:
+- version: 2.11.3
+  date: '2026-07-17'
+  kind: patch
+  highlights:
+  - Fixed MongoDB to PostgreSQL migration issues
+  - Resolved AI service communication problems with the Control Plane
+- version: 2.11.1
+  date: '2026-07-02'
+  kind: patch
+  highlights:
+  - Strengthened authorization and permission enforcement across the MCP endpoint and AI provider APIs
+- version: 2.11.0
+  date: '2026-06-25'
+  kind: minor
+  highlights:
+  - Create AI agents from goals
+  - Git repository observation for execution triggers (Git triggers)
+  - Custom resource watching with field-level trigger matching
+  - Improved insights and metrics, more responsive AI chat, Gateway API support
+- version: 2.10.3
+  date: '2026-06-09'
+  kind: patch
+  highlights:
+  - Incremental adjustments with no enterprise/on-premise deployment impact
+- version: 2.10.2
+  date: '2026-06-07'
+  kind: patch
+  highlights:
+  - License calculation improvements
+  - MCP server custom certificate support
+  - Agent label management
+  - TestWorkflow execution queue metrics
+- version: 2.10.0
+  date: '2026-06-01'
+  kind: minor
+  highlights:
+  - Granular test insights with automatic JUnit/JMeter/k6/Artillery report processing
+  - Improved AI chat progress visibility
+  - OAuth authentication for MCP servers
+note: >-
+  Recent window only — https://docs.testkube.io/changelog is the source of truth.
+  Releases are also tagged in the GitHub repository at
+  https://github.com/kubeshop/testkube/releases.

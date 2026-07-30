@@ -1,0 +1,91 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/*.yml, https://api.testkube.io/.well-known/oauth-authorization-server,
+  https://docs.testkube.io/articles/webhooks, https://testkube.io/pricing
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: all three published specs declare openapi 3.0.1
+- id: rfc9457-problem-details
+  conforms: true
+  evidence: >-
+    619 error responses across the three specs use application/problem+json with a
+    Problem schema requiring type/title/status/detail/instance; verified live on a
+    401 from https://api.testkube.io/mcp
+- id: rfc8288-web-linking
+  conforms: true
+  evidence: >-
+    paginated list responses return a Link header with rel="next"/rel="previous",
+    defined as components.headers.link
+- id: oauth2
+  conforms: true
+  scope: MCP endpoint only
+  evidence: >-
+    https://api.testkube.io/.well-known/oauth-authorization-server advertises
+    authorization_code + refresh_token grants
+- id: oauth2.1
+  conforms: true
+  scope: MCP endpoint only
+  evidence: PKCE S256 required, no implicit or password grants advertised
+- id: rfc8414-authorization-server-metadata
+  conforms: true
+  evidence: https://api.testkube.io/.well-known/oauth-authorization-server returns 200 application/json
+- id: rfc9728-protected-resource-metadata
+  conforms: true
+  evidence: >-
+    https://api.testkube.io/.well-known/oauth-protected-resource returns 200; the /mcp
+    401 emits a WWW-Authenticate Bearer challenge carrying resource_metadata
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: registration_endpoint advertised at https://api.testkube.io/mcp/auth/register
+- id: model-context-protocol
+  conforms: true
+  evidence: >-
+    hosted MCP server at api.testkube.io with 30 documented tools; also served locally
+    via `testkube mcp serve` over stdio and shttp
+- id: rfc6750-bearer-token
+  conforms: true
+  evidence: control-plane spec declares securityScheme BearerAuth (http/bearer)
+- id: cdevents
+  conforms: true
+  evidence: listed as a supported integration at https://docs.testkube.io/articles/integrations
+- id: kubernetes-crd
+  conforms: true
+  evidence: >-
+    resources are Custom Resource Definitions (executor.testkube.io/v1 Webhook,
+    TestWorkflow, TestTrigger); see https://docs.testkube.io/articles/crds
+- id: junit-xml
+  conforms: true
+  evidence: automatic JUnit report processing shipped in v2.10.0
+- id: openid-connect
+  conforms: false
+  evidence: no /.well-known/openid-configuration served on any Testkube host
+- id: asyncapi
+  conforms: false
+  evidence: webhook catalog is documented but no AsyncAPI document is published
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on testkube.io and kubeshop.io
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: no Sunset or Deprecation header declared in any spec
+- id: json-api
+  conforms: false
+- id: scim2
+  conforms: false
+- id: odata
+  conforms: false
+- id: fhir-r4
+  conforms: false
+- id: fapi
+  conforms: false
+compliance_program:
+  published: true
+  source: https://testkube.io/pricing
+  certifications:
+  - SOC 1 Type II
+  - SOC 2 Type II
+  note: >-
+    Listed on the pricing page as a "Security & Compliance" plan entitlement
+    ("SOC1 and SOC2 Type 2", alongside audit logs and a Pro Security add-on). Testkube
+    publishes no standalone trust center or downloadable report portal.
