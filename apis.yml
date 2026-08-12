@@ -538,6 +538,16 @@ apis:
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
 common:
+- type: Overlay
+  url: overlays/kubeshop-testkube-agent-overlay.yaml
+- type: IssueTracker
+  url: https://github.com/kubeshop/testkube/issues
+- type: Releases
+  url: https://github.com/kubeshop/testkube/releases
+- type: CodeOfConduct
+  url: https://github.com/kubeshop/testkube/blob/main/CODE_OF_CONDUCT.md
+- type: ContributionGuide
+  url: https://github.com/kubeshop/testkube/blob/main/CONTRIBUTING.md
 - type: Website
   url: https://testkube.io/
 - type: DeveloperPortal
