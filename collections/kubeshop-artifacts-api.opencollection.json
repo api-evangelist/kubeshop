@@ -1,0 +1,154 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testkube Standalone Agent api artifacts API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "artifacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get execution's artifacts by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/executions/:id/artifacts",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Returns artifacts of the given executionID"
+        },
+        {
+          "info": {
+            "name": "Download artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/executions/:id/artifacts/:filename",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "path",
+                "description": "filename of the object usually used for artifacts"
+              }
+            ]
+          },
+          "docs": "Download the artifact file from the given execution"
+        },
+        {
+          "info": {
+            "name": "Download artifact archive",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/executions/:id/artifact-archive",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "mask",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Download the artifact archive from the given execution"
+        },
+        {
+          "info": {
+            "name": "Get test workflow execution's artifacts by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID/artifacts",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Returns artifacts of the given executionID"
+        },
+        {
+          "info": {
+            "name": "Download test workflow artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID/artifacts/:filename",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "path",
+                "description": "filename of the object usually used for artifacts"
+              }
+            ]
+          },
+          "docs": "Download the artifact file from the given execution"
+        },
+        {
+          "info": {
+            "name": "Download test workflow artifact archive",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID/artifact-archive",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              },
+              {
+                "name": "mask",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Download the artifact archive from the given execution"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

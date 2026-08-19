@@ -1,0 +1,149 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testkube Standalone Agent api executor API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "executor",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List executors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/executors",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List executors available in cluster"
+        },
+        {
+          "info": {
+            "name": "Create new executor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/executors",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new executor based on variables passed in request"
+        },
+        {
+          "info": {
+            "name": "Delete executors",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/executors",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes labeled executors"
+        },
+        {
+          "info": {
+            "name": "Get executor details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/executors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Returns executors data with executions passed to executor"
+        },
+        {
+          "info": {
+            "name": "Update executor",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/executors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update new executor based on variables passed in request"
+        },
+        {
+          "info": {
+            "name": "Delete executor",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/executors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Deletes executor by its name"
+        },
+        {
+          "info": {
+            "name": "Get executor details by type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/executor-by-types",
+            "params": [
+              {
+                "name": "testType",
+                "value": "",
+                "type": "query",
+                "description": "test type of the executor"
+              }
+            ]
+          },
+          "docs": "Returns executors data with executions passed to executor"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

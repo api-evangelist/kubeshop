@@ -1,0 +1,1227 @@
+{
+  "item": [
+    {
+      "id": "9776da4c-433f-40d0-893b-d7b59809ee76",
+      "name": "Webhook Templates",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3b7c0041-55a8-467b-8c7a-cdb2824f5969",
+          "name": "List webhook templates",
+          "request": {
+            "name": "List webhook templates",
+            "description": {
+              "content": "List webhook templates available in cluster",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhook-templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "selector",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "93793c08-1594-421b-bf0c-c308e9bf4b55",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"webhook1\",\n    \"namespace\": \"testkube\",\n    \"uri\": \"https://hooks.app.com/services/1\",\n    \"events\": [\n      \"become-testworkflow-not-passed\",\n      \"end-testworkflow-failed\"\n    ],\n    \"selector\": \"string\",\n    \"payloadObjectField\": \"string\",\n    \"payloadTemplate\": \"string\",\n    \"payloadTemplateReference\": \"string\",\n    \"headers\": {\n      \"Content-Type\": \"application/xml\"\n    },\n    \"labels\": {\n      \"env\": \"prod\",\n      \"app\": \"backend\"\n    },\n    \"annotations\": {\n      \"env\": \"prod\",\n      \"app\": \"backend\"\n    },\n    \"disabled\": false,\n    \"config\": {\n      \"key_0\": {\n        \"value\": {\n          \"value\": \"string\"\n        },\n        \"secret\": {\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"namespace\": \"string\"\n        }\n      }\n    },\n    \"parameters\": [\n      {\n        \"description\": \"example value for the parameter\",\n        \"type\": \"string\"\n      },\n      {\n        \"description\": \"example value for the parameter\",\n        \"type\": \"string\"\n      }\n    ],\n    \"sync\": {\n      \"creationSource\": \"kubernetes\",\n      \"lastModificationSource\": \"kubernetes\"\n    },\n    \"target\": null\n  },\n  {\n    \"name\": \"webhook1\",\n    \"namespace\": \"testkube\",\n    \"uri\": \"https://hooks.app.com/services/1\",\n    \"events\": [\n      \"become-testworkflow-aborted\",\n      \"become-testworkflow-not-passed\"\n    ],\n    \"selector\": \"string\",\n    \"payloadObjectField\": \"string\",\n    \"payloadTemplate\": \"string\",\n    \"payloadTemplateReference\": \"string\",\n    \"headers\": {\n      \"Content-Type\": \"application/xml\"\n    },\n    \"labels\": {\n      \"env\": \"prod\",\n      \"app\": \"backend\"\n    },\n    \"annotations\": {\n      \"env\": \"prod\",\n      \"app\": \"backend\"\n    },\n    \"disabled\": false,\n    \"config\": {\n      \"key_0\": {\n        \"value\": {\n          \"value\": \"string\"\n        },\n        \"secret\": {\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"namespace\": \"string\"\n        }\n      },\n      \"key_1\": {\n        \"value\": {\n          \"value\": \"string\"\n        },\n        \"secret\": {\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"namespace\": \"string\"\n        }\n      },\n      \"key_2\": {\n        \"value\": {\n          \"value\": \"string\"\n        },\n        \"secret\": {\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"namespace\": \"string\"\n        }\n      },\n      \"key_3\": {\n        \"value\": {\n          \"value\": \"string\"\n        },\n        \"secret\": {\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"namespace\": \"string\"\n        }\n      }\n    },\n    \"parameters\": [\n      {\n        \"description\": \"example value for the parameter\",\n        \"type\": \"string\"\n      },\n      {\n        \"description\": \"example value for the parameter\",\n        \"type\": \"string\"\n      }\n    ],\n    \"sync\": {\n      \"creationSource\": \"kubernetes\",\n      \"lastModificationSource\": \"kubernetes\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2bb78f95-1030-4e39-b70e-322edbfbfb6c",
+              "name": "problem with input for CRD generation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "654af34f-3978-4d56-9de6-971c54b83653",
+              "name": "problem with read information from kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b4dfdcf1-ecae-4a45-a9e2-0975ec3508fc",
+          "name": "Create new webhook template",
+          "request": {
+            "name": "Create new webhook template",
+            "description": {
+              "content": "Create new webhook template based on variables passed in request",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhook-templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "text/yaml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "498f3fde-f2fe-4753-b287-51e3f35415a7",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/yaml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"webhook1\",\n  \"namespace\": \"testkube\",\n  \"uri\": \"https://hooks.app.com/services/1\",\n  \"events\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selector\": \"<string>\",\n  \"payloadObjectField\": \"<string>\",\n  \"payloadTemplate\": \"<string>\",\n  \"payloadTemplateReference\": \"<string>\",\n  \"headers\": {\n    \"Content-Type\": \"application/xml\"\n  },\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"annotations\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"disabled\": false,\n  \"config\": {\n    \"key_0\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    }\n  },\n  \"parameters\": [\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    },\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    }\n  ],\n  \"sync\": {\n    \"creationSource\": \"<string>\",\n    \"lastModificationSource\": \"<string>\"\n  },\n  \"target\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/yaml"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b2e6c32a-0778-482f-8e37-7521cb4e90e2",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"webhook1\",\n  \"namespace\": \"testkube\",\n  \"uri\": \"https://hooks.app.com/services/1\",\n  \"events\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selector\": \"<string>\",\n  \"payloadObjectField\": \"<string>\",\n  \"payloadTemplate\": \"<string>\",\n  \"payloadTemplateReference\": \"<string>\",\n  \"headers\": {\n    \"Content-Type\": \"application/xml\"\n  },\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"annotations\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"disabled\": false,\n  \"config\": {\n    \"key_0\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    }\n  },\n  \"parameters\": [\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    },\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    }\n  ],\n  \"sync\": {\n    \"creationSource\": \"<string>\",\n    \"lastModificationSource\": \"<string>\"\n  },\n  \"target\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"webhook1\",\n  \"namespace\": \"testkube\",\n  \"uri\": \"https://hooks.app.com/services/1\",\n  \"events\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selector\": \"<string>\",\n  \"payloadObjectField\": \"<string>\",\n  \"payloadTemplate\": \"<string>\",\n  \"payloadTemplateReference\": \"<string>\",\n  \"headers\": {\n    \"Content-Type\": \"application/xml\"\n  },\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"annotations\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"disabled\": false,\n  \"config\": {\n    \"key_0\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    },\n    \"key_1\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    },\n    \"key_2\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    }\n  },\n  \"parameters\": [\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    },\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    }\n  ],\n  \"sync\": {\n    \"creationSource\": \"<string>\",\n    \"lastModificationSource\": \"<string>\"\n  },\n  \"target\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a782d176-b85f-4a5d-bf36-7d72b02d02bc",
+              "name": "problem with webhook template definition - probably some bad input occurs (invalid JSON body or similar)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"webhook1\",\n  \"namespace\": \"testkube\",\n  \"uri\": \"https://hooks.app.com/services/1\",\n  \"events\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selector\": \"<string>\",\n  \"payloadObjectField\": \"<string>\",\n  \"payloadTemplate\": \"<string>\",\n  \"payloadTemplateReference\": \"<string>\",\n  \"headers\": {\n    \"Content-Type\": \"application/xml\"\n  },\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"annotations\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"disabled\": false,\n  \"config\": {\n    \"key_0\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    }\n  },\n  \"parameters\": [\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    },\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    }\n  ],\n  \"sync\": {\n    \"creationSource\": \"<string>\",\n    \"lastModificationSource\": \"<string>\"\n  },\n  \"target\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3721d5a4-a692-4656-9159-ccad65266e6f",
+              "name": "problem with communicating with kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"webhook1\",\n  \"namespace\": \"testkube\",\n  \"uri\": \"https://hooks.app.com/services/1\",\n  \"events\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selector\": \"<string>\",\n  \"payloadObjectField\": \"<string>\",\n  \"payloadTemplate\": \"<string>\",\n  \"payloadTemplateReference\": \"<string>\",\n  \"headers\": {\n    \"Content-Type\": \"application/xml\"\n  },\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"annotations\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"disabled\": false,\n  \"config\": {\n    \"key_0\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    }\n  },\n  \"parameters\": [\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    },\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    }\n  ],\n  \"sync\": {\n    \"creationSource\": \"<string>\",\n    \"lastModificationSource\": \"<string>\"\n  },\n  \"target\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2fdf6573-a957-4680-975e-8051434c1988",
+          "name": "Delete webhook templates",
+          "request": {
+            "name": "Delete webhook templates",
+            "description": {
+              "content": "Deletes labeled webhook templates",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhook-templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "selector",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9fc4c517-583a-4475-b6d5-55e5cbe12f66",
+              "name": "no content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2e713226-c8ec-4545-8546-18a3c15dc38b",
+              "name": "problem with read information from kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eaae4999-2e2b-4512-b6c1-eb672bacd21e",
+          "name": "Delete webhook template",
+          "request": {
+            "name": "Delete webhook template",
+            "description": {
+              "content": "Deletes webhook template by its name",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhook-templates",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) unique id of the object"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ed1a73ad-c8c8-4c0f-9f81-9d04f505b8fd",
+              "name": "webhook template deleted successfuly",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "34f833ca-8ca0-442b-9e91-633ec08c5fc4",
+              "name": "webhook template not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b69fc048-6e6c-4a19-8c3f-44ed1964fb2f",
+              "name": "problem with communicating with kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f679466c-1520-412e-8bfd-a64bd43226fe",
+          "name": "Get webhook template details",
+          "request": {
+            "name": "Get webhook template details",
+            "description": {
+              "content": "Returns webhook template",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhook-templates",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) unique id of the object"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "009091e4-c00d-48e5-89a1-5e270a657e1d",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"webhook1\",\n  \"namespace\": \"testkube\",\n  \"uri\": \"https://hooks.app.com/services/1\",\n  \"events\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selector\": \"<string>\",\n  \"payloadObjectField\": \"<string>\",\n  \"payloadTemplate\": \"<string>\",\n  \"payloadTemplateReference\": \"<string>\",\n  \"headers\": {\n    \"Content-Type\": \"application/xml\"\n  },\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"annotations\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"disabled\": false,\n  \"config\": {\n    \"key_0\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    },\n    \"key_1\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    },\n    \"key_2\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    }\n  },\n  \"parameters\": [\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    },\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    }\n  ],\n  \"sync\": {\n    \"creationSource\": \"<string>\",\n    \"lastModificationSource\": \"<string>\"\n  },\n  \"target\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "994f8eaf-f35c-4116-8c27-b1d1055cda4d",
+              "name": "problem with input for CRD generation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "61682812-9215-4ca9-9647-c720aec929f3",
+              "name": "webhook template not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7a56d27-145f-41a3-a7b2-293c47cb3e9e",
+              "name": "problem with getting webhook template data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "faea2b40-2dc8-4f34-bd21-15fbffb6f24d",
+              "name": "problem with communicating with kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b307c7be-bef0-430e-bf05-960b01af762d",
+          "name": "Update new webhook template",
+          "request": {
+            "name": "Update new webhook template",
+            "description": {
+              "content": "Update new webhook template based on variables passed in request",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhook-templates",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) unique id of the object"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e68b933d-1732-480f-a4f6-b098eb3f626f",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"webhook1\",\n  \"namespace\": \"testkube\",\n  \"uri\": \"https://hooks.app.com/services/1\",\n  \"events\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selector\": \"<string>\",\n  \"payloadObjectField\": \"<string>\",\n  \"payloadTemplate\": \"<string>\",\n  \"payloadTemplateReference\": \"<string>\",\n  \"headers\": {\n    \"Content-Type\": \"application/xml\"\n  },\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"annotations\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"disabled\": false,\n  \"config\": {\n    \"key_0\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    },\n    \"key_1\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    },\n    \"key_2\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    }\n  },\n  \"parameters\": [\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    },\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    }\n  ],\n  \"sync\": {\n    \"creationSource\": \"<string>\",\n    \"lastModificationSource\": \"<string>\"\n  },\n  \"target\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"webhook1\",\n  \"namespace\": \"testkube\",\n  \"uri\": \"https://hooks.app.com/services/1\",\n  \"events\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selector\": \"<string>\",\n  \"payloadObjectField\": \"<string>\",\n  \"payloadTemplate\": \"<string>\",\n  \"payloadTemplateReference\": \"<string>\",\n  \"headers\": {\n    \"Content-Type\": \"application/xml\"\n  },\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"annotations\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"disabled\": false,\n  \"config\": {\n    \"key_0\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    },\n    \"key_1\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    },\n    \"key_2\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    }\n  },\n  \"parameters\": [\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    },\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    }\n  ],\n  \"sync\": {\n    \"creationSource\": \"<string>\",\n    \"lastModificationSource\": \"<string>\"\n  },\n  \"target\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d76cd2f-0dfd-44c9-bd2d-24dd45cb74eb",
+              "name": "problem with webhook template definition - probably some bad input occurs (invalid JSON body or similar)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"webhook1\",\n  \"namespace\": \"testkube\",\n  \"uri\": \"https://hooks.app.com/services/1\",\n  \"events\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selector\": \"<string>\",\n  \"payloadObjectField\": \"<string>\",\n  \"payloadTemplate\": \"<string>\",\n  \"payloadTemplateReference\": \"<string>\",\n  \"headers\": {\n    \"Content-Type\": \"application/xml\"\n  },\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"annotations\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"disabled\": false,\n  \"config\": {\n    \"key_0\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    },\n    \"key_1\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    },\n    \"key_2\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    }\n  },\n  \"parameters\": [\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    },\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    }\n  ],\n  \"sync\": {\n    \"creationSource\": \"<string>\",\n    \"lastModificationSource\": \"<string>\"\n  },\n  \"target\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7ad93ab-9e18-436a-a578-d05d80b0e683",
+              "name": "webhook template not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"webhook1\",\n  \"namespace\": \"testkube\",\n  \"uri\": \"https://hooks.app.com/services/1\",\n  \"events\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selector\": \"<string>\",\n  \"payloadObjectField\": \"<string>\",\n  \"payloadTemplate\": \"<string>\",\n  \"payloadTemplateReference\": \"<string>\",\n  \"headers\": {\n    \"Content-Type\": \"application/xml\"\n  },\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"annotations\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"disabled\": false,\n  \"config\": {\n    \"key_0\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    },\n    \"key_1\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    },\n    \"key_2\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    }\n  },\n  \"parameters\": [\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    },\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    }\n  ],\n  \"sync\": {\n    \"creationSource\": \"<string>\",\n    \"lastModificationSource\": \"<string>\"\n  },\n  \"target\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6cc3a37c-d221-40e0-bca3-108dff507c01",
+              "name": "problem with communicating with kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook-templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"webhook1\",\n  \"namespace\": \"testkube\",\n  \"uri\": \"https://hooks.app.com/services/1\",\n  \"events\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selector\": \"<string>\",\n  \"payloadObjectField\": \"<string>\",\n  \"payloadTemplate\": \"<string>\",\n  \"payloadTemplateReference\": \"<string>\",\n  \"headers\": {\n    \"Content-Type\": \"application/xml\"\n  },\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"annotations\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"disabled\": false,\n  \"config\": {\n    \"key_0\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    },\n    \"key_1\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    },\n    \"key_2\": {\n      \"value\": {\n        \"value\": \"<string>\"\n      },\n      \"secret\": {\n        \"name\": \"<string>\",\n        \"key\": \"<string>\",\n        \"namespace\": \"<string>\"\n      }\n    }\n  },\n  \"parameters\": [\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    },\n    {\n      \"description\": \"example value for the parameter\",\n      \"type\": \"string\",\n      \"default\": \"<string>\"\n    }\n  ],\n  \"sync\": {\n    \"creationSource\": \"<string>\",\n    \"lastModificationSource\": \"<string>\"\n  },\n  \"target\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.testkube.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f4e2cba8-9aa6-44e7-8e01-bbfc840f16c8",
+    "name": "Testkube Standalone Agent api Webhook Templates API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for Testkube Standalone Agent\n\nContact Support:\n Email: info@testkube.io",
+      "type": "text/plain"
+    }
+  }
+}

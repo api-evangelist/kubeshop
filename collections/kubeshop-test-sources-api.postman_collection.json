@@ -1,0 +1,1360 @@
+{
+  "item": [
+    {
+      "id": "f0e33280-e4d6-4eca-8068-127a8bf5c2c9",
+      "name": "test-sources",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "44b7dda0-f7e8-40f3-b890-240dc9db81d2",
+          "name": "List test sources",
+          "request": {
+            "name": "List test sources",
+            "description": {
+              "content": "List test sources available in cluster",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "test-sources"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "selector",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f24f70b8-902d-4e7d-b74f-2eb35f00e748",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"testsource1\",\n    \"namespace\": \"testkube\",\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"type\": \"file-uri\",\n    \"repository\": {\n      \"type\": \"git\",\n      \"uri\": \"https://github.com/kubeshop/testkube\",\n      \"branch\": \"main\",\n      \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n      \"path\": \"test/perf\",\n      \"username\": \"string\",\n      \"token\": \"string\",\n      \"usernameSecret\": {\n        \"name\": \"string\",\n        \"key\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"tokenSecret\": {\n        \"name\": \"string\",\n        \"key\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"certificateSecret\": \"string\",\n      \"workingDir\": \"/\",\n      \"authType\": \"header\"\n    },\n    \"data\": \"string\",\n    \"uri\": \"https://github.com/kubeshop/testkube\"\n  },\n  {\n    \"name\": \"testsource1\",\n    \"namespace\": \"testkube\",\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"type\": \"git\",\n    \"repository\": {\n      \"type\": \"git\",\n      \"uri\": \"https://github.com/kubeshop/testkube\",\n      \"branch\": \"main\",\n      \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n      \"path\": \"test/perf\",\n      \"username\": \"string\",\n      \"token\": \"string\",\n      \"usernameSecret\": {\n        \"name\": \"string\",\n        \"key\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"tokenSecret\": {\n        \"name\": \"string\",\n        \"key\": \"string\",\n        \"namespace\": \"string\"\n      },\n      \"certificateSecret\": \"string\",\n      \"workingDir\": \"/\",\n      \"authType\": \"header\"\n    },\n    \"data\": \"string\",\n    \"uri\": \"https://github.com/kubeshop/testkube\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fde684d8-db1e-4c86-ae90-4a042deb40b6",
+              "name": "problem with input for CRD generation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0acc637a-4cd3-4ab4-b927-726d32b52793",
+              "name": "problem with read information from kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6aa35b5f-19c3-4de1-98a0-5a1b37eedaf4",
+          "name": "Create new test source",
+          "request": {
+            "name": "Create new test source",
+            "description": {
+              "content": "Create new test source based on variables passed in request",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "test-sources"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "text/yaml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"namespace\": \"<string>\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"type\": \"<string>\",\n  \"repository\": {\n    \"type\": \"<string>\",\n    \"uri\": \"<string>\",\n    \"branch\": \"<string>\",\n    \"commit\": \"<string>\",\n    \"path\": \"<string>\",\n    \"username\": \"<string>\",\n    \"token\": \"<string>\",\n    \"usernameSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"tokenSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"certificateSecret\": \"<string>\",\n    \"workingDir\": \"<string>\",\n    \"authType\": \"<string>\"\n  },\n  \"data\": \"<string>\",\n  \"uri\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "181c12f5-c813-4a90-804a-30c74375ef69",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/yaml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"testsource1\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"type\": \"<string>\",\n  \"repository\": {\n    \"type\": \"<string>\",\n    \"uri\": \"https://github.com/kubeshop/testkube\",\n    \"branch\": \"main\",\n    \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n    \"path\": \"test/perf\",\n    \"username\": \"<string>\",\n    \"token\": \"<string>\",\n    \"usernameSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"tokenSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"certificateSecret\": \"<string>\",\n    \"workingDir\": \"/\",\n    \"authType\": \"<string>\"\n  },\n  \"data\": \"<string>\",\n  \"uri\": \"https://github.com/kubeshop/testkube\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/yaml"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bdb336ea-b82a-424e-9873-950c80399aec",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"testsource1\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"type\": \"<string>\",\n  \"repository\": {\n    \"type\": \"<string>\",\n    \"uri\": \"https://github.com/kubeshop/testkube\",\n    \"branch\": \"main\",\n    \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n    \"path\": \"test/perf\",\n    \"username\": \"<string>\",\n    \"token\": \"<string>\",\n    \"usernameSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"tokenSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"certificateSecret\": \"<string>\",\n    \"workingDir\": \"/\",\n    \"authType\": \"<string>\"\n  },\n  \"data\": \"<string>\",\n  \"uri\": \"https://github.com/kubeshop/testkube\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"testsource1\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"type\": \"<string>\",\n  \"repository\": {\n    \"type\": \"<string>\",\n    \"uri\": \"https://github.com/kubeshop/testkube\",\n    \"branch\": \"main\",\n    \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n    \"path\": \"test/perf\",\n    \"username\": \"<string>\",\n    \"token\": \"<string>\",\n    \"usernameSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"tokenSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"certificateSecret\": \"<string>\",\n    \"workingDir\": \"/\",\n    \"authType\": \"<string>\"\n  },\n  \"data\": \"<string>\",\n  \"uri\": \"https://github.com/kubeshop/testkube\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d169cfe-eb58-4d8c-b4e9-c32d6543da26",
+              "name": "problem with test source definition - probably some bad input occurs (invalid JSON body or similar)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"testsource1\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"type\": \"<string>\",\n  \"repository\": {\n    \"type\": \"<string>\",\n    \"uri\": \"https://github.com/kubeshop/testkube\",\n    \"branch\": \"main\",\n    \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n    \"path\": \"test/perf\",\n    \"username\": \"<string>\",\n    \"token\": \"<string>\",\n    \"usernameSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"tokenSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"certificateSecret\": \"<string>\",\n    \"workingDir\": \"/\",\n    \"authType\": \"<string>\"\n  },\n  \"data\": \"<string>\",\n  \"uri\": \"https://github.com/kubeshop/testkube\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "85571442-8ebf-479b-aa7d-f3075f2f1182",
+              "name": "problem with communicating with kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"testsource1\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"type\": \"<string>\",\n  \"repository\": {\n    \"type\": \"<string>\",\n    \"uri\": \"https://github.com/kubeshop/testkube\",\n    \"branch\": \"main\",\n    \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n    \"path\": \"test/perf\",\n    \"username\": \"<string>\",\n    \"token\": \"<string>\",\n    \"usernameSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"tokenSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"certificateSecret\": \"<string>\",\n    \"workingDir\": \"/\",\n    \"authType\": \"<string>\"\n  },\n  \"data\": \"<string>\",\n  \"uri\": \"https://github.com/kubeshop/testkube\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b33eeee5-2295-4782-84b8-c87ea1d79d7b",
+          "name": "Process test source batch (create, update, delete)",
+          "request": {
+            "name": "Process test source batch (create, update, delete)",
+            "description": {
+              "content": "Process test source batch based on variables passed in request",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "test-sources"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batch\": [\n    {\n      \"name\": \"<string>\",\n      \"namespace\": \"<string>\",\n      \"labels\": {\n        \"key_0\": \"<string>\"\n      },\n      \"type\": \"<string>\",\n      \"repository\": {\n        \"type\": \"<string>\",\n        \"uri\": \"<string>\",\n        \"branch\": \"<string>\",\n        \"commit\": \"<string>\",\n        \"path\": \"<string>\",\n        \"username\": \"<string>\",\n        \"token\": \"<string>\",\n        \"usernameSecret\": {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"namespace\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"tokenSecret\": {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"namespace\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"certificateSecret\": \"<string>\",\n        \"workingDir\": \"<string>\",\n        \"authType\": \"<string>\"\n      },\n      \"data\": \"<string>\",\n      \"uri\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"namespace\": \"<string>\",\n      \"labels\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\",\n        \"key_2\": \"<string>\"\n      },\n      \"type\": \"<string>\",\n      \"repository\": {\n        \"type\": \"<string>\",\n        \"uri\": \"<string>\",\n        \"branch\": \"<string>\",\n        \"commit\": \"<string>\",\n        \"path\": \"<string>\",\n        \"username\": \"<string>\",\n        \"token\": \"<string>\",\n        \"usernameSecret\": {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"namespace\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"tokenSecret\": {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"namespace\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"certificateSecret\": \"<string>\",\n        \"workingDir\": \"<string>\",\n        \"authType\": \"<string>\"\n      },\n      \"data\": \"<string>\",\n      \"uri\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f98645ce-ac30-4cde-a70f-b942d545d2c7",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"batch\": [\n    {\n      \"name\": \"testsource1\",\n      \"namespace\": \"testkube\",\n      \"labels\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"type\": \"<string>\",\n      \"repository\": {\n        \"type\": \"<string>\",\n        \"uri\": \"https://github.com/kubeshop/testkube\",\n        \"branch\": \"main\",\n        \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n        \"path\": \"test/perf\",\n        \"username\": \"<string>\",\n        \"token\": \"<string>\",\n        \"usernameSecret\": {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"namespace\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"tokenSecret\": {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"namespace\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"certificateSecret\": \"<string>\",\n        \"workingDir\": \"/\",\n        \"authType\": \"<string>\"\n      },\n      \"data\": \"<string>\",\n      \"uri\": \"https://github.com/kubeshop/testkube\"\n    },\n    {\n      \"name\": \"testsource1\",\n      \"namespace\": \"testkube\",\n      \"labels\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"type\": \"<string>\",\n      \"repository\": {\n        \"type\": \"<string>\",\n        \"uri\": \"https://github.com/kubeshop/testkube\",\n        \"branch\": \"main\",\n        \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n        \"path\": \"test/perf\",\n        \"username\": \"<string>\",\n        \"token\": \"<string>\",\n        \"usernameSecret\": {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"namespace\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"tokenSecret\": {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"namespace\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"certificateSecret\": \"<string>\",\n        \"workingDir\": \"/\",\n        \"authType\": \"<string>\"\n      },\n      \"data\": \"<string>\",\n      \"uri\": \"https://github.com/kubeshop/testkube\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created\": [\n    \"name1\",\n    \"name2\",\n    \"name3\"\n  ],\n  \"updated\": [\n    \"name4\",\n    \"name5\",\n    \"name6\"\n  ],\n  \"deleted\": [\n    \"name7\",\n    \"name8\",\n    \"name9\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e543323-2319-4c20-98c5-0a8dd6db2d0e",
+              "name": "problem with test source definition - probably some bad input occurs (invalid JSON body or similar)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"batch\": [\n    {\n      \"name\": \"testsource1\",\n      \"namespace\": \"testkube\",\n      \"labels\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"type\": \"<string>\",\n      \"repository\": {\n        \"type\": \"<string>\",\n        \"uri\": \"https://github.com/kubeshop/testkube\",\n        \"branch\": \"main\",\n        \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n        \"path\": \"test/perf\",\n        \"username\": \"<string>\",\n        \"token\": \"<string>\",\n        \"usernameSecret\": {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"namespace\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"tokenSecret\": {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"namespace\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"certificateSecret\": \"<string>\",\n        \"workingDir\": \"/\",\n        \"authType\": \"<string>\"\n      },\n      \"data\": \"<string>\",\n      \"uri\": \"https://github.com/kubeshop/testkube\"\n    },\n    {\n      \"name\": \"testsource1\",\n      \"namespace\": \"testkube\",\n      \"labels\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"type\": \"<string>\",\n      \"repository\": {\n        \"type\": \"<string>\",\n        \"uri\": \"https://github.com/kubeshop/testkube\",\n        \"branch\": \"main\",\n        \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n        \"path\": \"test/perf\",\n        \"username\": \"<string>\",\n        \"token\": \"<string>\",\n        \"usernameSecret\": {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"namespace\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"tokenSecret\": {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"namespace\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"certificateSecret\": \"<string>\",\n        \"workingDir\": \"/\",\n        \"authType\": \"<string>\"\n      },\n      \"data\": \"<string>\",\n      \"uri\": \"https://github.com/kubeshop/testkube\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c39cf7c6-73ae-434a-831b-ab8ccbf34881",
+              "name": "problem with communicating with kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"batch\": [\n    {\n      \"name\": \"testsource1\",\n      \"namespace\": \"testkube\",\n      \"labels\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"type\": \"<string>\",\n      \"repository\": {\n        \"type\": \"<string>\",\n        \"uri\": \"https://github.com/kubeshop/testkube\",\n        \"branch\": \"main\",\n        \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n        \"path\": \"test/perf\",\n        \"username\": \"<string>\",\n        \"token\": \"<string>\",\n        \"usernameSecret\": {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"namespace\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"tokenSecret\": {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"namespace\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"certificateSecret\": \"<string>\",\n        \"workingDir\": \"/\",\n        \"authType\": \"<string>\"\n      },\n      \"data\": \"<string>\",\n      \"uri\": \"https://github.com/kubeshop/testkube\"\n    },\n    {\n      \"name\": \"testsource1\",\n      \"namespace\": \"testkube\",\n      \"labels\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"type\": \"<string>\",\n      \"repository\": {\n        \"type\": \"<string>\",\n        \"uri\": \"https://github.com/kubeshop/testkube\",\n        \"branch\": \"main\",\n        \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n        \"path\": \"test/perf\",\n        \"username\": \"<string>\",\n        \"token\": \"<string>\",\n        \"usernameSecret\": {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"namespace\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"tokenSecret\": {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"namespace\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"certificateSecret\": \"<string>\",\n        \"workingDir\": \"/\",\n        \"authType\": \"<string>\"\n      },\n      \"data\": \"<string>\",\n      \"uri\": \"https://github.com/kubeshop/testkube\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c4043098-a96d-4ae9-ac27-695718d3eded",
+          "name": "Delete test sources",
+          "request": {
+            "name": "Delete test sources",
+            "description": {
+              "content": "Deletes labeled test sources",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "test-sources"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "selector",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "931d941d-a72e-44fa-a954-45b76be356b9",
+              "name": "no content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7948ade5-e9fe-4d9e-9092-dd4a0dcf67a2",
+              "name": "problem with read information from kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2d5e6c10-4b87-4eaa-9a0d-7cad61418892",
+          "name": "Update test source",
+          "request": {
+            "name": "Update test source",
+            "description": {
+              "content": "Update test source based on test content or git based data",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "test-sources",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) unique id of the object"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"namespace\": \"<string>\",\n  \"labels\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\"\n  },\n  \"type\": \"<string>\",\n  \"repository\": {\n    \"type\": \"<string>\",\n    \"uri\": \"<string>\",\n    \"branch\": \"<string>\",\n    \"commit\": \"<string>\",\n    \"path\": \"<string>\",\n    \"username\": \"<string>\",\n    \"token\": \"<string>\",\n    \"usernameSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"tokenSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"certificateSecret\": \"<string>\",\n    \"workingDir\": \"<string>\",\n    \"authType\": \"<string>\"\n  },\n  \"data\": \"<string>\",\n  \"uri\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1b465545-48d7-41c6-a5cc-a32bad1fd0f2",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"testsource1\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"type\": \"<string>\",\n  \"repository\": {\n    \"type\": \"<string>\",\n    \"uri\": \"https://github.com/kubeshop/testkube\",\n    \"branch\": \"main\",\n    \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n    \"path\": \"test/perf\",\n    \"username\": \"<string>\",\n    \"token\": \"<string>\",\n    \"usernameSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"tokenSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"certificateSecret\": \"<string>\",\n    \"workingDir\": \"/\",\n    \"authType\": \"<string>\"\n  },\n  \"data\": \"<string>\",\n  \"uri\": \"https://github.com/kubeshop/testkube\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"testsource1\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"type\": \"<string>\",\n  \"repository\": {\n    \"type\": \"<string>\",\n    \"uri\": \"https://github.com/kubeshop/testkube\",\n    \"branch\": \"main\",\n    \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n    \"path\": \"test/perf\",\n    \"username\": \"<string>\",\n    \"token\": \"<string>\",\n    \"usernameSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"tokenSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"certificateSecret\": \"<string>\",\n    \"workingDir\": \"/\",\n    \"authType\": \"<string>\"\n  },\n  \"data\": \"<string>\",\n  \"uri\": \"https://github.com/kubeshop/testkube\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18baa788-f6e5-42f4-bde4-7cdb7bf9477a",
+              "name": "problem with test source definition - probably some bad input occurs (invalid JSON body or similar)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"testsource1\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"type\": \"<string>\",\n  \"repository\": {\n    \"type\": \"<string>\",\n    \"uri\": \"https://github.com/kubeshop/testkube\",\n    \"branch\": \"main\",\n    \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n    \"path\": \"test/perf\",\n    \"username\": \"<string>\",\n    \"token\": \"<string>\",\n    \"usernameSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"tokenSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"certificateSecret\": \"<string>\",\n    \"workingDir\": \"/\",\n    \"authType\": \"<string>\"\n  },\n  \"data\": \"<string>\",\n  \"uri\": \"https://github.com/kubeshop/testkube\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48e65d8c-76fd-413e-95aa-38ea938a6f69",
+              "name": "test source not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"testsource1\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"type\": \"<string>\",\n  \"repository\": {\n    \"type\": \"<string>\",\n    \"uri\": \"https://github.com/kubeshop/testkube\",\n    \"branch\": \"main\",\n    \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n    \"path\": \"test/perf\",\n    \"username\": \"<string>\",\n    \"token\": \"<string>\",\n    \"usernameSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"tokenSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"certificateSecret\": \"<string>\",\n    \"workingDir\": \"/\",\n    \"authType\": \"<string>\"\n  },\n  \"data\": \"<string>\",\n  \"uri\": \"https://github.com/kubeshop/testkube\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f6b6bce-7f6d-46ff-81fb-b52cf8bfb344",
+              "name": "problem with communicating with kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"testsource1\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"type\": \"<string>\",\n  \"repository\": {\n    \"type\": \"<string>\",\n    \"uri\": \"https://github.com/kubeshop/testkube\",\n    \"branch\": \"main\",\n    \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n    \"path\": \"test/perf\",\n    \"username\": \"<string>\",\n    \"token\": \"<string>\",\n    \"usernameSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"tokenSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"certificateSecret\": \"<string>\",\n    \"workingDir\": \"/\",\n    \"authType\": \"<string>\"\n  },\n  \"data\": \"<string>\",\n  \"uri\": \"https://github.com/kubeshop/testkube\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3453657e-e83a-4009-8227-f94d5573367c",
+          "name": "Delete test source",
+          "request": {
+            "name": "Delete test source",
+            "description": {
+              "content": "Deletes test source by its name",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "test-sources",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) unique id of the object"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "50fd6f63-cad9-4187-b5a4-e5747b655e0f",
+              "name": "test source deleted successfuly",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "49340fc5-f658-4836-93b6-9cc1fb0f4abe",
+              "name": "problem with communicating with kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fe5f7555-0507-463e-ba7a-9b6f781068e1",
+          "name": "Get test source data",
+          "request": {
+            "name": "Get test source data",
+            "description": {
+              "content": "Returns test sources data",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "test-sources",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) unique id of the object"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "caf69f97-7048-47b0-b0df-90fc6de887ce",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"testsource1\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"type\": \"<string>\",\n  \"repository\": {\n    \"type\": \"<string>\",\n    \"uri\": \"https://github.com/kubeshop/testkube\",\n    \"branch\": \"main\",\n    \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n    \"path\": \"test/perf\",\n    \"username\": \"<string>\",\n    \"token\": \"<string>\",\n    \"usernameSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"tokenSecret\": {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"certificateSecret\": \"<string>\",\n    \"workingDir\": \"/\",\n    \"authType\": \"<string>\"\n  },\n  \"data\": \"<string>\",\n  \"uri\": \"https://github.com/kubeshop/testkube\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20bda41b-bdbe-49a3-ad67-3642a4d513e8",
+              "name": "problem with input for CRD generation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3707b24-53d6-49f6-863d-a7a7e98f8fa8",
+              "name": "test source not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "77cc4e34-3492-48e7-8310-bd62da679464",
+              "name": "problem with getting test source data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27cdc17a-c5f0-462e-b7f3-0495e932238c",
+              "name": "problem with communicating with kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "test-sources",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.testkube.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1f7d0f97-39b0-47c1-becf-841799fe8d20",
+    "name": "Testkube Standalone Agent api test-sources API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for Testkube Standalone Agent\n\nContact Support:\n Email: info@testkube.io",
+      "type": "text/plain"
+    }
+  }
+}

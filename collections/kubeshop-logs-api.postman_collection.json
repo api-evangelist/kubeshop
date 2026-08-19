@@ -1,0 +1,305 @@
+{
+  "item": [
+    {
+      "id": "509cc103-c8e3-4ba2-816d-a352c2d55cb9",
+      "name": "logs",
+      "description": {
+        "content": "Log operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d642c97c-5fa9-42e2-bc7d-b161564ad95b",
+          "name": "Get execution's logs by ID",
+          "request": {
+            "name": "Get execution's logs by ID",
+            "description": {
+              "content": "Returns logs of the given executionID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "executions",
+                ":id",
+                "logs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) unique id of the object"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "76e2a91d-2899-481a-9770-5d6263662e8e",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executions",
+                    ":id",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"event\",\n    \"content\": \"string\",\n    \"result\": {\n      \"status\": \"queued\",\n      \"output\": \"string\",\n      \"outputType\": \"application/json\",\n      \"errorMessage\": \"string\",\n      \"steps\": [\n        {\n          \"name\": \"step1\",\n          \"status\": \"failed\",\n          \"duration\": \"10m0s\",\n          \"assertionResults\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"name\": \"step1\",\n          \"status\": \"failed\",\n          \"duration\": \"10m0s\",\n          \"assertionResults\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"reports\": {\n        \"junit\": \"string\"\n      }\n    },\n    \"time\": \"2018-03-20T09:12:28Z\"\n  },\n  {\n    \"type\": \"event\",\n    \"content\": \"string\",\n    \"result\": {\n      \"status\": \"failed\",\n      \"output\": \"string\",\n      \"outputType\": \"text/plain\",\n      \"errorMessage\": \"string\",\n      \"steps\": [\n        {\n          \"name\": \"step1\",\n          \"status\": \"failed\",\n          \"duration\": \"10m0s\",\n          \"assertionResults\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"name\": \"step1\",\n          \"status\": \"failed\",\n          \"duration\": \"10m0s\",\n          \"assertionResults\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"reports\": {\n        \"junit\": \"string\"\n      }\n    },\n    \"time\": \"2018-03-20T09:12:28Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "834a8d03-5931-4c6a-8f06-59d4f389b9e7",
+              "name": "problem with getting execution's logs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executions",
+                    ":id",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f24eefd2-40a9-426f-bf18-1fed1d6c3cd3",
+          "name": "Get execution's logs by ID version 2",
+          "request": {
+            "name": "Get execution's logs by ID version 2",
+            "description": {
+              "content": "Returns logs of the given executionID version 2",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "executions",
+                ":id",
+                "logs",
+                "v2"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) unique id of the object"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "33933661-808a-4da5-9947-6dda944fe71c",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executions",
+                    ":id",
+                    "logs",
+                    "v2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"source\": \"job-executor\",\n    \"time\": \"2018-03-20T09:12:28Z\",\n    \"content\": \"string\",\n    \"type\": \"string\",\n    \"error\": false,\n    \"version\": \"v2\",\n    \"metadata\": {\n      \"argsl\": \"passed command arguments\"\n    },\n    \"v1\": {\n      \"result\": {\n        \"status\": \"timeout\",\n        \"output\": \"string\",\n        \"outputType\": \"application/json\",\n        \"errorMessage\": \"string\",\n        \"steps\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"duration\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"assertionResults\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"duration\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"assertionResults\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"reports\": {\n          \"junit\": \"string\"\n        }\n      }\n    }\n  },\n  {\n    \"source\": \"job-pod\",\n    \"time\": \"2018-03-20T09:12:28Z\",\n    \"content\": \"string\",\n    \"type\": \"string\",\n    \"error\": true,\n    \"version\": \"v2\",\n    \"metadata\": {\n      \"argsl\": \"passed command arguments\"\n    },\n    \"v1\": {\n      \"result\": {\n        \"status\": \"timeout\",\n        \"output\": \"string\",\n        \"outputType\": \"application/junit+xml\",\n        \"errorMessage\": \"string\",\n        \"steps\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"duration\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"assertionResults\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"duration\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"assertionResults\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"reports\": {\n          \"junit\": \"string\"\n        }\n      }\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a227bbe-eab2-492a-b015-34d2d597bafc",
+              "name": "problem with getting execution's logs version 2",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executions",
+                    ":id",
+                    "logs",
+                    "v2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.testkube.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d97d2970-aba3-4d40-9578-46b7c9bdc54d",
+    "name": "Testkube Standalone Agent api logs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for Testkube Standalone Agent\n\nContact Support:\n Email: info@testkube.io",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,455 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testkube Standalone Agent api test-suites API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "test-suites",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all test suites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suites",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "textSearch",
+                "value": "",
+                "type": "query",
+                "description": "text to search in name and test name"
+              }
+            ]
+          },
+          "docs": "Returns array of test suites"
+        },
+        {
+          "info": {
+            "name": "Create new test suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-suites",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new test suite action"
+        },
+        {
+          "info": {
+            "name": "Delete test suites",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/test-suites",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes all or labeled test suites"
+        },
+        {
+          "info": {
+            "name": "Get test suite by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suites/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Returns test suite with given name"
+        },
+        {
+          "info": {
+            "name": "Update test suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/test-suites/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update test based on test suite content or git based data"
+        },
+        {
+          "info": {
+            "name": "Delete test suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/test-suites/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "skipDeleteCRD",
+                "value": "",
+                "type": "query",
+                "description": "dont delete CRD"
+              }
+            ]
+          },
+          "docs": "Deletes a test suite"
+        },
+        {
+          "info": {
+            "name": "List tests for test suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suites/:id/tests",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "List available tests for test suite"
+        },
+        {
+          "info": {
+            "name": "Abort all executions of a test suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-suites/:id/abort",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Abort all test executions of a test suite"
+        },
+        {
+          "info": {
+            "name": "Get all test suite with executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suite-with-executions",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "textSearch",
+                "value": "",
+                "type": "query",
+                "description": "text to search in name and test name"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "optional status filter containing multiple values separated by comma"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "the number of executions to get, setting to 0 will return only totals"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "the page index to start at"
+              }
+            ]
+          },
+          "docs": "Returns array of test suite with executions"
+        },
+        {
+          "info": {
+            "name": "Get test suite by ID with execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suite-with-executions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Returns test suite with given name with execution"
+        },
+        {
+          "info": {
+            "name": "Get all test suite executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suites/:id/executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "the number of executions to get, setting to 0 will return only totals"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "the page index to start at"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "optional status filter containing multiple values separated by comma"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "startDate for filtering in ISO-8601 format, i.e. \"yyyy-mm-dd\""
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "endDate for filtering"
+              }
+            ]
+          },
+          "docs": "Returns array of all available test suite executions"
+        },
+        {
+          "info": {
+            "name": "Starts new test suite execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-suites/:id/executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "last",
+                "value": "",
+                "type": "query",
+                "description": "last N days to show"
+              },
+              {
+                "name": "testSuiteExecutionName",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "New test suite execution returns new execution details on successful execution start"
+        },
+        {
+          "info": {
+            "name": "Get test suite execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suites/:id/executions/:executionID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Returns test suite execution with given executionID"
+        },
+        {
+          "info": {
+            "name": "Aborts testsuite execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/test-suites/:id/executions/:executionID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Aborts testsuite execution with given executionID"
+        },
+        {
+          "info": {
+            "name": "Get test suite execution artifacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suites/:id/executions/:executionID/artifacts",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Returns test suite execution artifacts with given executionID"
+        },
+        {
+          "info": {
+            "name": "Starts new test suite executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-suite-executions",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "concurrency",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "New test suite executions returns new executions details on successful executions start"
+        },
+        {
+          "info": {
+            "name": "Get test suite execution artifacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suite-executions/:executionID/artifacts",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Returns test suite execution artifacts with given executionID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

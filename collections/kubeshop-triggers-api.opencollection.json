@@ -1,0 +1,176 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testkube Standalone Agent api Triggers API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Triggers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List test triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/triggers",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List test triggers from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Create new test trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/triggers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new test trigger CRD inside a Kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Bulk update test triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/triggers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates test triggers provided as an array in the request body"
+        },
+        {
+          "info": {
+            "name": "Delete test triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/triggers",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes all or labeled test triggers"
+        },
+        {
+          "info": {
+            "name": "Get test trigger by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/triggers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get test trigger by ID from CRD in kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Update test trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/triggers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "query",
+                "description": "Update mode for the trigger. When set to \"replace\", the entire trigger \nis replaced with the request body (full replacement semantics). When not \nset or set to any other value, merge semantics are used where only \nnon-null fields from the request are applied to the existing trigger.\nThis is used by cloud-api to signal that the original request was YAML.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update test trigger"
+        },
+        {
+          "info": {
+            "name": "Delete test trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/triggers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes a test trigger"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

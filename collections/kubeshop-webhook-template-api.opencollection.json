@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testkube Standalone Agent api webhook-template API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "webhook-template",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List webhook templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/webhook-templates",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List webhook templates available in cluster"
+        },
+        {
+          "info": {
+            "name": "Create new webhook template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/webhook-templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new webhook template based on variables passed in request"
+        },
+        {
+          "info": {
+            "name": "Delete webhook templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/webhook-templates",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes labeled webhook templates"
+        },
+        {
+          "info": {
+            "name": "Get webhook template details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/webhook-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Returns webhook template"
+        },
+        {
+          "info": {
+            "name": "Update new webhook template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/webhook-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update new webhook template based on variables passed in request"
+        },
+        {
+          "info": {
+            "name": "Delete webhook template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/webhook-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Deletes webhook template by its name"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

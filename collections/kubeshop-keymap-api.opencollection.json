@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testkube Standalone Agent api keymap API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "keymap",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Test triggers keymap",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/keymap/triggers"
+          },
+          "docs": "Returns a keymap (supported/allowed fields) for the test trigger UI screen"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

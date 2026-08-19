@@ -1,0 +1,1341 @@
+{
+  "item": [
+    {
+      "id": "eb63cffa-f27b-453d-b66d-11dfca510e98",
+      "name": "executor",
+      "description": {
+        "content": "Executor operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d21a6dbc-3a63-413b-9c47-985a810e7b54",
+          "name": "List executors",
+          "request": {
+            "name": "List executors",
+            "description": {
+              "content": "List executors available in cluster",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "executors"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "selector",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "321ce03b-db3b-4b38-91c7-36c3fc629768",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"executorType\": \"string\",\n    \"image\": \"string\",\n    \"slaves\": {\n      \"image\": \"kubeshop/ex-slaves-image:latest\"\n    },\n    \"imagePullSecrets\": [\n      {\n        \"name\": \"string\"\n      },\n      {\n        \"name\": \"string\"\n      }\n    ],\n    \"command\": [\n      \"curl\"\n    ],\n    \"args\": [\n      \"--repeats\",\n      \"5\",\n      \"--insecure\"\n    ],\n    \"types\": [\n      \"string\",\n      \"string\"\n    ],\n    \"uri\": \"string\",\n    \"contentTypes\": [\n      \"string\",\n      \"string\"\n    ],\n    \"jobTemplate\": \"string\",\n    \"jobTemplateReference\": \"string\",\n    \"labels\": {\n      \"env\": \"prod\",\n      \"app\": \"backend\"\n    },\n    \"features\": [\n      \"junit-report\",\n      \"artifacts\"\n    ],\n    \"meta\": {\n      \"iconURI\": \"/assets/k6.jpg\",\n      \"docsURI\": \"https://docs.testkube.io/test-types/executor-k6\",\n      \"tooltips\": {\n        \"general\": \"please provide k6 test script for execution\"\n      }\n    },\n    \"useDataDirAsWorkingDir\": true\n  },\n  {\n    \"executorType\": \"string\",\n    \"image\": \"string\",\n    \"slaves\": {\n      \"image\": \"kubeshop/ex-slaves-image:latest\"\n    },\n    \"imagePullSecrets\": [\n      {\n        \"name\": \"string\"\n      },\n      {\n        \"name\": \"string\"\n      }\n    ],\n    \"command\": [\n      \"curl\"\n    ],\n    \"args\": [\n      \"--repeats\",\n      \"5\",\n      \"--insecure\"\n    ],\n    \"types\": [\n      \"string\",\n      \"string\"\n    ],\n    \"uri\": \"string\",\n    \"contentTypes\": [\n      \"string\",\n      \"string\"\n    ],\n    \"jobTemplate\": \"string\",\n    \"jobTemplateReference\": \"string\",\n    \"labels\": {\n      \"env\": \"prod\",\n      \"app\": \"backend\"\n    },\n    \"features\": [\n      \"artifacts\",\n      \"artifacts\"\n    ],\n    \"meta\": {\n      \"iconURI\": \"/assets/k6.jpg\",\n      \"docsURI\": \"https://docs.testkube.io/test-types/executor-k6\",\n      \"tooltips\": {\n        \"general\": \"please provide k6 test script for execution\"\n      }\n    },\n    \"useDataDirAsWorkingDir\": false\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d0e5678-50d6-4b4e-9ecc-8b126f9e0507",
+              "name": "problem with input for CRD generation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7dbd968-6eff-424a-8a69-1796a1b7d1c8",
+              "name": "problem with read information from kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "978f00d4-d3e5-47e4-9c27-21c6869066ef",
+          "name": "Create new executor",
+          "request": {
+            "name": "Create new executor",
+            "description": {
+              "content": "Create new executor based on variables passed in request",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "executors"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "text/yaml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "26306a71-ec3a-4bd5-9cb4-a39e29df3905",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/yaml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"name\",\n  \"namespace\": \"testkube\",\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"executorType\": \"<string>\",\n  \"image\": \"<string>\",\n  \"slaves\": {\n    \"image\": \"kubeshop/ex-slaves-image:latest\"\n  },\n  \"imagePullSecrets\": [\n    {\n      \"name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\"\n    }\n  ],\n  \"command\": [\n    \"curl\"\n  ],\n  \"args\": [\n    \"--repeats\",\n    \"5\",\n    \"--insecure\"\n  ],\n  \"uri\": \"<string>\",\n  \"contentTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"jobTemplate\": \"<string>\",\n  \"jobTemplateReference\": \"<string>\",\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"meta\": {\n    \"iconURI\": \"/assets/k6.jpg\",\n    \"docsURI\": \"https://docs.testkube.io/test-types/executor-k6\",\n    \"tooltips\": {\n      \"general\": \"please provide k6 test script for execution\"\n    }\n  },\n  \"useDataDirAsWorkingDir\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/yaml"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c5127f99-415d-467a-bb8c-5b78dc87bd72",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"name\",\n  \"namespace\": \"testkube\",\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"executorType\": \"<string>\",\n  \"image\": \"<string>\",\n  \"slaves\": {\n    \"image\": \"kubeshop/ex-slaves-image:latest\"\n  },\n  \"imagePullSecrets\": [\n    {\n      \"name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\"\n    }\n  ],\n  \"command\": [\n    \"curl\"\n  ],\n  \"args\": [\n    \"--repeats\",\n    \"5\",\n    \"--insecure\"\n  ],\n  \"uri\": \"<string>\",\n  \"contentTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"jobTemplate\": \"<string>\",\n  \"jobTemplateReference\": \"<string>\",\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"meta\": {\n    \"iconURI\": \"/assets/k6.jpg\",\n    \"docsURI\": \"https://docs.testkube.io/test-types/executor-k6\",\n    \"tooltips\": {\n      \"general\": \"please provide k6 test script for execution\"\n    }\n  },\n  \"useDataDirAsWorkingDir\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"executor\": {\n    \"executorType\": \"<string>\",\n    \"image\": \"<string>\",\n    \"slaves\": {\n      \"image\": \"kubeshop/ex-slaves-image:latest\"\n    },\n    \"imagePullSecrets\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"command\": [\n      \"curl\"\n    ],\n    \"args\": [\n      \"--repeats\",\n      \"5\",\n      \"--insecure\"\n    ],\n    \"types\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"uri\": \"<string>\",\n    \"contentTypes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"jobTemplate\": \"<string>\",\n    \"jobTemplateReference\": \"<string>\",\n    \"labels\": {\n      \"env\": \"prod\",\n      \"app\": \"backend\"\n    },\n    \"features\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"meta\": {\n      \"iconURI\": \"/assets/k6.jpg\",\n      \"docsURI\": \"https://docs.testkube.io/test-types/executor-k6\",\n      \"tooltips\": {\n        \"general\": \"please provide k6 test script for execution\"\n      }\n    },\n    \"useDataDirAsWorkingDir\": \"<boolean>\"\n  },\n  \"executions\": {\n    \"totals\": {\n      \"results\": 3733,\n      \"passed\": 3999,\n      \"failed\": 1359,\n      \"queued\": 4206,\n      \"running\": 1969,\n      \"paused\": 1840.9931562642223\n    },\n    \"results\": [\n      {\n        \"id\": \"62f395e004109209b50edfc4\",\n        \"name\": \"test-suite1-test1\",\n        \"testName\": \"test1\",\n        \"testType\": \"postman/collection\",\n        \"status\": \"aborted\",\n        \"number\": 1,\n        \"testNamespace\": \"testkube\",\n        \"startTime\": \"1985-03-26T11:18:02.863Z\",\n        \"endTime\": \"1969-01-17T07:14:07.722Z\",\n        \"duration\": \"00:00:13\",\n        \"durationMs\": 10000,\n        \"labels\": {\n          \"env\": \"prod\",\n          \"app\": \"backend\"\n        },\n        \"runningContext\": {\n          \"type\": \"userUI\",\n          \"context\": \"string\"\n        }\n      },\n      {\n        \"id\": \"62f395e004109209b50edfc4\",\n        \"name\": \"test-suite1-test1\",\n        \"testName\": \"test1\",\n        \"testType\": \"postman/collection\",\n        \"status\": \"failed\",\n        \"number\": 1,\n        \"testNamespace\": \"testkube\",\n        \"startTime\": \"1959-12-19T16:02:27.238Z\",\n        \"endTime\": \"1991-12-17T01:49:45.022Z\",\n        \"duration\": \"00:00:13\",\n        \"durationMs\": 10000,\n        \"labels\": {\n          \"env\": \"prod\",\n          \"app\": \"backend\"\n        },\n        \"runningContext\": {\n          \"type\": \"scheduler\",\n          \"context\": \"string\"\n        }\n      }\n    ],\n    \"filtered\": {\n      \"results\": 3297,\n      \"passed\": 4129,\n      \"failed\": 6932,\n      \"queued\": 9707,\n      \"running\": 6009,\n      \"paused\": true\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80afc31c-fe82-490c-90d4-4a1c8143e700",
+              "name": "problem with executor definition - probably some bad input occurs (invalid JSON body or similar)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"name\",\n  \"namespace\": \"testkube\",\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"executorType\": \"<string>\",\n  \"image\": \"<string>\",\n  \"slaves\": {\n    \"image\": \"kubeshop/ex-slaves-image:latest\"\n  },\n  \"imagePullSecrets\": [\n    {\n      \"name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\"\n    }\n  ],\n  \"command\": [\n    \"curl\"\n  ],\n  \"args\": [\n    \"--repeats\",\n    \"5\",\n    \"--insecure\"\n  ],\n  \"uri\": \"<string>\",\n  \"contentTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"jobTemplate\": \"<string>\",\n  \"jobTemplateReference\": \"<string>\",\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"meta\": {\n    \"iconURI\": \"/assets/k6.jpg\",\n    \"docsURI\": \"https://docs.testkube.io/test-types/executor-k6\",\n    \"tooltips\": {\n      \"general\": \"please provide k6 test script for execution\"\n    }\n  },\n  \"useDataDirAsWorkingDir\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f139123e-fa98-4d44-a380-1b1ff0aeb322",
+              "name": "problem with communicating with kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"name\",\n  \"namespace\": \"testkube\",\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"executorType\": \"<string>\",\n  \"image\": \"<string>\",\n  \"slaves\": {\n    \"image\": \"kubeshop/ex-slaves-image:latest\"\n  },\n  \"imagePullSecrets\": [\n    {\n      \"name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\"\n    }\n  ],\n  \"command\": [\n    \"curl\"\n  ],\n  \"args\": [\n    \"--repeats\",\n    \"5\",\n    \"--insecure\"\n  ],\n  \"uri\": \"<string>\",\n  \"contentTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"jobTemplate\": \"<string>\",\n  \"jobTemplateReference\": \"<string>\",\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"meta\": {\n    \"iconURI\": \"/assets/k6.jpg\",\n    \"docsURI\": \"https://docs.testkube.io/test-types/executor-k6\",\n    \"tooltips\": {\n      \"general\": \"please provide k6 test script for execution\"\n    }\n  },\n  \"useDataDirAsWorkingDir\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4188a231-58fb-4d07-9411-1865be12d277",
+          "name": "Delete executors",
+          "request": {
+            "name": "Delete executors",
+            "description": {
+              "content": "Deletes labeled executors",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "executors"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "selector",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fa7e0c54-c535-4e57-a728-a8d9abc786d9",
+              "name": "no content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c874b6b1-adfb-4ef8-b9a0-557e8e4f2ff1",
+              "name": "problem with read information from kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7d741cbf-285d-4fe0-b00e-4ead0b1fce1a",
+          "name": "Delete executor",
+          "request": {
+            "name": "Delete executor",
+            "description": {
+              "content": "Deletes executor by its name",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "executors",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) unique id of the object"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f1a0a65f-d084-44a4-9052-24d8c9411885",
+              "name": "executor deleted successfuly",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executors",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9c88774d-b67b-4f2c-9bb9-6a03b1252f94",
+              "name": "problem with communicating with kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executors",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3930d1e3-f010-4f45-8e21-c172884bd963",
+          "name": "Get executor details",
+          "request": {
+            "name": "Get executor details",
+            "description": {
+              "content": "Returns executors data with executions passed to executor",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "executors",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) unique id of the object"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "67414905-a3a6-4ca6-906a-a06035345c82",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executors",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"executor\": {\n    \"executorType\": \"<string>\",\n    \"image\": \"<string>\",\n    \"slaves\": {\n      \"image\": \"kubeshop/ex-slaves-image:latest\"\n    },\n    \"imagePullSecrets\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"command\": [\n      \"curl\"\n    ],\n    \"args\": [\n      \"--repeats\",\n      \"5\",\n      \"--insecure\"\n    ],\n    \"types\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"uri\": \"<string>\",\n    \"contentTypes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"jobTemplate\": \"<string>\",\n    \"jobTemplateReference\": \"<string>\",\n    \"labels\": {\n      \"env\": \"prod\",\n      \"app\": \"backend\"\n    },\n    \"features\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"meta\": {\n      \"iconURI\": \"/assets/k6.jpg\",\n      \"docsURI\": \"https://docs.testkube.io/test-types/executor-k6\",\n      \"tooltips\": {\n        \"general\": \"please provide k6 test script for execution\"\n      }\n    },\n    \"useDataDirAsWorkingDir\": \"<boolean>\"\n  },\n  \"executions\": {\n    \"totals\": {\n      \"results\": 5051,\n      \"passed\": 7636,\n      \"failed\": 492,\n      \"queued\": 381,\n      \"running\": 3924,\n      \"paused\": true\n    },\n    \"results\": [\n      {\n        \"id\": \"62f395e004109209b50edfc4\",\n        \"name\": \"test-suite1-test1\",\n        \"testName\": \"test1\",\n        \"testType\": \"postman/collection\",\n        \"status\": \"timeout\",\n        \"number\": 1,\n        \"testNamespace\": \"testkube\",\n        \"startTime\": \"1976-04-26T03:24:52.782Z\",\n        \"endTime\": \"2008-01-26T17:27:17.422Z\",\n        \"duration\": \"00:00:13\",\n        \"durationMs\": 10000,\n        \"labels\": {\n          \"env\": \"prod\",\n          \"app\": \"backend\"\n        },\n        \"runningContext\": {\n          \"type\": \"scheduler\",\n          \"context\": \"string\"\n        }\n      },\n      {\n        \"id\": \"62f395e004109209b50edfc4\",\n        \"name\": \"test-suite1-test1\",\n        \"testName\": \"test1\",\n        \"testType\": \"postman/collection\",\n        \"status\": \"canceled\",\n        \"number\": 1,\n        \"testNamespace\": \"testkube\",\n        \"startTime\": \"2011-11-09T09:19:40.875Z\",\n        \"endTime\": \"2023-09-26T10:31:57.485Z\",\n        \"duration\": \"00:00:13\",\n        \"durationMs\": 10000,\n        \"labels\": {\n          \"env\": \"prod\",\n          \"app\": \"backend\"\n        },\n        \"runningContext\": {\n          \"type\": \"testtrigger\",\n          \"context\": \"string\"\n        }\n      }\n    ],\n    \"filtered\": {\n      \"results\": 9126,\n      \"passed\": 5281,\n      \"failed\": 11,\n      \"queued\": 9742,\n      \"running\": 7855,\n      \"paused\": 6085.002096877392\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37ad24ae-0ea5-451b-b576-723e756e12b3",
+              "name": "problem with input for CRD generation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executors",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca4d7cd2-aff3-4ac6-9361-e27411823a55",
+              "name": "problem with getting executor data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executors",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e92e689-ec89-4c38-9f8f-a43ead369f7e",
+              "name": "problem with communicating with kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executors",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dad767f2-fcec-435f-8674-5465b7798a1e",
+          "name": "Update executor",
+          "request": {
+            "name": "Update executor",
+            "description": {
+              "content": "Update new executor based on variables passed in request",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "executors",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) unique id of the object"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bda8e226-1b17-4912-8360-56c8273ba344",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executors",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"name\",\n  \"executorType\": \"<string>\",\n  \"image\": \"<string>\",\n  \"slaves\": {\n    \"image\": \"kubeshop/ex-slaves-image:latest\"\n  },\n  \"imagePullSecrets\": [\n    {\n      \"name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\"\n    }\n  ],\n  \"command\": [\n    \"curl\"\n  ],\n  \"args\": [\n    \"--repeats\",\n    \"5\",\n    \"--insecure\"\n  ],\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"uri\": \"<string>\",\n  \"contentTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"jobTemplate\": \"<string>\",\n  \"jobTemplateReference\": \"<string>\",\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"meta\": {\n    \"iconURI\": \"/assets/k6.jpg\",\n    \"docsURI\": \"https://docs.testkube.io/test-types/executor-k6\",\n    \"tooltips\": {\n      \"general\": \"please provide k6 test script for execution\"\n    }\n  },\n  \"useDataDirAsWorkingDir\": \"<boolean>\",\n  \"namespace\": \"testkube\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"executor\": {\n    \"executorType\": \"<string>\",\n    \"image\": \"<string>\",\n    \"slaves\": {\n      \"image\": \"kubeshop/ex-slaves-image:latest\"\n    },\n    \"imagePullSecrets\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"command\": [\n      \"curl\"\n    ],\n    \"args\": [\n      \"--repeats\",\n      \"5\",\n      \"--insecure\"\n    ],\n    \"types\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"uri\": \"<string>\",\n    \"contentTypes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"jobTemplate\": \"<string>\",\n    \"jobTemplateReference\": \"<string>\",\n    \"labels\": {\n      \"env\": \"prod\",\n      \"app\": \"backend\"\n    },\n    \"features\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"meta\": {\n      \"iconURI\": \"/assets/k6.jpg\",\n      \"docsURI\": \"https://docs.testkube.io/test-types/executor-k6\",\n      \"tooltips\": {\n        \"general\": \"please provide k6 test script for execution\"\n      }\n    },\n    \"useDataDirAsWorkingDir\": \"<boolean>\"\n  },\n  \"executions\": {\n    \"totals\": {\n      \"results\": 5051,\n      \"passed\": 7636,\n      \"failed\": 492,\n      \"queued\": 381,\n      \"running\": 3924,\n      \"paused\": true\n    },\n    \"results\": [\n      {\n        \"id\": \"62f395e004109209b50edfc4\",\n        \"name\": \"test-suite1-test1\",\n        \"testName\": \"test1\",\n        \"testType\": \"postman/collection\",\n        \"status\": \"timeout\",\n        \"number\": 1,\n        \"testNamespace\": \"testkube\",\n        \"startTime\": \"1976-04-26T03:24:52.782Z\",\n        \"endTime\": \"2008-01-26T17:27:17.422Z\",\n        \"duration\": \"00:00:13\",\n        \"durationMs\": 10000,\n        \"labels\": {\n          \"env\": \"prod\",\n          \"app\": \"backend\"\n        },\n        \"runningContext\": {\n          \"type\": \"scheduler\",\n          \"context\": \"string\"\n        }\n      },\n      {\n        \"id\": \"62f395e004109209b50edfc4\",\n        \"name\": \"test-suite1-test1\",\n        \"testName\": \"test1\",\n        \"testType\": \"postman/collection\",\n        \"status\": \"canceled\",\n        \"number\": 1,\n        \"testNamespace\": \"testkube\",\n        \"startTime\": \"2011-11-09T09:19:40.875Z\",\n        \"endTime\": \"2023-09-26T10:31:57.485Z\",\n        \"duration\": \"00:00:13\",\n        \"durationMs\": 10000,\n        \"labels\": {\n          \"env\": \"prod\",\n          \"app\": \"backend\"\n        },\n        \"runningContext\": {\n          \"type\": \"testtrigger\",\n          \"context\": \"string\"\n        }\n      }\n    ],\n    \"filtered\": {\n      \"results\": 9126,\n      \"passed\": 5281,\n      \"failed\": 11,\n      \"queued\": 9742,\n      \"running\": 7855,\n      \"paused\": 6085.002096877392\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b74a7cc2-2d98-4a53-94b5-700cca9884d6",
+              "name": "problem with executor definition - probably some bad input occurs (invalid JSON body or similar)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executors",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"name\",\n  \"executorType\": \"<string>\",\n  \"image\": \"<string>\",\n  \"slaves\": {\n    \"image\": \"kubeshop/ex-slaves-image:latest\"\n  },\n  \"imagePullSecrets\": [\n    {\n      \"name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\"\n    }\n  ],\n  \"command\": [\n    \"curl\"\n  ],\n  \"args\": [\n    \"--repeats\",\n    \"5\",\n    \"--insecure\"\n  ],\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"uri\": \"<string>\",\n  \"contentTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"jobTemplate\": \"<string>\",\n  \"jobTemplateReference\": \"<string>\",\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"meta\": {\n    \"iconURI\": \"/assets/k6.jpg\",\n    \"docsURI\": \"https://docs.testkube.io/test-types/executor-k6\",\n    \"tooltips\": {\n      \"general\": \"please provide k6 test script for execution\"\n    }\n  },\n  \"useDataDirAsWorkingDir\": \"<boolean>\",\n  \"namespace\": \"testkube\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3b52549-e9f9-4f69-b7a5-6bcb7900a159",
+              "name": "executor not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executors",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"name\",\n  \"executorType\": \"<string>\",\n  \"image\": \"<string>\",\n  \"slaves\": {\n    \"image\": \"kubeshop/ex-slaves-image:latest\"\n  },\n  \"imagePullSecrets\": [\n    {\n      \"name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\"\n    }\n  ],\n  \"command\": [\n    \"curl\"\n  ],\n  \"args\": [\n    \"--repeats\",\n    \"5\",\n    \"--insecure\"\n  ],\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"uri\": \"<string>\",\n  \"contentTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"jobTemplate\": \"<string>\",\n  \"jobTemplateReference\": \"<string>\",\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"meta\": {\n    \"iconURI\": \"/assets/k6.jpg\",\n    \"docsURI\": \"https://docs.testkube.io/test-types/executor-k6\",\n    \"tooltips\": {\n      \"general\": \"please provide k6 test script for execution\"\n    }\n  },\n  \"useDataDirAsWorkingDir\": \"<boolean>\",\n  \"namespace\": \"testkube\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2dea4b67-6e09-4222-b9b1-b2dab20d6e00",
+              "name": "problem with communicating with kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executors",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"name\",\n  \"executorType\": \"<string>\",\n  \"image\": \"<string>\",\n  \"slaves\": {\n    \"image\": \"kubeshop/ex-slaves-image:latest\"\n  },\n  \"imagePullSecrets\": [\n    {\n      \"name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\"\n    }\n  ],\n  \"command\": [\n    \"curl\"\n  ],\n  \"args\": [\n    \"--repeats\",\n    \"5\",\n    \"--insecure\"\n  ],\n  \"types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"uri\": \"<string>\",\n  \"contentTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"jobTemplate\": \"<string>\",\n  \"jobTemplateReference\": \"<string>\",\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  },\n  \"features\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"meta\": {\n    \"iconURI\": \"/assets/k6.jpg\",\n    \"docsURI\": \"https://docs.testkube.io/test-types/executor-k6\",\n    \"tooltips\": {\n      \"general\": \"please provide k6 test script for execution\"\n    }\n  },\n  \"useDataDirAsWorkingDir\": \"<boolean>\",\n  \"namespace\": \"testkube\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "28f969c4-4719-4259-877e-88026872d127",
+          "name": "Get executor details by type",
+          "request": {
+            "name": "Get executor details by type",
+            "description": {
+              "content": "Returns executors data with executions passed to executor",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "executor-by-types"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "testType",
+                  "value": "<string>",
+                  "description": "(Required) test type of the executor"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d1f53f87-e92f-40ee-9d37-ab428721f2a4",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executor-by-types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "testType",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"executor\": {\n    \"executorType\": \"<string>\",\n    \"image\": \"<string>\",\n    \"slaves\": {\n      \"image\": \"kubeshop/ex-slaves-image:latest\"\n    },\n    \"imagePullSecrets\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"command\": [\n      \"curl\"\n    ],\n    \"args\": [\n      \"--repeats\",\n      \"5\",\n      \"--insecure\"\n    ],\n    \"types\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"uri\": \"<string>\",\n    \"contentTypes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"jobTemplate\": \"<string>\",\n    \"jobTemplateReference\": \"<string>\",\n    \"labels\": {\n      \"env\": \"prod\",\n      \"app\": \"backend\"\n    },\n    \"features\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"meta\": {\n      \"iconURI\": \"/assets/k6.jpg\",\n      \"docsURI\": \"https://docs.testkube.io/test-types/executor-k6\",\n      \"tooltips\": {\n        \"general\": \"please provide k6 test script for execution\"\n      }\n    },\n    \"useDataDirAsWorkingDir\": \"<boolean>\"\n  },\n  \"executions\": {\n    \"totals\": {\n      \"results\": 5051,\n      \"passed\": 7636,\n      \"failed\": 492,\n      \"queued\": 381,\n      \"running\": 3924,\n      \"paused\": true\n    },\n    \"results\": [\n      {\n        \"id\": \"62f395e004109209b50edfc4\",\n        \"name\": \"test-suite1-test1\",\n        \"testName\": \"test1\",\n        \"testType\": \"postman/collection\",\n        \"status\": \"timeout\",\n        \"number\": 1,\n        \"testNamespace\": \"testkube\",\n        \"startTime\": \"1976-04-26T03:24:52.782Z\",\n        \"endTime\": \"2008-01-26T17:27:17.422Z\",\n        \"duration\": \"00:00:13\",\n        \"durationMs\": 10000,\n        \"labels\": {\n          \"env\": \"prod\",\n          \"app\": \"backend\"\n        },\n        \"runningContext\": {\n          \"type\": \"scheduler\",\n          \"context\": \"string\"\n        }\n      },\n      {\n        \"id\": \"62f395e004109209b50edfc4\",\n        \"name\": \"test-suite1-test1\",\n        \"testName\": \"test1\",\n        \"testType\": \"postman/collection\",\n        \"status\": \"canceled\",\n        \"number\": 1,\n        \"testNamespace\": \"testkube\",\n        \"startTime\": \"2011-11-09T09:19:40.875Z\",\n        \"endTime\": \"2023-09-26T10:31:57.485Z\",\n        \"duration\": \"00:00:13\",\n        \"durationMs\": 10000,\n        \"labels\": {\n          \"env\": \"prod\",\n          \"app\": \"backend\"\n        },\n        \"runningContext\": {\n          \"type\": \"testtrigger\",\n          \"context\": \"string\"\n        }\n      }\n    ],\n    \"filtered\": {\n      \"results\": 9126,\n      \"passed\": 5281,\n      \"failed\": 11,\n      \"queued\": 9742,\n      \"running\": 7855,\n      \"paused\": 6085.002096877392\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27e7d0a2-28cb-49ec-bc5c-a6466e104424",
+              "name": "problem with input for CRD generation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executor-by-types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "testType",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a46e7955-fcf4-486b-9726-b9f66ff477e6",
+              "name": "problem with getting executor data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executor-by-types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "testType",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d24910c-7bd6-422b-a730-28cdab3b7270",
+              "name": "problem with communicating with kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executor-by-types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "testType",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.testkube.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "866fbd0e-e19a-4617-8a94-777ae13822aa",
+    "name": "Testkube Standalone Agent api executor API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for Testkube Standalone Agent\n\nContact Support:\n Email: info@testkube.io",
+      "type": "text/plain"
+    }
+  }
+}

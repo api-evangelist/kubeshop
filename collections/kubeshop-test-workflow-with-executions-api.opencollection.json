@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testkube Standalone Agent api Test Workflow With Executions API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Test Workflow With Executions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List test workflows with latest execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-with-executions",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List test workflows from the kubernetes cluster with latest execution"
+        },
+        {
+          "info": {
+            "name": "Get test workflow details with latest execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-with-executions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Get test workflow details from the kubernetes cluster with latest execution"
+        },
+        {
+          "info": {
+            "name": "List test workflow execution tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-with-executions/:id/tags",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "List test workflow execution tags for all executed test workflows"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

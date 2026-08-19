@@ -1,0 +1,1066 @@
+{
+  "item": [
+    {
+      "id": "f1c29c57-0860-4e31-8f2b-c8e442189870",
+      "name": "template",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f55369c0-b4d1-4cbc-9755-49ff89500db5",
+          "name": "Create new template",
+          "request": {
+            "name": "Create new template",
+            "description": {
+              "content": "Create new template based on variables passed in request",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "text/yaml"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a81a18c6-b844-47a7-880a-fbabbd864983",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/yaml"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"webhook-template\",\n  \"type\": \"<string>\",\n  \"body\": \"{\\\"id\\\": \\\"{{ .Id }}\\\"}\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/yaml"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "34f73ac2-308f-41be-9f32-8a8bbdddef47",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"webhook-template\",\n  \"type\": \"<string>\",\n  \"body\": \"{\\\"id\\\": \\\"{{ .Id }}\\\"}\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"webhook-template\",\n  \"type\": \"<string>\",\n  \"body\": \"{\\\"id\\\": \\\"{{ .Id }}\\\"}\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c38de16-440e-41b3-94c1-3e2620a1a1dd",
+              "name": "problem with template definition - probably some bad input occurs (invalid JSON body or similar)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"webhook-template\",\n  \"type\": \"<string>\",\n  \"body\": \"{\\\"id\\\": \\\"{{ .Id }}\\\"}\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3f49a73d-73f0-4dc2-937c-7ebb6b15875d",
+              "name": "problem with communicating with kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"webhook-template\",\n  \"type\": \"<string>\",\n  \"body\": \"{\\\"id\\\": \\\"{{ .Id }}\\\"}\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7005b51d-0505-4504-b701-dc3374dd4072",
+          "name": "Delete templates",
+          "request": {
+            "name": "Delete templates",
+            "description": {
+              "content": "Deletes labeled templates",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "selector",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ffd3d63c-0be3-40f7-ac76-c2e9ee2cb649",
+              "name": "no content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1ff3ca71-eb81-4baf-ade3-4fb0f575f71e",
+              "name": "problem with read information from kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5ae2e180-ab1c-40ad-be88-a624be1d1fde",
+          "name": "Delete template",
+          "request": {
+            "name": "Delete template",
+            "description": {
+              "content": "Deletes template by its name",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "templates",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) unique id of the object"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0d0ed761-247d-4aaf-923e-16855a80e97e",
+              "name": "template deleted successfuly",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "63caad54-445d-445a-a65a-aaf766860907",
+              "name": "template not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ebf05dcc-6e53-4fd2-b33e-6ee67d065fe2",
+              "name": "problem with communicating with kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a3b2129d-2e61-4678-b823-7435be3e5262",
+          "name": "Get template details",
+          "request": {
+            "name": "Get template details",
+            "description": {
+              "content": "Returns template",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "templates",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) unique id of the object"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3d00b4ae-b3fa-4042-9635-79594db84025",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"webhook-template\",\n  \"type\": \"<string>\",\n  \"body\": \"{\\\"id\\\": \\\"{{ .Id }}\\\"}\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04861dc8-e072-4782-b33d-0b397963e0eb",
+              "name": "problem with input for CRD generation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87c16f65-e1d6-4083-9382-ae6e64fa8c33",
+              "name": "template not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48fa8f95-4e7a-4e0e-ae4b-5f22bc9c2c44",
+              "name": "problem with getting template data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f30821ab-5439-4c1b-ac42-2ca64e17083b",
+              "name": "problem with communicating with kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6df54056-603d-4cd2-8b24-2ed06f25784b",
+          "name": "Update new template",
+          "request": {
+            "name": "Update new template",
+            "description": {
+              "content": "Update new template based on variables passed in request",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "templates",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) unique id of the object"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "569d5a68-e67c-4ace-a928-4bf4bca16825",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"webhook-template\",\n  \"type\": \"<string>\",\n  \"body\": \"{\\\"id\\\": \\\"{{ .Id }}\\\"}\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"webhook-template\",\n  \"type\": \"<string>\",\n  \"body\": \"{\\\"id\\\": \\\"{{ .Id }}\\\"}\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af6bbab5-bf89-4f23-8002-a431a12c042e",
+              "name": "problem with template definition - probably some bad input occurs (invalid JSON body or similar)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"webhook-template\",\n  \"type\": \"<string>\",\n  \"body\": \"{\\\"id\\\": \\\"{{ .Id }}\\\"}\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f956a0e-b548-4548-8d9e-51f570fe592d",
+              "name": "template not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"webhook-template\",\n  \"type\": \"<string>\",\n  \"body\": \"{\\\"id\\\": \\\"{{ .Id }}\\\"}\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72d51b01-1950-4ade-a417-e9b37f18d08b",
+              "name": "problem with communicating with kubernetes cluster",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "templates",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) unique id of the object"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"webhook-template\",\n  \"type\": \"<string>\",\n  \"body\": \"{\\\"id\\\": \\\"{{ .Id }}\\\"}\",\n  \"namespace\": \"testkube\",\n  \"labels\": {\n    \"env\": \"prod\",\n    \"app\": \"backend\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.testkube.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "815810f8-04c3-4f85-83c3-52e1215b8ef3",
+    "name": "Testkube Standalone Agent api template API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for Testkube Standalone Agent\n\nContact Support:\n Email: info@testkube.io",
+      "type": "text/plain"
+    }
+  }
+}

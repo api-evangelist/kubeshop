@@ -1,0 +1,760 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testkube Standalone Agent api Test Workflows API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Test Workflows",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List test workflows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflows",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List test workflows from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Create test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflows",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create test workflow in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Validate test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.testkube.io/test-workflows"
+          },
+          "docs": "Validate test workflow specification against CRD schema"
+        },
+        {
+          "info": {
+            "name": "Delete test workflows",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/test-workflows",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "testWorkflowNames",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete test workflows from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "List test workflow executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflows/:id/executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "tagSelector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "actorName",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "actorType",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List test workflow executions"
+        },
+        {
+          "info": {
+            "name": "Execute test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflows/:id/executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "testWorkflowExecutionName",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute test workflow in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "List test workflow execution tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflows/:id/tags",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "List test workflow execution tags for all executed test workflows"
+        },
+        {
+          "info": {
+            "name": "Get test workflow metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflows/:id/metrics",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Get metrics of test workflow executions"
+        },
+        {
+          "info": {
+            "name": "Get test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflows/:id/executions/:executionID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Get test workflow execution details"
+        },
+        {
+          "info": {
+            "name": "Abort test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflows/:id/executions/:executionID/abort",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              },
+              {
+                "name": "forceAgent",
+                "value": "",
+                "type": "query",
+                "description": "force cancellation using agent"
+              }
+            ]
+          },
+          "docs": "Abort test workflow execution"
+        },
+        {
+          "info": {
+            "name": "Rerun test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflows/:id/executions/:executionID/rerun",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rerun test workflow execution"
+        },
+        {
+          "info": {
+            "name": "Abort all test workflow executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflows/:id/abort",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Abort all test workflow executions"
+        },
+        {
+          "info": {
+            "name": "Get test workflow details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflows/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Get test workflow details from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Update test workflow details",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.testkube.io/test-workflows/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update test workflow details in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Delete test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/test-workflows/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "skipDeleteExecutions",
+                "value": "",
+                "type": "query",
+                "description": "dont delete executions"
+              },
+              {
+                "name": "skipDeleteCRD",
+                "value": "",
+                "type": "query",
+                "description": "dont delete CRD"
+              }
+            ]
+          },
+          "docs": "Delete test workflow from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "List test workflows with latest execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-with-executions",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List test workflows from the kubernetes cluster with latest execution"
+        },
+        {
+          "info": {
+            "name": "Get test workflow details with latest execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-with-executions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Get test workflow details from the kubernetes cluster with latest execution"
+        },
+        {
+          "info": {
+            "name": "List test workflow execution tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-with-executions/:id/tags",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "List test workflow execution tags for all executed test workflows"
+        },
+        {
+          "info": {
+            "name": "List test workflow executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "tagSelector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "actorName",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "actorType",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List test workflow executions"
+        },
+        {
+          "info": {
+            "name": "Execute test workflows",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflow-executions",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "concurrency",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute test workflows in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Get test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Get test workflow execution details"
+        },
+        {
+          "info": {
+            "name": "Get test workflow execution's artifacts by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID/artifacts",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Returns artifacts of the given executionID"
+        },
+        {
+          "info": {
+            "name": "Download test workflow artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID/artifacts/:filename",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "path",
+                "description": "filename of the object usually used for artifacts"
+              }
+            ]
+          },
+          "docs": "Download the artifact file from the given execution"
+        },
+        {
+          "info": {
+            "name": "Download test workflow artifact archive",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID/artifact-archive",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              },
+              {
+                "name": "mask",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Download the artifact archive from the given execution"
+        },
+        {
+          "info": {
+            "name": "Abort test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID/abort",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              },
+              {
+                "name": "forceAgent",
+                "value": "",
+                "type": "query",
+                "description": "force cancellation using agent"
+              }
+            ]
+          },
+          "docs": "Abort test workflow execution"
+        },
+        {
+          "info": {
+            "name": "Rerun test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID/rerun",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rerun test workflow execution"
+        },
+        {
+          "info": {
+            "name": "Preview test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/preview-test-workflow",
+            "params": [
+              {
+                "name": "inline",
+                "value": "",
+                "type": "query",
+                "description": "should inline templates in the resolved workflow"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Preview test workflow after including templates inside"
+        },
+        {
+          "info": {
+            "name": "List test workflow templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-templates",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List test workflow templates from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Create test workflow template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflow-templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create test workflow template in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Validate test workflow template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.testkube.io/test-workflow-templates"
+          },
+          "docs": "Validate test workflow template specification against CRD schema"
+        },
+        {
+          "info": {
+            "name": "Delete test workflow templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/test-workflow-templates",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete test workflow templates from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Get test workflow template details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Get test workflow template details from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Update test workflow template details",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.testkube.io/test-workflow-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update test workflow template details in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Delete test workflow template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/test-workflow-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Delete test workflow template from the kubernetes cluster"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

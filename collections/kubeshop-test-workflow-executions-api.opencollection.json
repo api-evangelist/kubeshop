@@ -1,0 +1,214 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testkube Standalone Agent api Test Workflow Executions API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Test Workflow Executions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List test workflow executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "tagSelector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "actorName",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "actorType",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List test workflow executions"
+        },
+        {
+          "info": {
+            "name": "Execute test workflows",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflow-executions",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "concurrency",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute test workflows in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Get test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Get test workflow execution details"
+        },
+        {
+          "info": {
+            "name": "Get test workflow execution's artifacts by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID/artifacts",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Returns artifacts of the given executionID"
+        },
+        {
+          "info": {
+            "name": "Download test workflow artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID/artifacts/:filename",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "path",
+                "description": "filename of the object usually used for artifacts"
+              }
+            ]
+          },
+          "docs": "Download the artifact file from the given execution"
+        },
+        {
+          "info": {
+            "name": "Download test workflow artifact archive",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID/artifact-archive",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              },
+              {
+                "name": "mask",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Download the artifact archive from the given execution"
+        },
+        {
+          "info": {
+            "name": "Abort test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID/abort",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              },
+              {
+                "name": "forceAgent",
+                "value": "",
+                "type": "query",
+                "description": "force cancellation using agent"
+              }
+            ]
+          },
+          "docs": "Abort test workflow execution"
+        },
+        {
+          "info": {
+            "name": "Rerun test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID/rerun",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rerun test workflow execution"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

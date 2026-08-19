@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testkube Standalone Agent api Status Pages API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Status Pages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get status pages by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/status-pages/:statusPageID",
+            "params": [
+              {
+                "name": "statusPageID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a status page for the given statusPageID"
+        },
+        {
+          "info": {
+            "name": "Get incidents for status page",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/status-pages/:statusPageID/incidents",
+            "params": [
+              {
+                "name": "statusPageID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the status page"
+              }
+            ]
+          },
+          "docs": "Returns the list of incidents for the given statusPageID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

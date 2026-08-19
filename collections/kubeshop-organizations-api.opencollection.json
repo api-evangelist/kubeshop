@@ -1,0 +1,5724 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testkube Standalone Agent api Organizations API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "limit queries for list of resources"
+              }
+            ]
+          },
+          "docs": "List organizations"
+        },
+        {
+          "info": {
+            "name": "Create new organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create organization"
+        },
+        {
+          "info": {
+            "name": "Get organization by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Get organization by ID"
+        },
+        {
+          "info": {
+            "name": "Update organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/organizations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update organization with given request body"
+        },
+        {
+          "info": {
+            "name": "Delete organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Deletes organization"
+        },
+        {
+          "info": {
+            "name": "List agents used in the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/agents",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "query",
+                "description": "filter by environment id"
+              },
+              {
+                "name": "capability",
+                "value": "",
+                "type": "query",
+                "description": "filter resources by agent capability"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "limit queries for list of resources"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "skip some items in list of resources"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The desired page for this list, or the first page when absent."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "The desired page size for this list, or a default page size when absent."
+              },
+              {
+                "name": "includeDeleted",
+                "value": "",
+                "type": "query",
+                "description": "consider also soft-deleted records"
+              }
+            ]
+          },
+          "docs": "List agents used in the organization."
+        },
+        {
+          "info": {
+            "name": "Create a new agent in the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/agents",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "query",
+                "description": "filter by environment id"
+              },
+              {
+                "name": "capability",
+                "value": "",
+                "type": "query",
+                "description": "filter resources by agent capability"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "limit queries for list of resources"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "skip some items in list of resources"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The desired page for this list, or the first page when absent."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "The desired page size for this list, or a default page size when absent."
+              },
+              {
+                "name": "includeDeleted",
+                "value": "",
+                "type": "query",
+                "description": "consider also soft-deleted records"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new agent in the organization."
+        },
+        {
+          "info": {
+            "name": "Get agent from the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/agents/:agentID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "agentID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the agent"
+              },
+              {
+                "name": "includeDeleted",
+                "value": "",
+                "type": "query",
+                "description": "consider also soft-deleted records"
+              }
+            ]
+          },
+          "docs": "Get agent from the organization."
+        },
+        {
+          "info": {
+            "name": "Update agent data in the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/organizations/:id/agents/:agentID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "agentID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the agent"
+              },
+              {
+                "name": "includeDeleted",
+                "value": "",
+                "type": "query",
+                "description": "consider also soft-deleted records"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update agent data in the organization."
+        },
+        {
+          "info": {
+            "name": "Delete agent in the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/agents/:agentID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "agentID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the agent"
+              },
+              {
+                "name": "includeDeleted",
+                "value": "",
+                "type": "query",
+                "description": "consider also soft-deleted records"
+              }
+            ]
+          },
+          "docs": "Delete agent in the organization."
+        },
+        {
+          "info": {
+            "name": "[internal] Get commands for this super agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/agents/:agentID/commands",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "agentID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the agent"
+              }
+            ]
+          },
+          "docs": "Get commands for this super agent. This endpoint is deprecated and will be removed in the near future."
+        },
+        {
+          "info": {
+            "name": "Get the secret key for selected agent.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/agents/:agentID/secret-key",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "agentID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the agent"
+              }
+            ]
+          },
+          "docs": "Get the secret key for selected agent."
+        },
+        {
+          "info": {
+            "name": "Regenerate the secret key for selected agent.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/agents/:agentID/secret-key",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "agentID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the agent"
+              }
+            ]
+          },
+          "docs": "Regenerate the secret key for selected agent."
+        },
+        {
+          "info": {
+            "name": "Retrieve a list of application audit logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/audit",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "limit queries for list of resources"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "query",
+                "description": "filter by environment id"
+              },
+              {
+                "name": "startDate",
+                "value": "2006-01-02T15:04:05Z",
+                "type": "query",
+                "description": "startDate for filtering in RFC3339 format, i.e. \"2006-01-02T15:04:05Z\""
+              },
+              {
+                "name": "endDate",
+                "value": "2006-01-02T15:04:05Z",
+                "type": "query",
+                "description": "endDate for filtering in RFC3339 format, i.e. \"2006-01-02T15:04:05Z\""
+              },
+              {
+                "name": "subject",
+                "value": "",
+                "type": "query",
+                "description": "filter by subject in audit logs"
+              },
+              {
+                "name": "event",
+                "value": "",
+                "type": "query",
+                "description": "filter by event type in audit logs"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The desired page for this list, or the first page when absent."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "The desired page size for this list, or a default page size when absent."
+              }
+            ]
+          },
+          "docs": "Fetch a paginated list of audit logs detailing actions performed on application resources.\nThis includes actions such as resource creation, updates, and deletions, along with metadata\nabout the entities involved and the context in which the actions occurred.\n\nThe logs provide visibility into operations for auditing and compliance purposes,\nand may be filtered or limited by the parameters provided.\n"
+        },
+        {
+          "info": {
+            "name": "Download an export of application audit logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/audit/export",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "query",
+                "description": "filter by environment id"
+              },
+              {
+                "name": "startDate",
+                "value": "2006-01-02T15:04:05Z",
+                "type": "query",
+                "description": "startDate for filtering in RFC3339 format, i.e. \"2006-01-02T15:04:05Z\""
+              },
+              {
+                "name": "endDate",
+                "value": "2006-01-02T15:04:05Z",
+                "type": "query",
+                "description": "endDate for filtering in RFC3339 format, i.e. \"2006-01-02T15:04:05Z\""
+              },
+              {
+                "name": "subject",
+                "value": "",
+                "type": "query",
+                "description": "filter by subject in audit logs"
+              },
+              {
+                "name": "event",
+                "value": "",
+                "type": "query",
+                "description": "filter by event type in audit logs"
+              },
+              {
+                "name": "format",
+                "value": "csv",
+                "type": "query",
+                "description": "specify the format of the exported report"
+              }
+            ]
+          },
+          "docs": "Download an export of application audit logs in a structured format, such as CSV or JSON,\nfor the specified organization. The export includes detailed information about actions\nperformed on application resources, including the entities involved, the context in which\nthe actions occurred, and metadata about the operations.\n\nThe export provides a comprehensive record of operations for auditing and compliance purposes,\nand can be used to analyze and visualize the history of changes to application r"
+        },
+        {
+          "info": {
+            "name": "Returns a list of distinct values for the subject filter.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/audit/filters/subject",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "query",
+                "description": "filter by environment id"
+              },
+              {
+                "name": "startDate",
+                "value": "2006-01-02T15:04:05Z",
+                "type": "query",
+                "description": "startDate for filtering in RFC3339 format, i.e. \"2006-01-02T15:04:05Z\""
+              },
+              {
+                "name": "endDate",
+                "value": "2006-01-02T15:04:05Z",
+                "type": "query",
+                "description": "endDate for filtering in RFC3339 format, i.e. \"2006-01-02T15:04:05Z\""
+              },
+              {
+                "name": "event",
+                "value": "",
+                "type": "query",
+                "description": "filter by event type in audit logs"
+              }
+            ]
+          },
+          "docs": "Returns a list of distinct values for the subject filter based on the provided query parameters.\nThe subject filter is used to filter audit logs based on the entity that performed the action,\nsuch as a user, API token... This endpoint provides a list of distinct\nsubjects that can be used to filter audit logs by the entity that performed the action.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve a keymap of application audit log types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/audit/keymap",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Retrieve a keymap that provides mappings of various audit log attributes, such as event types,\nactions, entity types, and sources, for the specified organization.\n\nThis keymap helps interpret the structure and meaning of audit logs by mapping internal identifiers\nto their corresponding human-readable descriptions. It can be used to facilitate the analysis and\ndisplay of audit logs by providing context for different events, actions, and entities involved in the\nlogged operations.\n"
+        },
+        {
+          "info": {
+            "name": "List board summaries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/boards",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter boards by name (case-insensitive substring match)"
+              },
+              {
+                "name": "private",
+                "value": "",
+                "type": "query",
+                "description": "Return only private boards owned by the current user."
+              },
+              {
+                "name": "shared",
+                "value": "",
+                "type": "query",
+                "description": "Return only shared organization boards."
+              },
+              {
+                "name": "userFavorite",
+                "value": "",
+                "type": "query",
+                "description": "Return only boards favorited by the current user."
+              },
+              {
+                "name": "orgFavorite",
+                "value": "",
+                "type": "query",
+                "description": "Return only boards favorited at the organization level."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The desired page for this list, or the first page when absent."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "The desired page size for this list, or a default page size when absent."
+              }
+            ]
+          },
+          "docs": "Lists the summaries of the boards in your organization."
+        },
+        {
+          "info": {
+            "name": "Create a board",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/boards",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a board."
+        },
+        {
+          "info": {
+            "name": "Get a board",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/boards/:boardID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "boardID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this board"
+              }
+            ]
+          },
+          "docs": "Get a board by its `id` or `slug`."
+        },
+        {
+          "info": {
+            "name": "Update a board",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/organizations/:id/boards/:boardID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "boardID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this board"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a board's details, content or layout."
+        },
+        {
+          "info": {
+            "name": "Delete a board",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/boards/:boardID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "boardID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this board"
+              }
+            ]
+          },
+          "docs": "Deletes a board."
+        },
+        {
+          "info": {
+            "name": "Reorder shared boards",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/organizations/:id/boards/shared-order",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the sidebar navigation order for shared organization boards. Requires organization admin."
+        },
+        {
+          "info": {
+            "name": "List credentials used in the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/credentials",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "query",
+                "description": "filter by environment id"
+              }
+            ]
+          },
+          "docs": "List credentials used in the organization."
+        },
+        {
+          "info": {
+            "name": "Create a new credential in the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/credentials",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "query",
+                "description": "filter by environment id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new credential in the organization."
+        },
+        {
+          "info": {
+            "name": "Get credential in the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/credentials/:credentialName",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "credentialName",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the credential"
+              }
+            ]
+          },
+          "docs": "Get credential details. Variables will include their decrypted value, secrets will not."
+        },
+        {
+          "info": {
+            "name": "Update value of the credential in the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/organizations/:id/credentials/:credentialName",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "credentialName",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the credential"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update value of the credential in the organization."
+        },
+        {
+          "info": {
+            "name": "Delete credential in the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/credentials/:credentialName",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "credentialName",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the credential"
+              }
+            ]
+          },
+          "docs": "Delete credential in the organization."
+        },
+        {
+          "info": {
+            "name": "List environments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "limit queries for list of resources"
+              }
+            ]
+          },
+          "docs": "List environments from the active organization"
+        },
+        {
+          "info": {
+            "name": "Create new environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create test environment"
+        },
+        {
+          "info": {
+            "name": "Delete environments",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/environments",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "object name to search for"
+              }
+            ]
+          },
+          "docs": "Deletes all or labeled environments"
+        },
+        {
+          "info": {
+            "name": "Get environment by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              }
+            ]
+          },
+          "docs": "Get test environment by ID from CRD in kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Update environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update environment with given request body"
+        },
+        {
+          "info": {
+            "name": "Delete test environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              }
+            ]
+          },
+          "docs": "Deletes a test environment"
+        },
+        {
+          "info": {
+            "name": "Lists all collaborators for this environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/collaborators",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              }
+            ]
+          },
+          "docs": "Lists all collaborators for this environment."
+        },
+        {
+          "info": {
+            "name": "Adds many collaborators to this environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/collaborators",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds many collaborators to this environment."
+        },
+        {
+          "info": {
+            "name": "Remove many collaborators from this environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/collaborators",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove many collaborators from this environment."
+        },
+        {
+          "info": {
+            "name": "List credentials in the environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/credentials",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Optional filter to include organization-level credentials. Use 'all' to merge org and env credentials, excluding org credentials that are overridden by env credentials with the same name."
+              }
+            ]
+          },
+          "docs": "List credentials in the environment. Use filter=all to include organization-level credentials that are not overridden by environment-level credentials."
+        },
+        {
+          "info": {
+            "name": "Create a new credential in the environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/credentials",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new credential in the environment."
+        },
+        {
+          "info": {
+            "name": "Get credential in the environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/credentials/:credentialName",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "credentialName",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the credential"
+              }
+            ]
+          },
+          "docs": "Get credential details. Variables will include their decrypted value, secrets will not."
+        },
+        {
+          "info": {
+            "name": "Update value of the credential in the environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/credentials/:credentialName",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "credentialName",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the credential"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update value of the credential in the environment."
+        },
+        {
+          "info": {
+            "name": "Delete credential in the environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/credentials/:credentialName",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "credentialName",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the credential"
+              }
+            ]
+          },
+          "docs": "Delete credential in the environment."
+        },
+        {
+          "info": {
+            "name": "Get recent executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "kind",
+                "value": "",
+                "type": "query",
+                "description": "The test definition's kind, either 'test', 'suite' or 'workflow'."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The desired page for this list, or the first page when absent."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "The desired page size for this list, or a default page size when absent."
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              },
+              {
+                "name": "textSearch",
+                "value": "foo",
+                "type": "query",
+                "description": "full-text search"
+              },
+              {
+                "name": "status",
+                "value": "failed",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              },
+              {
+                "name": "tagSelector",
+                "value": "",
+                "type": "query",
+                "description": "Test workflow execution tags"
+              },
+              {
+                "name": "runner",
+                "value": "",
+                "type": "query",
+                "description": "Filter by runner/agent ID"
+              },
+              {
+                "name": "health",
+                "value": "excellent,good",
+                "type": "query",
+                "description": "Filter by workflow health categories (comma-separated). Options - perfect, excellent, good, fair, poor, critical"
+              }
+            ]
+          },
+          "docs": "Get recent executions"
+        },
+        {
+          "info": {
+            "name": "Get artifact archive",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/executions/:executionID/artifact-archive",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the test execution"
+              },
+              {
+                "name": "testName",
+                "value": "",
+                "type": "query",
+                "description": "name of the test"
+              },
+              {
+                "name": "testSuiteName",
+                "value": "",
+                "type": "query",
+                "description": "name of the testsuite"
+              }
+            ]
+          },
+          "docs": "Get artifact archive"
+        },
+        {
+          "info": {
+            "name": "Get artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/executions/:executionID/artifacts",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the test execution"
+              },
+              {
+                "name": "testName",
+                "value": "",
+                "type": "query",
+                "description": "name of the test"
+              },
+              {
+                "name": "testSuiteName",
+                "value": "",
+                "type": "query",
+                "description": "name of the testsuite"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get artifact"
+        },
+        {
+          "info": {
+            "name": "Get artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/executions/:executionID/artifacts/:artifactID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the test execution"
+              },
+              {
+                "name": "artifactID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the artifact"
+              },
+              {
+                "name": "testName",
+                "value": "",
+                "type": "query",
+                "description": "name of the test"
+              },
+              {
+                "name": "testSuiteName",
+                "value": "",
+                "type": "query",
+                "description": "name of the testsuite"
+              }
+            ]
+          },
+          "docs": "Get artifact"
+        },
+        {
+          "info": {
+            "name": "Download artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/executions/:executionID/download-artifact/:artifactID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the test execution"
+              },
+              {
+                "name": "artifactID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the artifact"
+              }
+            ]
+          },
+          "docs": "Download artifact"
+        },
+        {
+          "info": {
+            "name": "Get events that regard this execution.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/executions/:executionID/events",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the test execution"
+              },
+              {
+                "name": "series",
+                "value": "",
+                "type": "query",
+                "description": "Whether to group isomorphic events or keep a flat list of events."
+              }
+            ]
+          },
+          "docs": "Get events that regard this execution"
+        },
+        {
+          "info": {
+            "name": "Get JUnit report for execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/executions/:executionID/junit",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the test execution"
+              }
+            ]
+          },
+          "docs": "Returns JUnit report for the specified execution"
+        },
+        {
+          "info": {
+            "name": "Get Testkube Pro logs for execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/executions/:executionID/logs",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the test execution"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "line number from which logs should be returned"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "line number to which logs should be returned"
+              }
+            ]
+          },
+          "docs": "Get Logs separately from execution"
+        },
+        {
+          "info": {
+            "name": "Serve artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/executions/:executionID/serve-artifact",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the test execution"
+              },
+              {
+                "name": "testName",
+                "value": "",
+                "type": "query",
+                "description": "name of the test"
+              },
+              {
+                "name": "testSuiteName",
+                "value": "",
+                "type": "query",
+                "description": "name of the testsuite"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Serve artifact"
+        },
+        {
+          "info": {
+            "name": "Serve artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/executions/:executionID/serve-artifact/:artifactID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the test execution"
+              },
+              {
+                "name": "artifactID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the artifact"
+              },
+              {
+                "name": "testName",
+                "value": "",
+                "type": "query",
+                "description": "name of the test"
+              },
+              {
+                "name": "testSuiteName",
+                "value": "",
+                "type": "query",
+                "description": "name of the testsuite"
+              }
+            ]
+          },
+          "docs": "Serve artifact"
+        },
+        {
+          "info": {
+            "name": "Get Test Workflow artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/test-workflow-executions/:executionID/artifacts",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the test execution"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get Test Workflow artifact with artifactID"
+        },
+        {
+          "info": {
+            "name": "Get Test Workflow artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/test-workflow-executions/:executionID/artifacts/:artifactID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the test execution"
+              },
+              {
+                "name": "artifactID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the artifact"
+              }
+            ]
+          },
+          "docs": "Get Test Workflow artifact"
+        },
+        {
+          "info": {
+            "name": "Download test workflow artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/test-workflow-executions/:executionID/download-artifact/:artifactID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the test execution"
+              },
+              {
+                "name": "artifactID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the artifact"
+              }
+            ]
+          },
+          "docs": "Download test workflow artifact"
+        },
+        {
+          "info": {
+            "name": "Get Test Workflow logs URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/test-workflow-executions/:executionID/logs",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the test execution"
+              }
+            ]
+          },
+          "docs": "Get Test Workflow logs URL"
+        },
+        {
+          "info": {
+            "name": "Serve artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/test-workflow-executions/:executionID/serve-artifact",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the test execution"
+              },
+              {
+                "name": "testName",
+                "value": "",
+                "type": "query",
+                "description": "name of the test"
+              },
+              {
+                "name": "testSuiteName",
+                "value": "",
+                "type": "query",
+                "description": "name of the testsuite"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Serve artifact"
+        },
+        {
+          "info": {
+            "name": "Serve Test Workflow artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/test-workflow-executions/:executionID/serve-artifact/:artifactID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the test execution"
+              },
+              {
+                "name": "artifactID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the artifact"
+              }
+            ]
+          },
+          "docs": "Serve Test workflow artifact"
+        },
+        {
+          "info": {
+            "name": "Get execution summaries in bulk",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/test-workflow-executions/summaries",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "workflowName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by workflow name"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by execution status"
+              },
+              {
+                "name": "textSearch",
+                "value": "",
+                "type": "query",
+                "description": "Text search filter"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of executions to return (default 50, max 100)"
+              }
+            ]
+          },
+          "docs": "Returns a map of execution ID to JSON summary for MCP query tools"
+        },
+        {
+          "info": {
+            "name": "Delete test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/test-workflows/:testWorkflowName",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "testWorkflowName",
+                "value": "",
+                "type": "path",
+                "description": "name of the test workflow"
+              }
+            ]
+          },
+          "docs": "Deletes test workflow executions"
+        },
+        {
+          "info": {
+            "name": "List credentials for the test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/test-workflows/:testWorkflowName/credentials",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "testWorkflowName",
+                "value": "",
+                "type": "path",
+                "description": "name of the test workflow"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Optional filter to include organization and environment credentials. Use 'all' to merge org, env, and workflow credentials, with workflow overriding env and org, and env overriding org for credentials with the same name."
+              }
+            ]
+          },
+          "docs": "List credentials for the specified test workflow. Use filter=all to include organization and environment credentials that are not overridden by workflow-level credentials."
+        },
+        {
+          "info": {
+            "name": "Create a new credential for the test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/test-workflows/:testWorkflowName/credentials",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "testWorkflowName",
+                "value": "",
+                "type": "path",
+                "description": "name of the test workflow"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new credential for the specified test workflow."
+        },
+        {
+          "info": {
+            "name": "Get credential for the test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/test-workflows/:testWorkflowName/credentials/:credentialName",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "testWorkflowName",
+                "value": "",
+                "type": "path",
+                "description": "name of the test workflow"
+              },
+              {
+                "name": "credentialName",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the credential"
+              }
+            ]
+          },
+          "docs": "Get credential details. Variables will include their decrypted value, secrets will not."
+        },
+        {
+          "info": {
+            "name": "Update value of the credential for the test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/test-workflows/:testWorkflowName/credentials/:credentialName",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "testWorkflowName",
+                "value": "",
+                "type": "path",
+                "description": "name of the test workflow"
+              },
+              {
+                "name": "credentialName",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the credential"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update value of the credential for the specified test workflow."
+        },
+        {
+          "info": {
+            "name": "Delete credential for the test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/test-workflows/:testWorkflowName/credentials/:credentialName",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "testWorkflowName",
+                "value": "",
+                "type": "path",
+                "description": "name of the test workflow"
+              },
+              {
+                "name": "credentialName",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the credential"
+              }
+            ]
+          },
+          "docs": "Delete credential for the specified test workflow."
+        },
+        {
+          "info": {
+            "name": "Get workflow definitions in bulk",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentID/test-workflows/definitions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "environmentID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the environment"
+              },
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query",
+                "description": "Label selector to filter workflows"
+              },
+              {
+                "name": "resourceGroup",
+                "value": "",
+                "type": "query",
+                "description": "Resource group to filter workflows"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of workflows to return (default 50, max 100)"
+              }
+            ]
+          },
+          "docs": "Returns a map of workflow name to YAML definition for MCP query tools"
+        },
+        {
+          "info": {
+            "name": "Get all test executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "testName",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the test"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "object type"
+              },
+              {
+                "name": "textSearch",
+                "value": "foo",
+                "type": "query",
+                "description": "full-text search"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "The desired page size for this list, or a default page size when absent."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "the page index to start at"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "optional status filter containing multiple values separated by comma"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "startDate for filtering in ISO-8601 format, i.e. \"yyyy-mm-dd\""
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "endDate for filtering"
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              }
+            ]
+          },
+          "docs": "Returns array of test executions"
+        },
+        {
+          "info": {
+            "name": "Starts new test executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              },
+              {
+                "name": "executionSelector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "concurrency",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "New test executions returns new executions details on successful executions start"
+        },
+        {
+          "info": {
+            "name": "Get test execution by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/executions/:executionID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Returns execution with given executionID"
+        },
+        {
+          "info": {
+            "name": "Download artifact archive",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/executions/:id/artifact-archive",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "mask",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Download the artifact archive from the given execution"
+        },
+        {
+          "info": {
+            "name": "Get execution's artifacts by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/executions/:id/artifacts",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ]
+          },
+          "docs": "Returns artifacts of the given executionID"
+        },
+        {
+          "info": {
+            "name": "Download artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/executions/:id/artifacts/:filename",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "path",
+                "description": "filename of the object usually used for artifacts"
+              }
+            ]
+          },
+          "docs": "Download the artifact file from the given execution"
+        },
+        {
+          "info": {
+            "name": "Get execution's logs by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/executions/:id/logs",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ]
+          },
+          "docs": "Returns logs of the given executionID"
+        },
+        {
+          "info": {
+            "name": "Get execution's logs by ID version 2",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/executions/:id/logs/v2",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ]
+          },
+          "docs": "Returns logs of the given executionID version 2"
+        },
+        {
+          "info": {
+            "name": "List test workflow executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflow-executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "tagSelector",
+                "value": "",
+                "type": "query",
+                "description": "Test workflow execution tags"
+              },
+              {
+                "name": "actorName",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "actorType",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List test workflow executions"
+        },
+        {
+          "info": {
+            "name": "Execute test workflows",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflow-executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              },
+              {
+                "name": "concurrency",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute test workflows in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Get test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflow-executions/:executionID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Get test workflow execution details"
+        },
+        {
+          "info": {
+            "name": "Abort test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflow-executions/:executionID/abort",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              },
+              {
+                "name": "forceAgent",
+                "value": "",
+                "type": "query",
+                "description": "force cancellation using agent"
+              }
+            ]
+          },
+          "docs": "Abort test workflow execution"
+        },
+        {
+          "info": {
+            "name": "Download test workflow artifact archive",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflow-executions/:executionID/artifact-archive",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              },
+              {
+                "name": "mask",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Download the artifact archive from the given execution"
+        },
+        {
+          "info": {
+            "name": "Get test workflow execution's artifacts by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflow-executions/:executionID/artifacts",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Returns artifacts of the given executionID"
+        },
+        {
+          "info": {
+            "name": "Download test workflow artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflow-executions/:executionID/artifacts/:filename",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "path",
+                "description": "filename of the object usually used for artifacts"
+              }
+            ]
+          },
+          "docs": "Download the artifact file from the given execution"
+        },
+        {
+          "info": {
+            "name": "Rerun test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflow-executions/:executionID/rerun",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rerun test workflow execution"
+        },
+        {
+          "info": {
+            "name": "List test workflow templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflow-templates",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              }
+            ]
+          },
+          "docs": "List test workflow templates from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Create test workflow template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflow-templates",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create test workflow template in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Validate test workflow template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflow-templates",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ]
+          },
+          "docs": "Validate test workflow template specification against CRD schema"
+        },
+        {
+          "info": {
+            "name": "Delete test workflow templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflow-templates",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              }
+            ]
+          },
+          "docs": "Delete test workflow templates from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Get test workflow template details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflow-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ]
+          },
+          "docs": "Get test workflow template details from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Update test workflow template details",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflow-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update test workflow template details in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Delete test workflow template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflow-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ]
+          },
+          "docs": "Delete test workflow template from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "List test workflows with latest execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflow-with-executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              }
+            ]
+          },
+          "docs": "List test workflows from the kubernetes cluster with latest execution"
+        },
+        {
+          "info": {
+            "name": "Get test workflow details with latest execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflow-with-executions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ]
+          },
+          "docs": "Get test workflow details from the kubernetes cluster with latest execution"
+        },
+        {
+          "info": {
+            "name": "List test workflow execution tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflow-with-executions/:id/tags",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ]
+          },
+          "docs": "List test workflow execution tags for all executed test workflows"
+        },
+        {
+          "info": {
+            "name": "List test workflows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflows",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              }
+            ]
+          },
+          "docs": "List test workflows from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Create test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflows",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create test workflow in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Validate test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflows",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ]
+          },
+          "docs": "Validate test workflow specification against CRD schema"
+        },
+        {
+          "info": {
+            "name": "Delete test workflows",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflows",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              },
+              {
+                "name": "testWorkflowNames",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete test workflows from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Get test workflow details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflows/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ]
+          },
+          "docs": "Get test workflow details from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Update test workflow details",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflows/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update test workflow details in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Delete test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflows/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "skipDeleteExecutions",
+                "value": "",
+                "type": "query",
+                "description": "dont delete executions"
+              },
+              {
+                "name": "skipDeleteCRD",
+                "value": "",
+                "type": "query",
+                "description": "dont delete CRD"
+              }
+            ]
+          },
+          "docs": "Delete test workflow from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Abort all test workflow executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflows/:id/abort",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ]
+          },
+          "docs": "Abort all test workflow executions"
+        },
+        {
+          "info": {
+            "name": "List test workflow executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflows/:id/executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "tagSelector",
+                "value": "",
+                "type": "query",
+                "description": "Test workflow execution tags"
+              },
+              {
+                "name": "actorName",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "actorType",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List test workflow executions"
+        },
+        {
+          "info": {
+            "name": "Execute test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflows/:id/executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "testWorkflowExecutionName",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute test workflow in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Get test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflows/:id/executions/:executionID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Get test workflow execution details"
+        },
+        {
+          "info": {
+            "name": "Abort test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflows/:id/executions/:executionID/abort",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              },
+              {
+                "name": "forceAgent",
+                "value": "",
+                "type": "query",
+                "description": "force cancellation using agent"
+              }
+            ]
+          },
+          "docs": "Abort test workflow execution"
+        },
+        {
+          "info": {
+            "name": "Rerun test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflows/:id/executions/:executionID/rerun",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rerun test workflow execution"
+        },
+        {
+          "info": {
+            "name": "Get test workflow metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflows/:id/metrics",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ]
+          },
+          "docs": "Get metrics of test workflow executions"
+        },
+        {
+          "info": {
+            "name": "List test workflow execution tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/test-workflows/:id/tags",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ]
+          },
+          "docs": "List test workflow execution tags for all executed test workflows"
+        },
+        {
+          "info": {
+            "name": "List test triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/triggers",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              }
+            ]
+          },
+          "docs": "List test triggers from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Create new test trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/triggers",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new test trigger CRD inside a Kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Bulk update test triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/triggers",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates test triggers provided as an array in the request body"
+        },
+        {
+          "info": {
+            "name": "Delete test triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/triggers",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              }
+            ]
+          },
+          "docs": "Deletes all or labeled test triggers"
+        },
+        {
+          "info": {
+            "name": "Get test trigger by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/triggers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get test trigger by ID from CRD in kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Update test trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/triggers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "query",
+                "description": "Update mode for the trigger. When set to \"replace\", the entire trigger \nis replaced with the request body (full replacement semantics). When not \nset or set to any other value, merge semantics are used where only \nnon-null fields from the request are applied to the existing trigger.\nThis is used by cloud-api to signal that the original request was YAML.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update test trigger"
+        },
+        {
+          "info": {
+            "name": "Delete test trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/triggers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes a test trigger"
+        },
+        {
+          "info": {
+            "name": "List webhook templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/webhook-templates",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              }
+            ]
+          },
+          "docs": "List webhook templates available in cluster"
+        },
+        {
+          "info": {
+            "name": "Create new webhook template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/webhook-templates",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new webhook template based on variables passed in request"
+        },
+        {
+          "info": {
+            "name": "Delete webhook templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/webhook-templates",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              }
+            ]
+          },
+          "docs": "Deletes labeled webhook templates"
+        },
+        {
+          "info": {
+            "name": "Get webhook template details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/webhook-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ]
+          },
+          "docs": "Returns webhook template"
+        },
+        {
+          "info": {
+            "name": "Update new webhook template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/webhook-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update new webhook template based on variables passed in request"
+        },
+        {
+          "info": {
+            "name": "Delete webhook template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/webhook-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ]
+          },
+          "docs": "Deletes webhook template by its name"
+        },
+        {
+          "info": {
+            "name": "List webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/webhooks",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              }
+            ]
+          },
+          "docs": "List webhooks available in cluster"
+        },
+        {
+          "info": {
+            "name": "Create new webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/webhooks",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new webhook based on variables passed in request"
+        },
+        {
+          "info": {
+            "name": "Delete webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/webhooks",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              }
+            ]
+          },
+          "docs": "Deletes labeled webhooks"
+        },
+        {
+          "info": {
+            "name": "Get webhook details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/webhooks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ]
+          },
+          "docs": "Returns webhook"
+        },
+        {
+          "info": {
+            "name": "Update new webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/webhooks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update new webhook based on variables passed in request"
+        },
+        {
+          "info": {
+            "name": "Delete webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/environments/:environmentId/agent/webhooks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "organizationId"
+              },
+              {
+                "name": "environmentId",
+                "value": "",
+                "type": "path",
+                "description": "environmentID"
+              }
+            ]
+          },
+          "docs": "Deletes webhook by its name"
+        },
+        {
+          "info": {
+            "name": "Create or return a favorite",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.testkube.io/organizations/:id/favorites",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a favorite for an entity, or returns the existing favorite for the same scope."
+        },
+        {
+          "info": {
+            "name": "Delete a favorite",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/favorites",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Removes a favorite by entity, entity id, and scope."
+        },
+        {
+          "info": {
+            "name": "List organization groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/groups",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Lists the projects in an organization."
+        },
+        {
+          "info": {
+            "name": "Create a resource group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/groups",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a resource group."
+        },
+        {
+          "info": {
+            "name": "Get a resource group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/groups/:groupID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "groupID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this resource group"
+              }
+            ]
+          },
+          "docs": "Get a resource group by its `id`."
+        },
+        {
+          "info": {
+            "name": "Update a resource group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/organizations/:id/groups/:groupID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "groupID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this resource group"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a resource groups information."
+        },
+        {
+          "info": {
+            "name": "Delete a resource group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/groups/:groupID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "groupID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this resource group"
+              }
+            ]
+          },
+          "docs": "Deletes a resource group."
+        },
+        {
+          "info": {
+            "name": "Lists all collaborators for this resource group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/groups/:groupID/collaborators",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "groupID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this resource group"
+              }
+            ]
+          },
+          "docs": "Lists all collaborators for this resource group."
+        },
+        {
+          "info": {
+            "name": "Adds all collaborators to this resource group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/groups/:groupID/collaborators",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "groupID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this resource group"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds all collaborators to this resource group."
+        },
+        {
+          "info": {
+            "name": "Remove many members from this group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/groups/:groupID/collaborators",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "groupID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this resource group"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove many members from this access group."
+        },
+        {
+          "info": {
+            "name": "List credentials in the resource group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/groups/:groupID/credentials",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "groupID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this resource group"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Optional filter to include organization-level credentials. Use 'all' to merge org and resource group credentials, excluding org credentials that are overridden by resource group credentials with the same name."
+              }
+            ]
+          },
+          "docs": "List credentials in the resource group. Use filter=all to include organization-level credentials that are not overridden by resource-group-level credentials."
+        },
+        {
+          "info": {
+            "name": "Create a new credential in the resource group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/groups/:groupID/credentials",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "groupID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this resource group"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new credential in the resource group."
+        },
+        {
+          "info": {
+            "name": "Get credential in the resource group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/groups/:groupID/credentials/:credentialName",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "groupID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this resource group"
+              },
+              {
+                "name": "credentialName",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the credential"
+              }
+            ]
+          },
+          "docs": "Get credential details. Variables will include their decrypted value, secrets will not."
+        },
+        {
+          "info": {
+            "name": "Update value of the credential in the resource group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/organizations/:id/groups/:groupID/credentials/:credentialName",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "groupID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this resource group"
+              },
+              {
+                "name": "credentialName",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the credential"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update value of the credential in the resource group."
+        },
+        {
+          "info": {
+            "name": "Delete credential in the resource group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/groups/:groupID/credentials/:credentialName",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "groupID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this resource group"
+              },
+              {
+                "name": "credentialName",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the credential"
+              }
+            ]
+          },
+          "docs": "Delete credential in the resource group."
+        },
+        {
+          "info": {
+            "name": "Get environment execution duration stats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/insights/executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "startDate",
+                "value": "2006-01-02T15:04:05Z",
+                "type": "query",
+                "description": "startDate for filtering in RFC3339 format, i.e. \"2006-01-02T15:04:05Z\""
+              },
+              {
+                "name": "endDate",
+                "value": "2006-01-02T15:04:05Z",
+                "type": "query",
+                "description": "endDate for filtering in RFC3339 format, i.e. \"2006-01-02T15:04:05Z\""
+              },
+              {
+                "name": "groupBy",
+                "value": "",
+                "type": "query",
+                "description": "group by field"
+              },
+              {
+                "name": "env",
+                "value": "",
+                "type": "query",
+                "description": "env filters the data according to environments."
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              },
+              {
+                "name": "status",
+                "value": "failed",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              },
+              {
+                "name": "workflow",
+                "value": "my-workflow",
+                "type": "query",
+                "description": "The workflow for which the time series should be created."
+              }
+            ]
+          },
+          "docs": "Get environment execution duration stats"
+        },
+        {
+          "info": {
+            "name": "Get time series insights",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/insights/series",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "startDate",
+                "value": "2006-01-02T15:04:05Z",
+                "type": "query",
+                "description": "startDate for filtering in RFC3339 format, i.e. \"2006-01-02T15:04:05Z\""
+              },
+              {
+                "name": "endDate",
+                "value": "2006-01-02T15:04:05Z",
+                "type": "query",
+                "description": "endDate for filtering in RFC3339 format, i.e. \"2006-01-02T15:04:05Z\""
+              },
+              {
+                "name": "measure",
+                "value": "execution-count",
+                "type": "query",
+                "description": "The y-axis to measure within the time series. For organization insights series queries, this may be an execution-level measure or a granular metric key when seriesId is absent."
+              },
+              {
+                "name": "aggregate",
+                "value": "sum",
+                "type": "query",
+                "description": "The aggregation to perform on the time series bucket."
+              },
+              {
+                "name": "segment",
+                "value": "status",
+                "type": "query",
+                "description": "Creates a breakdown for each time series metric for the given segment property. Granular insight series queries support workflow, status, or any stable identity field key such as testsuite, testcase, scenario, or route."
+              },
+              {
+                "name": "seriesId",
+                "value": "sha256:7bc0c4...",
+                "type": "query",
+                "description": "Comma-separated granular insight series IDs to include in the time series."
+              },
+              {
+                "name": "identityFilters",
+                "value": "{\"testsuite\":[\"CheckoutSuite\"],\"testcase\":[\"~expired\"]}",
+                "type": "query",
+                "description": "JSON object of granular insight series identity filters. Keys are identity field names and values are arrays of strings. Plain strings match exactly (case-insensitive). Strings prefixed with `~` match partially via regex. Multiple identity keys are combined with AND; multiple values for the same key are combined with OR."
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              },
+              {
+                "name": "status",
+                "value": "failed",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              },
+              {
+                "name": "workflow",
+                "value": "my-workflow",
+                "type": "query",
+                "description": "The workflow for which the time series should be created."
+              },
+              {
+                "name": "env",
+                "value": "",
+                "type": "query",
+                "description": "env filters the data according to environments."
+              }
+            ]
+          },
+          "docs": "Get time series insights"
+        },
+        {
+          "info": {
+            "name": "List granular insight series catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/insights/series/catalog",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "env",
+                "value": "",
+                "type": "query",
+                "description": "env filters the data according to environments."
+              },
+              {
+                "name": "workflow",
+                "value": "my-workflow",
+                "type": "query",
+                "description": "The workflow for which the time series should be created."
+              },
+              {
+                "name": "source",
+                "value": "junit",
+                "type": "query",
+                "description": "Granular insight series source filter."
+              },
+              {
+                "name": "metricKey",
+                "value": "test_duration_ms",
+                "type": "query",
+                "description": "Granular insight series metric key filter."
+              },
+              {
+                "name": "identityFilters",
+                "value": "{\"testsuite\":[\"CheckoutSuite\"],\"testcase\":[\"~expired\"]}",
+                "type": "query",
+                "description": "JSON object of granular insight series identity filters. Keys are identity field names and values are arrays of strings. Plain strings match exactly (case-insensitive). Strings prefixed with `~` match partially via regex. Multiple identity keys are combined with AND; multiple values for the same key are combined with OR."
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "The query for this operation."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The desired page for this list, or the first page when absent."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "The desired page size for this list, or a default page size when absent."
+              }
+            ]
+          },
+          "docs": "List granular insight series catalog."
+        },
+        {
+          "info": {
+            "name": "List granular insight series metric keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/insights/series/catalog/metric-keys",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "env",
+                "value": "",
+                "type": "query",
+                "description": "env filters the data according to environments."
+              },
+              {
+                "name": "workflow",
+                "value": "my-workflow",
+                "type": "query",
+                "description": "The workflow for which the time series should be created."
+              },
+              {
+                "name": "source",
+                "value": "junit",
+                "type": "query",
+                "description": "Granular insight series source filter."
+              },
+              {
+                "name": "identityFilters",
+                "value": "{\"testsuite\":[\"CheckoutSuite\"],\"testcase\":[\"~expired\"]}",
+                "type": "query",
+                "description": "JSON object of granular insight series identity filters. Keys are identity field names and values are arrays of strings. Plain strings match exactly (case-insensitive). Strings prefixed with `~` match partially via regex. Multiple identity keys are combined with AND; multiple values for the same key are combined with OR."
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "The query for this operation."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The desired page for this list, or the first page when absent."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "The desired page size for this list, or a default page size when absent."
+              }
+            ]
+          },
+          "docs": "List distinct granular insight series metric keys."
+        },
+        {
+          "info": {
+            "name": "Get execution references",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/insights/series/executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "startDate",
+                "value": "2006-01-02T15:04:05Z",
+                "type": "query",
+                "description": "startDate for filtering in RFC3339 format, i.e. \"2006-01-02T15:04:05Z\""
+              },
+              {
+                "name": "endDate",
+                "value": "2006-01-02T15:04:05Z",
+                "type": "query",
+                "description": "endDate for filtering in RFC3339 format, i.e. \"2006-01-02T15:04:05Z\""
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              },
+              {
+                "name": "status",
+                "value": "failed",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              },
+              {
+                "name": "workflow",
+                "value": "my-workflow",
+                "type": "query",
+                "description": "The workflow for which the time series should be created."
+              },
+              {
+                "name": "env",
+                "value": "",
+                "type": "query",
+                "description": "env filters the data according to environments."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The desired page for this list, or the first page when absent."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "The desired page size for this list, or a default page size when absent."
+              }
+            ]
+          },
+          "docs": "Get references to executions from insights"
+        },
+        {
+          "info": {
+            "name": "Get environment execution count stats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/insights/stats",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "startDate",
+                "value": "2006-01-02T15:04:05Z",
+                "type": "query",
+                "description": "startDate for filtering in RFC3339 format, i.e. \"2006-01-02T15:04:05Z\""
+              },
+              {
+                "name": "endDate",
+                "value": "2006-01-02T15:04:05Z",
+                "type": "query",
+                "description": "endDate for filtering in RFC3339 format, i.e. \"2006-01-02T15:04:05Z\""
+              },
+              {
+                "name": "workflow",
+                "value": "my-workflow",
+                "type": "query",
+                "description": "The workflow for which the time series should be created."
+              },
+              {
+                "name": "env",
+                "value": "",
+                "type": "query",
+                "description": "env filters the data according to environments."
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              }
+            ]
+          },
+          "docs": "Get environment execution count stats"
+        },
+        {
+          "info": {
+            "name": "Get environment workflow summaries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/insights/workflows",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "startDate",
+                "value": "2006-01-02T15:04:05Z",
+                "type": "query",
+                "description": "startDate for filtering in RFC3339 format, i.e. \"2006-01-02T15:04:05Z\""
+              },
+              {
+                "name": "endDate",
+                "value": "2006-01-02T15:04:05Z",
+                "type": "query",
+                "description": "endDate for filtering in RFC3339 format, i.e. \"2006-01-02T15:04:05Z\""
+              },
+              {
+                "name": "env",
+                "value": "",
+                "type": "query",
+                "description": "env filters the data according to environments."
+              },
+              {
+                "name": "selector",
+                "value": "kubernetes.io/app=demo",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              },
+              {
+                "name": "status",
+                "value": "failed",
+                "type": "query",
+                "description": "Only workflow executions with given status are included in this time series chart."
+              },
+              {
+                "name": "workflow",
+                "value": "my-workflow",
+                "type": "query",
+                "description": "The workflow for which the time series should be created."
+              }
+            ]
+          },
+          "docs": "Get environment workflow summaries"
+        },
+        {
+          "info": {
+            "name": "Get GitHub App connect URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/integrations/github/connect",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Returns a signed GitHub App installation URL for the organization."
+        },
+        {
+          "info": {
+            "name": "List GitHub App installations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/integrations/github/installations",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Lists GitHub App installations connected to the organization."
+        },
+        {
+          "info": {
+            "name": "Add GitHub App installation manually",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/integrations/github/installations",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Manually adds a GitHub App installation to the organization by providing the GitHub organization name and installation ID."
+        },
+        {
+          "info": {
+            "name": "Remove GitHub App installation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/integrations/github/installations/:githubOrg",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "githubOrg",
+                "value": "",
+                "type": "path",
+                "description": "GitHub organization login."
+              }
+            ]
+          },
+          "docs": "Removes a connected GitHub App installation from the organization."
+        },
+        {
+          "info": {
+            "name": "List organization invites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/invites",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "The status of the invites."
+              }
+            ]
+          },
+          "docs": "Lists all invites for an organization."
+        },
+        {
+          "info": {
+            "name": "Invite users to the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/invites",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Invites one or more users to this organization."
+        },
+        {
+          "info": {
+            "name": "Get organization invite",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/invites/:inviteID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "inviteID",
+                "value": "",
+                "type": "path",
+                "description": "unique invite ID"
+              }
+            ]
+          },
+          "docs": "Get an invite for an organization with given id."
+        },
+        {
+          "info": {
+            "name": "Updates an organization invite",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/organizations/:id/invites/:inviteID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "inviteID",
+                "value": "",
+                "type": "path",
+                "description": "unique invite ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an organization invite."
+        },
+        {
+          "info": {
+            "name": "Resend organization invite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/invites/:inviteID/resend",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "inviteID",
+                "value": "",
+                "type": "path",
+                "description": "unique invite ID"
+              }
+            ]
+          },
+          "docs": "Resend an invite for an organization with given id."
+        },
+        {
+          "info": {
+            "name": "Revoke organization invite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/invites/:inviteID/revoke",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "inviteID",
+                "value": "",
+                "type": "path",
+                "description": "unique invite ID"
+              }
+            ]
+          },
+          "docs": "Revoke an invite for an organization with given id."
+        },
+        {
+          "info": {
+            "name": "Get organization members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/members",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "emailSearch",
+                "value": "",
+                "type": "query",
+                "description": "Filter members by email"
+              }
+            ]
+          },
+          "docs": "Get organizations members"
+        },
+        {
+          "info": {
+            "name": "Update org member role",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/organizations/:id/members/:memberEmail",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "memberEmail",
+                "value": "",
+                "type": "path",
+                "description": "unique email of the user"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update all organization members"
+        },
+        {
+          "info": {
+            "name": "Remove user from organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/members/:memberEmail",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "memberEmail",
+                "value": "",
+                "type": "path",
+                "description": "unique email of the user"
+              }
+            ]
+          },
+          "docs": "Remove user from organization"
+        },
+        {
+          "info": {
+            "name": "Get member permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/members/:memberEmail/permissions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              },
+              {
+                "name": "memberEmail",
+                "value": "",
+                "type": "path",
+                "description": "The email of the member"
+              }
+            ]
+          },
+          "docs": "Retrieve the permissions for a specific member in an organization."
+        },
+        {
+          "info": {
+            "name": "List organization teams",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/teams",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Lists the teams in an organization."
+        },
+        {
+          "info": {
+            "name": "Create a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/teams",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a team."
+        },
+        {
+          "info": {
+            "name": "Get a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/teams/:teamID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this team"
+              }
+            ]
+          },
+          "docs": "Get a team by its `id` or `slug."
+        },
+        {
+          "info": {
+            "name": "Update a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/organizations/:id/teams/:teamID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this team"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a team's information."
+        },
+        {
+          "info": {
+            "name": "Delete a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/teams/:teamID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this team"
+              }
+            ]
+          },
+          "docs": "Deletes a team."
+        },
+        {
+          "info": {
+            "name": "Lists all members for this team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/teams/:teamID/members",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this team"
+              }
+            ]
+          },
+          "docs": "Lists all members for this team."
+        },
+        {
+          "info": {
+            "name": "Adds members to this team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/teams/:teamID/members",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this team"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds many members to this team."
+        },
+        {
+          "info": {
+            "name": "Remove many members from this team",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/teams/:teamID/members",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "teamID",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of this team"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove many members from this team."
+        },
+        {
+          "info": {
+            "name": "List API Tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/tokens",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "limit queries for list of resources"
+              },
+              {
+                "name": "label",
+                "value": "team=platform,purpose=automation",
+                "type": "query",
+                "description": "Exact token label filters in key=value form. Repeat this parameter to require multiple labels.\n"
+              },
+              {
+                "name": "excludeLabel",
+                "value": "visibility=hidden",
+                "type": "query",
+                "description": "Exact token label exclusions in key=value form. Repeat this parameter to exclude tokens with any of the provided labels. Tokens missing an excluded label are kept.\n"
+              }
+            ]
+          },
+          "docs": "Lists API Tokens for an Organization"
+        },
+        {
+          "info": {
+            "name": "Create API Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/organizations/:id/tokens",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an API Token for an Organization"
+        },
+        {
+          "info": {
+            "name": "Get API Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/:id/tokens/:tokenID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "tokenID",
+                "value": "",
+                "type": "path",
+                "description": "unique ID of the API Token"
+              }
+            ]
+          },
+          "docs": "Gets an API Token for an Organization. Only SCIM tokens can be retrieved, other token types will return Forbidden."
+        },
+        {
+          "info": {
+            "name": "Delete API Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/organizations/:id/tokens/:tokenID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "tokenID",
+                "value": "",
+                "type": "path",
+                "description": "unique ID of the API Token"
+              }
+            ]
+          },
+          "docs": "Deletes an API Token for an Organization"
+        },
+        {
+          "info": {
+            "name": "Accept email invite",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/organizations/invites/:inviteID/accept",
+            "params": [
+              {
+                "name": "inviteID",
+                "value": "",
+                "type": "path",
+                "description": "unique invite ID"
+              }
+            ]
+          },
+          "docs": "accept email invite"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

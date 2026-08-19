@@ -1,0 +1,141 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testkube Standalone Agent api Test Workflow Templates API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Test Workflow Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List test workflow templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-templates",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List test workflow templates from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Create test workflow template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflow-templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create test workflow template in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Validate test workflow template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.testkube.io/test-workflow-templates"
+          },
+          "docs": "Validate test workflow template specification against CRD schema"
+        },
+        {
+          "info": {
+            "name": "Delete test workflow templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/test-workflow-templates",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete test workflow templates from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Get test workflow template details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Get test workflow template details from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Update test workflow template details",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.testkube.io/test-workflow-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update test workflow template details in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Delete test workflow template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/test-workflow-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Delete test workflow template from the kubernetes cluster"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

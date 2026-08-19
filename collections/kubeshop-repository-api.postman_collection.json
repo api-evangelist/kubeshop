@@ -1,0 +1,246 @@
+{
+  "item": [
+    {
+      "id": "a05a5cdf-1330-4115-a0bc-d8dafe58bbe6",
+      "name": "repository",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "70e7ab29-8bdc-473c-823e-40219a2b7f7d",
+          "name": "Validate new repository",
+          "request": {
+            "name": "Validate new repository",
+            "description": {
+              "content": "Validate new repository based on variables passed in request",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "repositories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"uri\": \"<string>\",\n  \"branch\": \"<string>\",\n  \"commit\": \"<string>\",\n  \"path\": \"<string>\",\n  \"username\": \"<string>\",\n  \"token\": \"<string>\",\n  \"usernameSecret\": {\n    \"name\": \"<string>\",\n    \"key\": \"<string>\",\n    \"namespace\": \"<string>\"\n  },\n  \"tokenSecret\": {\n    \"name\": \"<string>\",\n    \"key\": \"<string>\",\n    \"namespace\": \"<string>\"\n  },\n  \"certificateSecret\": \"<string>\",\n  \"workingDir\": \"<string>\",\n  \"authType\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "18526b8a-141f-4c1a-b0ae-f172af13785d",
+              "name": "no content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"uri\": \"https://github.com/kubeshop/testkube\",\n  \"branch\": \"main\",\n  \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n  \"path\": \"test/perf\",\n  \"username\": \"<string>\",\n  \"token\": \"<string>\",\n  \"usernameSecret\": {\n    \"name\": \"<string>\",\n    \"key\": \"<string>\",\n    \"namespace\": \"<string>\"\n  },\n  \"tokenSecret\": {\n    \"name\": \"<string>\",\n    \"key\": \"<string>\",\n    \"namespace\": \"<string>\"\n  },\n  \"certificateSecret\": \"<string>\",\n  \"workingDir\": \"/\",\n  \"authType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "071e837f-6d77-4754-a370-38927aa5d0ae",
+              "name": "problem with repository definition - probably some bad input occurs (invalid JSON body or similar)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"uri\": \"https://github.com/kubeshop/testkube\",\n  \"branch\": \"main\",\n  \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n  \"path\": \"test/perf\",\n  \"username\": \"<string>\",\n  \"token\": \"<string>\",\n  \"usernameSecret\": {\n    \"name\": \"<string>\",\n    \"key\": \"<string>\",\n    \"namespace\": \"<string>\"\n  },\n  \"tokenSecret\": {\n    \"name\": \"<string>\",\n    \"key\": \"<string>\",\n    \"namespace\": \"<string>\"\n  },\n  \"certificateSecret\": \"<string>\",\n  \"workingDir\": \"/\",\n  \"authType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "edfd7c68-2d27-4b51-83ba-e9edbae7dd28",
+              "name": "problem with creating folder for partial git checkout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"uri\": \"https://github.com/kubeshop/testkube\",\n  \"branch\": \"main\",\n  \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n  \"path\": \"test/perf\",\n  \"username\": \"<string>\",\n  \"token\": \"<string>\",\n  \"usernameSecret\": {\n    \"name\": \"<string>\",\n    \"key\": \"<string>\",\n    \"namespace\": \"<string>\"\n  },\n  \"tokenSecret\": {\n    \"name\": \"<string>\",\n    \"key\": \"<string>\",\n    \"namespace\": \"<string>\"\n  },\n  \"certificateSecret\": \"<string>\",\n  \"workingDir\": \"/\",\n  \"authType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "39690d4b-9bc2-41e4-a775-cf9fc3bee8a1",
+              "name": "problem with communicating with kubernetes cluster or git server",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "repositories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"uri\": \"https://github.com/kubeshop/testkube\",\n  \"branch\": \"main\",\n  \"commit\": \"b928cbb7186944ab9275937ec1ac3d3738ca2e1d\",\n  \"path\": \"test/perf\",\n  \"username\": \"<string>\",\n  \"token\": \"<string>\",\n  \"usernameSecret\": {\n    \"name\": \"<string>\",\n    \"key\": \"<string>\",\n    \"namespace\": \"<string>\"\n  },\n  \"tokenSecret\": {\n    \"name\": \"<string>\",\n    \"key\": \"<string>\",\n    \"namespace\": \"<string>\"\n  },\n  \"certificateSecret\": \"<string>\",\n  \"workingDir\": \"/\",\n  \"authType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  },\n  {\n    \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n    \"title\": \"Invalid test name\",\n    \"status\": 500,\n    \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n    \"instance\": \"http://10.23.23.123:8088/tests\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.testkube.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "709eb12e-7beb-47fd-93fb-da06bb99dac6",
+    "name": "Testkube Standalone Agent api repository API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for Testkube Standalone Agent\n\nContact Support:\n Email: info@testkube.io",
+      "type": "text/plain"
+    }
+  }
+}

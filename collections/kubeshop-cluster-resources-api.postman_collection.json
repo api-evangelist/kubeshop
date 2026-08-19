@@ -1,0 +1,182 @@
+{
+  "item": [
+    {
+      "id": "36c5dedc-bb6f-4e53-be8e-52e36a121297",
+      "name": "cluster-resources",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "40d3cdc4-8aa7-4f9f-98f6-7b4bfbdc4098",
+          "name": "List cluster resources",
+          "request": {
+            "name": "List cluster resources",
+            "description": {
+              "content": "Returns every Group/Version/Kind the cluster exposes, tagged with whether\nthe agent ServiceAccount has list+watch permission. Backs the UI dropdown\nfor picking what resource a TestTrigger or WorkflowTrigger should watch.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cluster-resources"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "watchable",
+                  "value": "<boolean>",
+                  "description": "When true, drop resources the agent cannot list+watch."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "db9171d5-007d-4d48-8d75-203bb7e4b8cb",
+              "name": "successful list operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cluster-resources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "watchable",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"version\": \"v1alpha1\",\n    \"kind\": \"Rollout\",\n    \"resource\": \"rollouts\",\n    \"namespaced\": false,\n    \"canWatch\": false,\n    \"group\": \"argoproj.io\"\n  },\n  {\n    \"version\": \"v1alpha1\",\n    \"kind\": \"Rollout\",\n    \"resource\": \"rollouts\",\n    \"namespaced\": true,\n    \"canWatch\": true,\n    \"group\": \"argoproj.io\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b81fe28-0a9c-4e84-b557-874b6936c428",
+              "name": "cluster discovery not configured on this instance",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cluster-resources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "watchable",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Implemented",
+              "code": 501,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "249db53e-a6dd-4e3e-aea1-1c9795075df4",
+              "name": "cluster discovery failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cluster-resources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "watchable",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.testkube.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "15a95aca-f9a5-4608-8b72-ebae37741edf",
+    "name": "Testkube Standalone Agent api cluster-resources API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for Testkube Standalone Agent\n\nContact Support:\n Email: info@testkube.io",
+      "type": "text/plain"
+    }
+  }
+}

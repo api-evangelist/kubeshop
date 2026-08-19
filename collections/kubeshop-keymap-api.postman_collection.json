@@ -1,0 +1,104 @@
+{
+  "item": [
+    {
+      "id": "f6a7b874-4326-49fc-836a-484fd2802a11",
+      "name": "keymap",
+      "description": {
+        "content": "Keymap for fields in a form",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d37456f6-7bf9-4cba-9caf-c0b70d426ef6",
+          "name": "Test triggers keymap",
+          "request": {
+            "name": "Test triggers keymap",
+            "description": {
+              "content": "Returns a keymap (supported/allowed fields) for the test trigger UI screen",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "keymap",
+                "triggers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e85bd24e-7a3f-48a1-9c35-d6ecc3c80d81",
+              "name": "successful get operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "keymap",
+                    "triggers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resources\": [\n    \"pod\",\n    \"deployment\",\n    \"statefulset\",\n    \"daemonset\",\n    \"service\",\n    \"ingress\",\n    \"event\",\n    \"configmap\"\n  ],\n  \"actions\": [\n    \"run\"\n  ],\n  \"executions\": [\n    \"test\",\n    \"testsuite\"\n  ],\n  \"events\": {\n    \"key_0\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"concurrencyPolicies\": [\n    \"allow\",\n    \"forbid\",\n    \"replace\"\n  ],\n  \"conditions\": [\n    \"Available\",\n    \"Progressing\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.testkube.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ea87f119-b464-4a8a-adba-8221d07d4f2e",
+    "name": "Testkube Standalone Agent api keymap API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for Testkube Standalone Agent\n\nContact Support:\n Email: info@testkube.io",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,477 @@
+{
+  "item": [
+    {
+      "id": "5a06368e-d6c4-46b2-b6b3-dfeff200fe17",
+      "name": "Status Pages",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "058d765b-023e-40fc-b1ee-187f870fc2fe",
+          "name": "Get status pages by ID",
+          "request": {
+            "name": "Get status pages by ID",
+            "description": {
+              "content": "Returns a status page for the given statusPageID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status-pages",
+                ":statusPageID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "statusPageID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "04a5ae7b-8d4b-447a-8f7d-4a12d41f0deb",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-pages",
+                    ":statusPageID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statusPageID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"description\": \"This page shows the status of the tests running on the production environment of MyService\",\n  \"labels\": {\n    \"key_0\": \"string\"\n  },\n  \"createdAt\": \"1984-02-23T09:21:34.493Z\",\n  \"updatedAt\": \"1953-02-12T23:43:01.132Z\",\n  \"organizationId\": \"string\",\n  \"environmentId\": \"string\",\n  \"timeScale\": \"1d1h1m1s\",\n  \"services\": [\n    {\n      \"name\": \"API Services\",\n      \"contents\": [\n        {\n          \"name\": \"Backend API\",\n          \"type\": \"test-suite\",\n          \"status\": \"operational\"\n        },\n        {\n          \"name\": \"Backend API\",\n          \"type\": \"test\",\n          \"status\": \"unknown\"\n        }\n      ],\n      \"operability\": 99.999,\n      \"status\": \"unknown\",\n      \"timeline\": [\n        {\n          \"startTime\": \"string\",\n          \"endTime\": \"string\",\n          \"status\": \"partial_outage\",\n          \"observables\": {\n            \"test-1\": \"operational\",\n            \"test-2\": \"major_outage\"\n          }\n        },\n        {\n          \"startTime\": \"string\",\n          \"endTime\": \"string\",\n          \"status\": \"unknown\",\n          \"observables\": {\n            \"test-1\": \"operational\",\n            \"test-2\": \"major_outage\"\n          }\n        }\n      ]\n    },\n    {\n      \"name\": \"API Services\",\n      \"contents\": [\n        {\n          \"name\": \"Backend API\",\n          \"type\": \"workflow\",\n          \"status\": \"partial_outage\"\n        },\n        {\n          \"name\": \"Backend API\",\n          \"type\": \"test\",\n          \"status\": \"partial_outage\"\n        }\n      ],\n      \"operability\": 99.999,\n      \"status\": \"major_outage\",\n      \"timeline\": [\n        {\n          \"startTime\": \"string\",\n          \"endTime\": \"string\",\n          \"status\": \"partial_outage\",\n          \"observables\": {\n            \"test-1\": \"operational\",\n            \"test-2\": \"major_outage\"\n          }\n        },\n        {\n          \"startTime\": \"string\",\n          \"endTime\": \"string\",\n          \"status\": \"unknown\",\n          \"observables\": {\n            \"test-1\": \"operational\",\n            \"test-2\": \"major_outage\"\n          }\n        }\n      ]\n    }\n  ],\n  \"isPublic\": true,\n  \"slug\": \"mySlugName\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83983d42-a5c5-4fc0-9427-7061501b5105",
+              "name": "401 Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-pages",
+                    ":statusPageID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statusPageID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n  \"title\": \"Invalid test name\",\n  \"status\": 500,\n  \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n  \"instance\": \"http://10.23.23.123:8088/tests\",\n  \"errorCode\": \"user-limit\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1bd25ec7-5531-46a5-a392-9903c950e7e2",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-pages",
+                    ":statusPageID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statusPageID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n  \"title\": \"Invalid test name\",\n  \"status\": 500,\n  \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n  \"instance\": \"http://10.23.23.123:8088/tests\",\n  \"errorCode\": \"user-limit\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "544e2390-23e0-4a18-b4d4-7e069f46b70b",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-pages",
+                    ":statusPageID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statusPageID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n  \"title\": \"Invalid test name\",\n  \"status\": 500,\n  \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n  \"instance\": \"http://10.23.23.123:8088/tests\",\n  \"errorCode\": \"user-limit\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b6aa27d3-fa83-43f2-9387-502b52affa25",
+          "name": "Get incidents for status page",
+          "request": {
+            "name": "Get incidents for status page",
+            "description": {
+              "content": "Returns the list of incidents for the given statusPageID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status-pages",
+                ":statusPageID",
+                "incidents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "statusPageID",
+                  "description": "(Required) unique id of the status page"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d9abd409-d321-434f-a87c-93a9fd536053",
+              "name": "list of incidents",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-pages",
+                    ":statusPageID",
+                    "incidents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statusPageID",
+                      "description": "(Required) unique id of the status page"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"elements\": [\n    {\n      \"name\": \"API migration problem\",\n      \"severity\": \"major\",\n      \"visibility\": \"published\",\n      \"description\": \"API Service was down due to unexpected changes in one of the dependencies.\",\n      \"id\": \"string\",\n      \"labels\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"createdAt\": \"1988-03-20T11:15:23.161Z\",\n      \"updatedAt\": \"2013-08-25T00:30:24.935Z\",\n      \"startDate\": \"1985-07-26T04:04:53.308Z\",\n      \"endDate\": \"1974-12-01T07:35:59.997Z\"\n    },\n    {\n      \"name\": \"API migration problem\",\n      \"severity\": \"major\",\n      \"visibility\": \"published\",\n      \"description\": \"API Service was down due to unexpected changes in one of the dependencies.\",\n      \"id\": \"string\",\n      \"labels\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\",\n        \"key_3\": \"string\"\n      },\n      \"createdAt\": \"2025-12-30T23:24:18.181Z\",\n      \"updatedAt\": \"1947-08-06T15:53:24.503Z\",\n      \"startDate\": \"1981-12-17T14:06:05.214Z\",\n      \"endDate\": \"1991-09-01T06:49:26.846Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16aa7224-8608-472c-9c34-757336af3cc6",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-pages",
+                    ":statusPageID",
+                    "incidents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statusPageID",
+                      "description": "(Required) unique id of the status page"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n  \"title\": \"Invalid test name\",\n  \"status\": 500,\n  \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n  \"instance\": \"http://10.23.23.123:8088/tests\",\n  \"errorCode\": \"user-limit\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fcfb96ce-b868-46b7-bf7d-8fa8c044bc92",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-pages",
+                    ":statusPageID",
+                    "incidents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statusPageID",
+                      "description": "(Required) unique id of the status page"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n  \"title\": \"Invalid test name\",\n  \"status\": 500,\n  \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n  \"instance\": \"http://10.23.23.123:8088/tests\",\n  \"errorCode\": \"user-limit\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9ea6c036-a3af-4ad8-a69e-da3ff655c7aa",
+              "name": "500 Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-pages",
+                    ":statusPageID",
+                    "incidents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statusPageID",
+                      "description": "(Required) unique id of the status page"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://kubeshop.io/testkube/problems/invalidtestname\",\n  \"title\": \"Invalid test name\",\n  \"status\": 500,\n  \"detail\": \"Your test name can't contain forbidden characters like \\\"}}}\\\" passed\",\n  \"instance\": \"http://10.23.23.123:8088/tests\",\n  \"errorCode\": \"user-limit\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.testkube.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "446ab5f7-27f3-4ff2-8b7a-727b08dad8c8",
+    "name": "Testkube Standalone Agent api Status Pages API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for Testkube Standalone Agent\n\nContact Support:\n Email: info@testkube.io",
+      "type": "text/plain"
+    }
+  }
+}

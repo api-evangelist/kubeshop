@@ -1,0 +1,496 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testkube Standalone Agent api tests API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "tests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get test suite metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suites/:id/metrics",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "last",
+                "value": "",
+                "type": "query",
+                "description": "last N days to show"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "limit records count same as pageSize"
+              }
+            ]
+          },
+          "docs": "Gets test suite metrics for given tests executions, with particular execution status and timings"
+        },
+        {
+          "info": {
+            "name": "Starts new test executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/executions",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "executionSelector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "concurrency",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "New test executions returns new executions details on successful executions start"
+        },
+        {
+          "info": {
+            "name": "List tests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/tests",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "textSearch",
+                "value": "",
+                "type": "query",
+                "description": "text to search in name and test name"
+              }
+            ]
+          },
+          "docs": "List available tests"
+        },
+        {
+          "info": {
+            "name": "Create new test",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/tests",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new test based on file content, uri or git based data"
+        },
+        {
+          "info": {
+            "name": "Delete tests",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/tests",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes all or labeled tests"
+        },
+        {
+          "info": {
+            "name": "Get test",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/tests/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Gets the specified test"
+        },
+        {
+          "info": {
+            "name": "Update test",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/tests/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update test based on test content or git based data"
+        },
+        {
+          "info": {
+            "name": "Delete test",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/tests/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "skipDeleteExecutions",
+                "value": "",
+                "type": "query",
+                "description": "dont delete executions"
+              },
+              {
+                "name": "skipDeleteCRD",
+                "value": "",
+                "type": "query",
+                "description": "dont delete CRD"
+              }
+            ]
+          },
+          "docs": "Deletes a test"
+        },
+        {
+          "info": {
+            "name": "Abort all executions of a test",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/tests/:id/abort",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Abort all test executions"
+        },
+        {
+          "info": {
+            "name": "Get test metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/tests/:id/metrics",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "last",
+                "value": "",
+                "type": "query",
+                "description": "last N days to show"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "limit records count same as pageSize"
+              }
+            ]
+          },
+          "docs": "Gets test metrics for given tests executions, with particular execution status and timings"
+        },
+        {
+          "info": {
+            "name": "List test with executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-with-executions",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "textSearch",
+                "value": "",
+                "type": "query",
+                "description": "text to search in name and test name"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "optional status filter containing multiple values separated by comma"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "the number of executions to get, setting to 0 will return only totals"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "the page index to start at"
+              }
+            ]
+          },
+          "docs": "List available test with executions"
+        },
+        {
+          "info": {
+            "name": "Get test with execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-with-executions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Gets the specified test with execution"
+        },
+        {
+          "info": {
+            "name": "Get all test executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/tests/:id/executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "last",
+                "value": "",
+                "type": "query",
+                "description": "last N days to show"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "the number of executions to get, setting to 0 will return only totals"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "the page index to start at"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "optional status filter containing multiple values separated by comma"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "startDate for filtering in ISO-8601 format, i.e. \"yyyy-mm-dd\""
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "endDate for filtering"
+              }
+            ]
+          },
+          "docs": "Returns array of all available test executions"
+        },
+        {
+          "info": {
+            "name": "Starts new test execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/tests/:id/executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "testExecutionName",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "New test execution returns new execution details on successful execution start"
+        },
+        {
+          "info": {
+            "name": "Get test execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/tests/:id/executions/:executionID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Returns execution with given executionID"
+        },
+        {
+          "info": {
+            "name": "Aborts execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/tests/:id/executions/:executionID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Aborts execution with given executionID"
+        },
+        {
+          "info": {
+            "name": "Upload file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/uploads",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "parentName",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "parentType",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "filePath",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload file to be used in executions and tests"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

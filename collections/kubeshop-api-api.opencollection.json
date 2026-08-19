@@ -1,0 +1,2934 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testkube Standalone Agent api API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "api",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List cluster resources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/cluster-resources",
+            "params": [
+              {
+                "name": "watchable",
+                "value": "",
+                "type": "query",
+                "description": "When true, drop resources the agent cannot list+watch."
+              }
+            ]
+          },
+          "docs": "Returns every Group/Version/Kind the cluster exposes, tagged with whether\nthe agent ServiceAccount has list+watch permission. Backs the UI dropdown\nfor picking what resource a TestTrigger or WorkflowTrigger should watch.\n"
+        },
+        {
+          "info": {
+            "name": "Test triggers keymap",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/keymap/triggers"
+          },
+          "docs": "Returns a keymap (supported/allowed fields) for the test trigger UI screen"
+        },
+        {
+          "info": {
+            "name": "List test triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/triggers",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List test triggers from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Create new test trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/triggers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new test trigger CRD inside a Kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Bulk update test triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/triggers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates test triggers provided as an array in the request body"
+        },
+        {
+          "info": {
+            "name": "Delete test triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/triggers",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes all or labeled test triggers"
+        },
+        {
+          "info": {
+            "name": "Get test trigger by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/triggers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get test trigger by ID from CRD in kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Update test trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/triggers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "query",
+                "description": "Update mode for the trigger. When set to \"replace\", the entire trigger \nis replaced with the request body (full replacement semantics). When not \nset or set to any other value, merge semantics are used where only \nnon-null fields from the request are applied to the existing trigger.\nThis is used by cloud-api to signal that the original request was YAML.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update test trigger"
+        },
+        {
+          "info": {
+            "name": "Delete test trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/triggers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes a test trigger"
+        },
+        {
+          "info": {
+            "name": "Get all test suites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suites",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "textSearch",
+                "value": "",
+                "type": "query",
+                "description": "text to search in name and test name"
+              }
+            ]
+          },
+          "docs": "Returns array of test suites"
+        },
+        {
+          "info": {
+            "name": "Create new test suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-suites",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new test suite action"
+        },
+        {
+          "info": {
+            "name": "Delete test suites",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/test-suites",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes all or labeled test suites"
+        },
+        {
+          "info": {
+            "name": "Get test suite by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suites/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Returns test suite with given name"
+        },
+        {
+          "info": {
+            "name": "Update test suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/test-suites/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update test based on test suite content or git based data"
+        },
+        {
+          "info": {
+            "name": "Delete test suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/test-suites/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "skipDeleteCRD",
+                "value": "",
+                "type": "query",
+                "description": "dont delete CRD"
+              }
+            ]
+          },
+          "docs": "Deletes a test suite"
+        },
+        {
+          "info": {
+            "name": "Get test suite metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suites/:id/metrics",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "last",
+                "value": "",
+                "type": "query",
+                "description": "last N days to show"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "limit records count same as pageSize"
+              }
+            ]
+          },
+          "docs": "Gets test suite metrics for given tests executions, with particular execution status and timings"
+        },
+        {
+          "info": {
+            "name": "List tests for test suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suites/:id/tests",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "List available tests for test suite"
+        },
+        {
+          "info": {
+            "name": "Abort all executions of a test suite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-suites/:id/abort",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Abort all test executions of a test suite"
+        },
+        {
+          "info": {
+            "name": "Get all test suite with executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suite-with-executions",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "textSearch",
+                "value": "",
+                "type": "query",
+                "description": "text to search in name and test name"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "optional status filter containing multiple values separated by comma"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "the number of executions to get, setting to 0 will return only totals"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "the page index to start at"
+              }
+            ]
+          },
+          "docs": "Returns array of test suite with executions"
+        },
+        {
+          "info": {
+            "name": "Get test suite by ID with execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suite-with-executions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Returns test suite with given name with execution"
+        },
+        {
+          "info": {
+            "name": "Get all test suite executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suites/:id/executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "the number of executions to get, setting to 0 will return only totals"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "the page index to start at"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "optional status filter containing multiple values separated by comma"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "startDate for filtering in ISO-8601 format, i.e. \"yyyy-mm-dd\""
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "endDate for filtering"
+              }
+            ]
+          },
+          "docs": "Returns array of all available test suite executions"
+        },
+        {
+          "info": {
+            "name": "Starts new test suite execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-suites/:id/executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "last",
+                "value": "",
+                "type": "query",
+                "description": "last N days to show"
+              },
+              {
+                "name": "testSuiteExecutionName",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "New test suite execution returns new execution details on successful execution start"
+        },
+        {
+          "info": {
+            "name": "Get test suite execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suites/:id/executions/:executionID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Returns test suite execution with given executionID"
+        },
+        {
+          "info": {
+            "name": "Aborts testsuite execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/test-suites/:id/executions/:executionID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Aborts testsuite execution with given executionID"
+        },
+        {
+          "info": {
+            "name": "Get test suite execution artifacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suites/:id/executions/:executionID/artifacts",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Returns test suite execution artifacts with given executionID"
+        },
+        {
+          "info": {
+            "name": "Get all test suite executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suite-executions",
+            "params": [
+              {
+                "name": "last",
+                "value": "",
+                "type": "query",
+                "description": "last N days to show"
+              },
+              {
+                "name": "test",
+                "value": "",
+                "type": "query",
+                "description": "test namespaced name to filter"
+              },
+              {
+                "name": "textSearch",
+                "value": "",
+                "type": "query",
+                "description": "text to search in name and test name"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "the number of executions to get, setting to 0 will return only totals"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "the page index to start at"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "optional status filter containing multiple values separated by comma"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "startDate for filtering in ISO-8601 format, i.e. \"yyyy-mm-dd\""
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "endDate for filtering"
+              },
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns array of test suite executions"
+        },
+        {
+          "info": {
+            "name": "Starts new test suite executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-suite-executions",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "concurrency",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "New test suite executions returns new executions details on successful executions start"
+        },
+        {
+          "info": {
+            "name": "Get test suite execution by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suite-executions/:executionID",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              },
+              {
+                "name": "last",
+                "value": "",
+                "type": "query",
+                "description": "last N days to show"
+              }
+            ]
+          },
+          "docs": "Returns test suite execution with given executionID"
+        },
+        {
+          "info": {
+            "name": "Aborts testsuite execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/test-suite-executions/:executionID",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Aborts testsuite execution with given executionID"
+        },
+        {
+          "info": {
+            "name": "Get test suite execution artifacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-suite-executions/:executionID/artifacts",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Returns test suite execution artifacts with given executionID"
+        },
+        {
+          "info": {
+            "name": "Get all test executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/executions",
+            "params": [
+              {
+                "name": "test",
+                "value": "",
+                "type": "query",
+                "description": "test namespaced name to filter"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "object type"
+              },
+              {
+                "name": "textSearch",
+                "value": "",
+                "type": "query",
+                "description": "text to search in name and test name"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "the number of executions to get, setting to 0 will return only totals"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "the page index to start at"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "optional status filter containing multiple values separated by comma"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "startDate for filtering in ISO-8601 format, i.e. \"yyyy-mm-dd\""
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "endDate for filtering"
+              },
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns array of test executions"
+        },
+        {
+          "info": {
+            "name": "Starts new test executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/executions",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "executionSelector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "concurrency",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "New test executions returns new executions details on successful executions start"
+        },
+        {
+          "info": {
+            "name": "Get test execution by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/executions/:executionID",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Returns execution with given executionID"
+        },
+        {
+          "info": {
+            "name": "Get execution's artifacts by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/executions/:id/artifacts",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Returns artifacts of the given executionID"
+        },
+        {
+          "info": {
+            "name": "Get execution's logs by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/executions/:id/logs",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Returns logs of the given executionID"
+        },
+        {
+          "info": {
+            "name": "Get execution's logs by ID version 2",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/executions/:id/logs/v2",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Returns logs of the given executionID version 2"
+        },
+        {
+          "info": {
+            "name": "Download artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/executions/:id/artifacts/:filename",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "path",
+                "description": "filename of the object usually used for artifacts"
+              }
+            ]
+          },
+          "docs": "Download the artifact file from the given execution"
+        },
+        {
+          "info": {
+            "name": "Download artifact archive",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/executions/:id/artifact-archive",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "mask",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Download the artifact archive from the given execution"
+        },
+        {
+          "info": {
+            "name": "List tests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/tests",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "textSearch",
+                "value": "",
+                "type": "query",
+                "description": "text to search in name and test name"
+              }
+            ]
+          },
+          "docs": "List available tests"
+        },
+        {
+          "info": {
+            "name": "Create new test",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/tests",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new test based on file content, uri or git based data"
+        },
+        {
+          "info": {
+            "name": "Delete tests",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/tests",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes all or labeled tests"
+        },
+        {
+          "info": {
+            "name": "Get test",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/tests/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Gets the specified test"
+        },
+        {
+          "info": {
+            "name": "Update test",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/tests/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update test based on test content or git based data"
+        },
+        {
+          "info": {
+            "name": "Delete test",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/tests/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "skipDeleteExecutions",
+                "value": "",
+                "type": "query",
+                "description": "dont delete executions"
+              },
+              {
+                "name": "skipDeleteCRD",
+                "value": "",
+                "type": "query",
+                "description": "dont delete CRD"
+              }
+            ]
+          },
+          "docs": "Deletes a test"
+        },
+        {
+          "info": {
+            "name": "Abort all executions of a test",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/tests/:id/abort",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Abort all test executions"
+        },
+        {
+          "info": {
+            "name": "Get test metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/tests/:id/metrics",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "last",
+                "value": "",
+                "type": "query",
+                "description": "last N days to show"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "limit records count same as pageSize"
+              }
+            ]
+          },
+          "docs": "Gets test metrics for given tests executions, with particular execution status and timings"
+        },
+        {
+          "info": {
+            "name": "List test with executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-with-executions",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "textSearch",
+                "value": "",
+                "type": "query",
+                "description": "text to search in name and test name"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "optional status filter containing multiple values separated by comma"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "the number of executions to get, setting to 0 will return only totals"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "the page index to start at"
+              }
+            ]
+          },
+          "docs": "List available test with executions"
+        },
+        {
+          "info": {
+            "name": "Get test with execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-with-executions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Gets the specified test with execution"
+        },
+        {
+          "info": {
+            "name": "Get all test executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/tests/:id/executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "last",
+                "value": "",
+                "type": "query",
+                "description": "last N days to show"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "the number of executions to get, setting to 0 will return only totals"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "the page index to start at"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "optional status filter containing multiple values separated by comma"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "startDate for filtering in ISO-8601 format, i.e. \"yyyy-mm-dd\""
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "endDate for filtering"
+              }
+            ]
+          },
+          "docs": "Returns array of all available test executions"
+        },
+        {
+          "info": {
+            "name": "Starts new test execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/tests/:id/executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "testExecutionName",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "New test execution returns new execution details on successful execution start"
+        },
+        {
+          "info": {
+            "name": "Get test execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/tests/:id/executions/:executionID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Returns execution with given executionID"
+        },
+        {
+          "info": {
+            "name": "Aborts execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/tests/:id/executions/:executionID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Aborts execution with given executionID"
+        },
+        {
+          "info": {
+            "name": "List executors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/executors",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List executors available in cluster"
+        },
+        {
+          "info": {
+            "name": "Create new executor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/executors",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new executor based on variables passed in request"
+        },
+        {
+          "info": {
+            "name": "Delete executors",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/executors",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes labeled executors"
+        },
+        {
+          "info": {
+            "name": "Get executor details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/executors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Returns executors data with executions passed to executor"
+        },
+        {
+          "info": {
+            "name": "Update executor",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/executors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update new executor based on variables passed in request"
+        },
+        {
+          "info": {
+            "name": "Delete executor",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/executors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Deletes executor by its name"
+        },
+        {
+          "info": {
+            "name": "Get executor details by type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/executor-by-types",
+            "params": [
+              {
+                "name": "testType",
+                "value": "",
+                "type": "query",
+                "description": "test type of the executor"
+              }
+            ]
+          },
+          "docs": "Returns executors data with executions passed to executor"
+        },
+        {
+          "info": {
+            "name": "List webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/webhooks",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List webhooks available in cluster"
+        },
+        {
+          "info": {
+            "name": "Create new webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/webhooks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new webhook based on variables passed in request"
+        },
+        {
+          "info": {
+            "name": "Delete webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/webhooks",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes labeled webhooks"
+        },
+        {
+          "info": {
+            "name": "Get webhook details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/webhooks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Returns webhook"
+        },
+        {
+          "info": {
+            "name": "Update new webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/webhooks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update new webhook based on variables passed in request"
+        },
+        {
+          "info": {
+            "name": "Delete webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/webhooks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Deletes webhook by its name"
+        },
+        {
+          "info": {
+            "name": "List webhook templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/webhook-templates",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List webhook templates available in cluster"
+        },
+        {
+          "info": {
+            "name": "Create new webhook template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/webhook-templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new webhook template based on variables passed in request"
+        },
+        {
+          "info": {
+            "name": "Delete webhook templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/webhook-templates",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes labeled webhook templates"
+        },
+        {
+          "info": {
+            "name": "Get webhook template details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/webhook-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Returns webhook template"
+        },
+        {
+          "info": {
+            "name": "Update new webhook template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/webhook-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update new webhook template based on variables passed in request"
+        },
+        {
+          "info": {
+            "name": "Delete webhook template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/webhook-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Deletes webhook template by its name"
+        },
+        {
+          "info": {
+            "name": "List templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/templates",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List templates available in cluster"
+        },
+        {
+          "info": {
+            "name": "Create new template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new template based on variables passed in request"
+        },
+        {
+          "info": {
+            "name": "Delete templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/templates",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes labeled templates"
+        },
+        {
+          "info": {
+            "name": "Get template details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Returns template"
+        },
+        {
+          "info": {
+            "name": "Update new template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update new template based on variables passed in request"
+        },
+        {
+          "info": {
+            "name": "Delete template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Deletes template by its name"
+        },
+        {
+          "info": {
+            "name": "Get config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/config"
+          },
+          "docs": "Get config from cluster storage state"
+        },
+        {
+          "info": {
+            "name": "Update config",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates config in cluster storage state"
+        },
+        {
+          "info": {
+            "name": "Get debug information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/debug"
+          },
+          "docs": "Gets information that is needed for debugging and opening Testkube bug reports"
+        },
+        {
+          "info": {
+            "name": "Export execution data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/export",
+            "params": [
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "Export only executions created after this date. Accepts ISO 8601 date (YYYY-MM-DD) or RFC 3339 timestamp (e.g. 2025-01-01T00:00:00Z)."
+              }
+            ]
+          },
+          "docs": "Exports all execution metadata, logs and workflow sequence numbers as a gzipped tar archive. The archive size is limited by the server (configured via the EXPORT_ARCHIVE_MAX_SIZE env var); use the 'since' parameter to narrow the date range if the limit is exceeded."
+        },
+        {
+          "info": {
+            "name": "List test sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-sources",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List test sources available in cluster"
+        },
+        {
+          "info": {
+            "name": "Create new test source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-sources",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new test source based on variables passed in request"
+        },
+        {
+          "info": {
+            "name": "Process test source batch (create, update, delete)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/test-sources",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Process test source batch based on variables passed in request"
+        },
+        {
+          "info": {
+            "name": "Delete test sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/test-sources",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deletes labeled test sources"
+        },
+        {
+          "info": {
+            "name": "Get test source data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-sources/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Returns test sources data"
+        },
+        {
+          "info": {
+            "name": "Update test source",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/test-sources/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update test source based on test content or git based data"
+        },
+        {
+          "info": {
+            "name": "Delete test source",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/test-sources/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Deletes test source by its name"
+        },
+        {
+          "info": {
+            "name": "Upload file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/uploads",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "parentName",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "parentType",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "filePath",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload file to be used in executions and tests"
+        },
+        {
+          "info": {
+            "name": "Validate new repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/repositories",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validate new repository based on variables passed in request"
+        },
+        {
+          "info": {
+            "name": "List secrets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/secrets",
+            "params": [
+              {
+                "name": "all",
+                "value": "",
+                "type": "query",
+                "description": "flag to request all resources"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List secrets available in cluster"
+        },
+        {
+          "info": {
+            "name": "Create secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/secrets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create secret in the cluster"
+        },
+        {
+          "info": {
+            "name": "Get secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/secrets/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Get secret in the cluster"
+        },
+        {
+          "info": {
+            "name": "Update secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.testkube.io/secrets/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update secret in the cluster"
+        },
+        {
+          "info": {
+            "name": "Delete secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/secrets/:id",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Delete secret in the cluster"
+        },
+        {
+          "info": {
+            "name": "List test workflows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflows",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List test workflows from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Create test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflows",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create test workflow in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Validate test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.testkube.io/test-workflows"
+          },
+          "docs": "Validate test workflow specification against CRD schema"
+        },
+        {
+          "info": {
+            "name": "Delete test workflows",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/test-workflows",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "testWorkflowNames",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete test workflows from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "List test workflows with latest execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-with-executions",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List test workflows from the kubernetes cluster with latest execution"
+        },
+        {
+          "info": {
+            "name": "Get test workflow details with latest execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-with-executions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Get test workflow details from the kubernetes cluster with latest execution"
+        },
+        {
+          "info": {
+            "name": "List test workflow execution tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-with-executions/:id/tags",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "List test workflow execution tags for all executed test workflows"
+        },
+        {
+          "info": {
+            "name": "List test workflow executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflows/:id/executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "tagSelector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "actorName",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "actorType",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List test workflow executions"
+        },
+        {
+          "info": {
+            "name": "Execute test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflows/:id/executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "testWorkflowExecutionName",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute test workflow in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "List test workflow execution tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflows/:id/tags",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "List test workflow execution tags for all executed test workflows"
+        },
+        {
+          "info": {
+            "name": "Get test workflow metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflows/:id/metrics",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Get metrics of test workflow executions"
+        },
+        {
+          "info": {
+            "name": "Get test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflows/:id/executions/:executionID",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Get test workflow execution details"
+        },
+        {
+          "info": {
+            "name": "Abort test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflows/:id/executions/:executionID/abort",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              },
+              {
+                "name": "forceAgent",
+                "value": "",
+                "type": "query",
+                "description": "force cancellation using agent"
+              }
+            ]
+          },
+          "docs": "Abort test workflow execution"
+        },
+        {
+          "info": {
+            "name": "Rerun test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflows/:id/executions/:executionID/rerun",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rerun test workflow execution"
+        },
+        {
+          "info": {
+            "name": "List test workflow executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-executions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "tagSelector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "actorName",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "actorType",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List test workflow executions"
+        },
+        {
+          "info": {
+            "name": "Execute test workflows",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflow-executions",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "concurrency",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute test workflows in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Get test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Get test workflow execution details"
+        },
+        {
+          "info": {
+            "name": "Get test workflow execution's artifacts by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID/artifacts",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ]
+          },
+          "docs": "Returns artifacts of the given executionID"
+        },
+        {
+          "info": {
+            "name": "Download test workflow artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID/artifacts/:filename",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "path",
+                "description": "filename of the object usually used for artifacts"
+              }
+            ]
+          },
+          "docs": "Download the artifact file from the given execution"
+        },
+        {
+          "info": {
+            "name": "Download test workflow artifact archive",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID/artifact-archive",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              },
+              {
+                "name": "mask",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Download the artifact archive from the given execution"
+        },
+        {
+          "info": {
+            "name": "Abort test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID/abort",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              },
+              {
+                "name": "forceAgent",
+                "value": "",
+                "type": "query",
+                "description": "force cancellation using agent"
+              }
+            ]
+          },
+          "docs": "Abort test workflow execution"
+        },
+        {
+          "info": {
+            "name": "Rerun test workflow execution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflow-executions/:executionID/rerun",
+            "params": [
+              {
+                "name": "executionID",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object execution"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rerun test workflow execution"
+        },
+        {
+          "info": {
+            "name": "Abort all test workflow executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflows/:id/abort",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Abort all test workflow executions"
+        },
+        {
+          "info": {
+            "name": "Preview test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/preview-test-workflow",
+            "params": [
+              {
+                "name": "inline",
+                "value": "",
+                "type": "query",
+                "description": "should inline templates in the resolved workflow"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Preview test workflow after including templates inside"
+        },
+        {
+          "info": {
+            "name": "Get test workflow details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflows/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Get test workflow details from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Update test workflow details",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.testkube.io/test-workflows/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update test workflow details in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Delete test workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/test-workflows/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              },
+              {
+                "name": "skipDeleteExecutions",
+                "value": "",
+                "type": "query",
+                "description": "dont delete executions"
+              },
+              {
+                "name": "skipDeleteCRD",
+                "value": "",
+                "type": "query",
+                "description": "dont delete CRD"
+              }
+            ]
+          },
+          "docs": "Delete test workflow from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "List test workflow templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-templates",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List test workflow templates from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Create test workflow template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/test-workflow-templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create test workflow template in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Validate test workflow template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.testkube.io/test-workflow-templates"
+          },
+          "docs": "Validate test workflow template specification against CRD schema"
+        },
+        {
+          "info": {
+            "name": "Delete test workflow templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/test-workflow-templates",
+            "params": [
+              {
+                "name": "selector",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete test workflow templates from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Get test workflow template details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/test-workflow-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Get test workflow template details from the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Update test workflow template details",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.testkube.io/test-workflow-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update test workflow template details in the kubernetes cluster"
+        },
+        {
+          "info": {
+            "name": "Delete test workflow template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.testkube.io/test-workflow-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "unique id of the object"
+              }
+            ]
+          },
+          "docs": "Delete test workflow template from the kubernetes cluster"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

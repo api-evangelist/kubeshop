@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testkube Standalone Agent api repository API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "repository",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Validate new repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.testkube.io/repositories",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validate new repository based on variables passed in request"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

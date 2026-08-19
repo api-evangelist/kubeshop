@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Testkube Standalone Agent api cluster-resources API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "cluster-resources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List cluster resources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.testkube.io/cluster-resources",
+            "params": [
+              {
+                "name": "watchable",
+                "value": "",
+                "type": "query",
+                "description": "When true, drop resources the agent cannot list+watch."
+              }
+            ]
+          },
+          "docs": "Returns every Group/Version/Kind the cluster exposes, tagged with whether\nthe agent ServiceAccount has list+watch permission. Backs the UI dropdown\nfor picking what resource a TestTrigger or WorkflowTrigger should watch.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
