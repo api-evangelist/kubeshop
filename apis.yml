@@ -44,6 +44,19 @@ tags:
 - Test Automation
 - Observability
 - DevOps
+- Cloud-Native
+- Quality Assurance
+- Open-Source
+- MCP
+tags_raw:
+- Company
+- Testing
+- Kubernetes
+- Continuous Integration
+- Developer Tools
+- Test Automation
+- Observability
+- DevOps
 - Cloud Native
 - Quality Assurance
 - Open Source
@@ -59,7 +72,8 @@ apis:
   description: Testkube API operations
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
-  tags:
+  tags: []
+  tags_raw:
   - api
   properties:
   - type: OpenAPI
@@ -76,6 +90,8 @@ apis:
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
   tags:
+  - Artifacts
+  tags_raw:
   - artifacts
   properties:
   - type: OpenAPI
@@ -108,6 +124,8 @@ apis:
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
   tags:
+  - Execution
+  tags_raw:
   - Executions
   properties:
   - type: OpenAPI
@@ -156,6 +174,8 @@ apis:
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
   tags:
+  - Labels
+  tags_raw:
   - labels
   properties:
   - type: OpenAPI
@@ -172,6 +192,8 @@ apis:
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
   tags:
+  - Logs
+  tags_raw:
   - logs
   properties:
   - type: OpenAPI
@@ -188,6 +210,8 @@ apis:
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -204,6 +228,8 @@ apis:
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
   tags:
+  - PRO
+  tags_raw:
   - pro
   properties:
   - type: OpenAPI
@@ -220,6 +246,8 @@ apis:
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
   tags:
+  - Repository
+  tags_raw:
   - repository
   properties:
   - type: OpenAPI
@@ -236,6 +264,8 @@ apis:
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
   tags:
+  - Secrets
+  tags_raw:
   - secrets
   properties:
   - type: OpenAPI
@@ -268,6 +298,8 @@ apis:
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
   tags:
+  - Tags
+  tags_raw:
   - tags
   properties:
   - type: OpenAPI
@@ -284,6 +316,8 @@ apis:
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
   tags:
+  - Template
+  tags_raw:
   - template
   properties:
   - type: OpenAPI
@@ -300,6 +334,8 @@ apis:
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
   tags:
+  - Templates
+  tags_raw:
   - templates
   properties:
   - type: OpenAPI
@@ -332,6 +368,8 @@ apis:
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
   tags:
+  - Test Suites
+  tags_raw:
   - test-suites
   properties:
   - type: OpenAPI
@@ -431,6 +469,8 @@ apis:
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
   tags:
+  - Tests
+  tags_raw:
   - tests
   properties:
   - type: OpenAPI
@@ -463,6 +503,8 @@ apis:
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
@@ -479,6 +521,8 @@ apis:
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
   tags:
+  - Webhook
+  tags_raw:
   - webhook
   properties:
   - type: OpenAPI
@@ -527,6 +571,8 @@ apis:
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
