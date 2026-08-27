@@ -222,24 +222,6 @@ apis:
     url: https://docs.testkube.io/openapi/agent/default--test-workflows
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
-- aid: kubeshop:kubeshop-pro-api
-  name: Kubeshop pro API
-  description: The pro API from Kubeshop — 18 operation(s) for pro.
-  humanURL: https://docs.testkube.io/openapi/overview
-  baseURL: https://api.testkube.io
-  tags:
-  - PRO
-  tags_raw:
-  - pro
-  properties:
-  - type: OpenAPI
-    url: openapi/kubeshop-pro-api-openapi.yml
-  - type: Documentation
-    url: https://docs.testkube.io/openapi/overview
-  - type: Documentation
-    url: https://docs.testkube.io/openapi/agent/default--test-workflows
-  - type: SourceCode
-    url: https://github.com/kubeshop/testkube
 - aid: kubeshop:kubeshop-repository-api
   name: Kubeshop repository API
   description: The repository API from Kubeshop — 1 operation(s) for repository.
@@ -396,57 +378,6 @@ apis:
     url: https://docs.testkube.io/openapi/agent/default--test-workflows
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
-- aid: kubeshop:kubeshop-test-workflow-executions-api
-  name: Kubeshop Test Workflow Executions API
-  description: >-
-    The Test Workflow Executions API from Kubeshop — 7 operation(s) for test workflow executions.
-  humanURL: https://docs.testkube.io/openapi/overview
-  baseURL: https://api.testkube.io
-  tags:
-  - Test Workflow Executions
-  properties:
-  - type: OpenAPI
-    url: openapi/kubeshop-test-workflow-executions-api-openapi.yml
-  - type: Documentation
-    url: https://docs.testkube.io/openapi/overview
-  - type: Documentation
-    url: https://docs.testkube.io/openapi/agent/default--test-workflows
-  - type: SourceCode
-    url: https://github.com/kubeshop/testkube
-- aid: kubeshop:kubeshop-test-workflow-templates-api
-  name: Kubeshop Test Workflow Templates API
-  description: >-
-    The Test Workflow Templates API from Kubeshop — 2 operation(s) for test workflow templates.
-  humanURL: https://docs.testkube.io/openapi/overview
-  baseURL: https://api.testkube.io
-  tags:
-  - Test Workflow Templates
-  properties:
-  - type: OpenAPI
-    url: openapi/kubeshop-test-workflow-templates-api-openapi.yml
-  - type: Documentation
-    url: https://docs.testkube.io/openapi/overview
-  - type: Documentation
-    url: https://docs.testkube.io/openapi/agent/default--test-workflows
-  - type: SourceCode
-    url: https://github.com/kubeshop/testkube
-- aid: kubeshop:kubeshop-test-workflow-with-executions-api
-  name: Kubeshop Test Workflow With Executions API
-  description: >-
-    The Test Workflow With Executions API from Kubeshop — 3 operation(s) for test workflow with executions.
-  humanURL: https://docs.testkube.io/openapi/overview
-  baseURL: https://api.testkube.io
-  tags:
-  - Test Workflow With Executions
-  properties:
-  - type: OpenAPI
-    url: openapi/kubeshop-test-workflow-with-executions-api-openapi.yml
-  - type: Documentation
-    url: https://docs.testkube.io/openapi/overview
-  - type: Documentation
-    url: https://docs.testkube.io/openapi/agent/default--test-workflows
-  - type: SourceCode
-    url: https://github.com/kubeshop/testkube
 - aid: kubeshop:kubeshop-test-workflows-api
   name: Kubeshop Test Workflows API
   description: The Test Workflows API from Kubeshop — 22 operation(s) for test workflows.
@@ -475,22 +406,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/kubeshop-tests-api-openapi.yml
-  - type: Documentation
-    url: https://docs.testkube.io/openapi/overview
-  - type: Documentation
-    url: https://docs.testkube.io/openapi/agent/default--test-workflows
-  - type: SourceCode
-    url: https://github.com/kubeshop/testkube
-- aid: kubeshop:kubeshop-triggers-api
-  name: Kubeshop Triggers API
-  description: The Triggers API from Kubeshop — 2 operation(s) for triggers.
-  humanURL: https://docs.testkube.io/openapi/overview
-  baseURL: https://api.testkube.io
-  tags:
-  - Triggers
-  properties:
-  - type: OpenAPI
-    url: openapi/kubeshop-triggers-api-openapi.yml
   - type: Documentation
     url: https://docs.testkube.io/openapi/overview
   - type: Documentation
@@ -543,40 +458,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/kubeshop-webhook-template-api-openapi.yml
-  - type: Documentation
-    url: https://docs.testkube.io/openapi/overview
-  - type: Documentation
-    url: https://docs.testkube.io/openapi/agent/default--test-workflows
-  - type: SourceCode
-    url: https://github.com/kubeshop/testkube
-- aid: kubeshop:kubeshop-webhook-templates-api
-  name: Kubeshop Webhook Templates API
-  description: The Webhook Templates API from Kubeshop — 2 operation(s) for webhook templates.
-  humanURL: https://docs.testkube.io/openapi/overview
-  baseURL: https://api.testkube.io
-  tags:
-  - Webhook Templates
-  properties:
-  - type: OpenAPI
-    url: openapi/kubeshop-webhook-templates-api-openapi.yml
-  - type: Documentation
-    url: https://docs.testkube.io/openapi/overview
-  - type: Documentation
-    url: https://docs.testkube.io/openapi/agent/default--test-workflows
-  - type: SourceCode
-    url: https://github.com/kubeshop/testkube
-- aid: kubeshop:kubeshop-webhooks-api
-  name: Kubeshop Webhooks API
-  description: The Webhooks API from Kubeshop — 2 operation(s) for webhooks.
-  humanURL: https://docs.testkube.io/openapi/overview
-  baseURL: https://api.testkube.io
-  tags:
-  - Webhook
-  tags_raw:
-  - Webhooks
-  properties:
-  - type: OpenAPI
-    url: openapi/kubeshop-webhooks-api-openapi.yml
   - type: Documentation
     url: https://docs.testkube.io/openapi/overview
   - type: Documentation
