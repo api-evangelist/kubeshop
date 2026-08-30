@@ -241,7 +241,7 @@ apis:
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
   tags:
-  - Repository
+  - repository
   tags_raw:
   - repository
   properties:
@@ -363,7 +363,7 @@ apis:
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
   tags:
-  - Test Suites
+  - test-suites
   tags_raw:
   - test-suites
   properties:
