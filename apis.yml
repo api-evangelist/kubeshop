@@ -1,17 +1,14 @@
 aid: kubeshop
 name: Kubeshop
-description: >-
-  Kubeshop is the company behind Testkube, an open-core, Kubernetes-native test
-  orchestration platform. Testkube runs agents inside Kubernetes clusters under a central
-  control plane, orchestrating tests written for existing frameworks — Cypress, Playwright,
-  k6, JMeter, pytest and others — then aggregating executions, logs, artifacts, JUnit
-  reports, flakiness metrics and cross-environment insights for engineering teams. It is
-  configured declaratively through Kubernetes Custom Resource Definitions (TestWorkflow,
-  Webhook, TestTrigger), installed via Helm, and driven by a first-party CLI. Kubeshop
-  publishes three OpenAPI 3.0.1 documents — an open-source API, a standalone agent API and a
-  commercial control-plane API — plus a gRPC service definition and a hosted Model Context
-  Protocol server exposing 30 tools to AI assistants over OAuth 2.1. The company is backed by
-  Insight Partners.
+description: Kubeshop is the company behind Testkube, an open-core, Kubernetes-native test orchestration
+  platform. Testkube runs agents inside Kubernetes clusters under a central control plane, orchestrating
+  tests written for existing frameworks — Cypress, Playwright, k6, JMeter, pytest and others — then aggregating
+  executions, logs, artifacts, JUnit reports, flakiness metrics and cross-environment insights for engineering
+  teams. It is configured declaratively through Kubernetes Custom Resource Definitions (TestWorkflow,
+  Webhook, TestTrigger), installed via Helm, and driven by a first-party CLI. Kubeshop publishes three
+  OpenAPI 3.0.1 documents — an open-source API, a standalone agent API and a commercial control-plane
+  API — plus a gRPC service definition and a hosted Model Context Protocol server exposing 30 tools to
+  AI assistants over OAuth 2.1. The company is backed by Insight Partners.
 url: https://raw.githubusercontent.com/api-evangelist/kubeshop/refs/heads/main/apis.yml
 deliveryModel:
   model: unknown
@@ -47,7 +44,7 @@ x-tier: enriched
 x-tier-reason: three-published-openapi-plus-hosted-mcp
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-07-19'
+modified: '2026-09-16'
 tags:
 - Company
 - Testing
@@ -81,7 +78,7 @@ maintainers:
   email: info@apis.io
 apis:
 - aid: kubeshop:kubeshop-api-api
-  name: Kubeshop api API
+  name: Kubeshop api
   description: Testkube API operations
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
