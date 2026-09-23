@@ -1,18 +1,13 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Testkube Standalone Agent api keymap API
-  description: API for Testkube Standalone Agent
+  title: Testkube Keymap API
+  description: Testkube provides a Kubernetes-native framework for test definition, execution and results
   contact:
-    email: info@testkube.io
+    email: contact@testkube.io
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
   version: 1.0.0
-servers:
-- url: https://api.testkube.io
-  description: Testkube Cloud Control Plane API Endpoint
-- url: https://<your-testkube-api-host>
-  description: Testkube On-Prem API Endpoint
 tags:
 - name: keymap
   description: Keymap for fields in a form
@@ -104,3 +99,6 @@ components:
           - allow
           - forbid
           - replace
+externalDocs:
+  description: Find out more about Testkube
+  url: https://testkube.kubeshop.io/

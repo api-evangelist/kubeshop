@@ -1,18 +1,13 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Testkube Standalone Agent api test-sources API
-  description: API for Testkube Standalone Agent
+  title: Testkube Test Sources API
+  description: Testkube provides a Kubernetes-native framework for test definition, execution and results
   contact:
-    email: info@testkube.io
+    email: contact@testkube.io
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
   version: 1.0.0
-servers:
-- url: https://api.testkube.io
-  description: Testkube Cloud Control Plane API Endpoint
-- url: https://<your-testkube-api-host>
-  description: Testkube On-Prem API Endpoint
 tags:
 - name: test-sources
 paths:
@@ -203,77 +198,32 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Problem'
-    delete:
-      parameters:
-      - $ref: '#/components/parameters/ID'
-      tags:
-      - test-sources
-      summary: Delete test source
-      description: Deletes test source by its name
-      operationId: deleteTestSource
-      responses:
-        204:
-          description: test source deleted successfuly
-        502:
-          description: problem with communicating with kubernetes cluster
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-    get:
-      parameters:
-      - $ref: '#/components/parameters/ID'
-      tags:
-      - test-sources
-      summary: Get test source data
-      description: Returns test sources data
-      operationId: getTestSource
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TestSource'
-            text/yaml:
-              schema:
-                type: string
-        400:
-          description: problem with input for CRD generation
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        404:
-          description: test source not found
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        502:
-          description: problem with communicating with kubernetes cluster
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        500:
-          description: problem with getting test source data
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    Problem:
+      description: problem response in case of error
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type contains a URI that identifies the problem type.
+          example: https://kubeshop.io/testkube/problems/invalidtestname
+        title:
+          type: string
+          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          example: Invalid test name
+        status:
+          type: integer
+          description: HTTP status code for this occurrence of the problem.
+          example: 500
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem.
+          example: Your test name can't contain forbidden characters like "}}}" passed
+        instance:
+          type: string
+          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
+          example: http://10.23.23.123:8088/tests
     Repository:
       description: repository representation for tests in git repositories
       type: object
@@ -325,6 +275,56 @@ components:
           - basic
           - header
           description: auth type for git requests
+    TestSourceUpdateRequest:
+      description: test source update request body
+      type:
+      - object
+      - 'null'
+      allOf:
+      - $ref: '#/components/schemas/TestContent'
+      properties:
+        name:
+          type: string
+          description: test source name
+          example: testsource1
+        namespace:
+          type: string
+          description: test source namespace
+          example: testkube
+        labels:
+          type: object
+          description: test source labels
+          additionalProperties:
+            type: string
+    TestSource:
+      description: Test source resource for shared test content
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/TestContent'
+      properties:
+        name:
+          type: string
+          description: test source name
+          example: testsource1
+        namespace:
+          type: string
+          description: test source namespace
+          example: testkube
+        labels:
+          type: object
+          description: test source labels
+          additionalProperties:
+            type: string
+    TestSourceBatchRequest:
+      description: Test source batch request
+      type: object
+      required:
+      - batch
+      properties:
+        batch:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestSourceUpsertRequest'
     TestSourceBatchResult:
       description: Test source batch result
       type: object
@@ -356,26 +356,6 @@ components:
           - name7
           - name8
           - name9
-    TestSourceUpdateRequest:
-      description: test source update request body
-      type: object
-      nullable: true
-      allOf:
-      - $ref: '#/components/schemas/TestContent'
-      properties:
-        name:
-          type: string
-          description: test source name
-          example: testsource1
-        namespace:
-          type: string
-          description: test source namespace
-          example: testkube
-        labels:
-          type: object
-          description: test source labels
-          additionalProperties:
-            type: string
     TestSourceUpsertRequest:
       description: test source create request body
       type: object
@@ -416,59 +396,6 @@ components:
           type: string
           description: test content
           example: https://github.com/kubeshop/testkube
-    Problem:
-      description: problem response in case of error
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type contains a URI that identifies the problem type.
-          example: https://kubeshop.io/testkube/problems/invalidtestname
-        title:
-          type: string
-          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
-          example: Invalid test name
-        status:
-          type: integer
-          description: HTTP status code for this occurrence of the problem.
-          example: 500
-        detail:
-          type: string
-          description: A human-readable explanation specific to this occurrence of the problem.
-          example: Your test name can't contain forbidden characters like "}}}" passed
-        instance:
-          type: string
-          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
-          example: http://10.23.23.123:8088/tests
-    TestSource:
-      description: Test source resource for shared test content
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/TestContent'
-      properties:
-        name:
-          type: string
-          description: test source name
-          example: testsource1
-        namespace:
-          type: string
-          description: test source namespace
-          example: testkube
-        labels:
-          type: object
-          description: test source labels
-          additionalProperties:
-            type: string
-    TestSourceBatchRequest:
-      description: Test source batch request
-      type: object
-      required:
-      - batch
-      properties:
-        batch:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestSourceUpsertRequest'
     SecretRef:
       required:
       - name
@@ -486,12 +413,6 @@ components:
           type: string
           description: object key
   parameters:
-    Selector:
-      in: query
-      name: selector
-      schema:
-        type: string
-        description: Labels to filter by
     ID:
       in: path
       name: id
@@ -499,3 +420,12 @@ components:
         type: string
       required: true
       description: unique id of the object
+    Selector:
+      in: query
+      name: selector
+      schema:
+        type: string
+        description: Labels to filter by
+externalDocs:
+  description: Find out more about Testkube
+  url: https://testkube.kubeshop.io/

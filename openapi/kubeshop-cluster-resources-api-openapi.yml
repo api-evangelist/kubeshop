@@ -1,18 +1,13 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Testkube Standalone Agent api cluster-resources API
-  description: API for Testkube Standalone Agent
+  title: Testkube Cluster Resources API
+  description: Testkube provides a Kubernetes-native framework for test definition, execution and results
   contact:
-    email: info@testkube.io
+    email: contact@testkube.io
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
   version: 1.0.0
-servers:
-- url: https://api.testkube.io
-  description: Testkube Cloud Control Plane API Endpoint
-- url: https://<your-testkube-api-host>
-  description: Testkube On-Prem API Endpoint
 tags:
 - name: cluster-resources
 paths:
@@ -25,9 +20,7 @@ paths:
 
         the agent ServiceAccount has list+watch permission. Backs the UI dropdown
 
-        for picking what resource a TestTrigger or WorkflowTrigger should watch.
-
-        '
+        for picking what resource a TestTrigger or WorkflowTrigger should watch.'
       operationId: listClusterResources
       parameters:
       - in: query
@@ -80,3 +73,6 @@ components:
         canWatch:
           type: boolean
           description: True when the agent ServiceAccount holds list+watch on this resource.
+externalDocs:
+  description: Find out more about Testkube
+  url: https://testkube.kubeshop.io/

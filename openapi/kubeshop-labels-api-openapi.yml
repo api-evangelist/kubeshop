@@ -1,26 +1,21 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Testkube Standalone Agent api labels API
-  description: API for Testkube Standalone Agent
+  title: Testkube Labels API
+  description: Testkube provides a Kubernetes-native framework for test definition, execution and results
   contact:
-    email: info@testkube.io
+    email: contact@testkube.io
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
   version: 1.0.0
-servers:
-- url: https://api.testkube.io
-  description: Testkube Cloud Control Plane API Endpoint
-- url: https://<your-testkube-api-host>
-  description: Testkube On-Prem API Endpoint
 tags:
-- name: labels
+- name: Labels
   description: Listing all available labels
 paths:
   /labels:
     get:
       tags:
-      - labels
+      - Labels
       summary: List labels
       description: list all available labels
       operationId: listLabels
@@ -76,3 +71,6 @@ components:
           type: string
           description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
           example: http://10.23.23.123:8088/tests
+externalDocs:
+  description: Find out more about Testkube
+  url: https://testkube.kubeshop.io/

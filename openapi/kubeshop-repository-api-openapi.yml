@@ -1,25 +1,20 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Testkube Standalone Agent api repository API
-  description: API for Testkube Standalone Agent
+  title: Testkube Repository API
+  description: Testkube provides a Kubernetes-native framework for test definition, execution and results
   contact:
-    email: info@testkube.io
+    email: contact@testkube.io
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
   version: 1.0.0
-servers:
-- url: https://api.testkube.io
-  description: Testkube Cloud Control Plane API Endpoint
-- url: https://<your-testkube-api-host>
-  description: Testkube On-Prem API Endpoint
 tags:
-- name: repository
+- name: Repository
 paths:
   /repositories:
     post:
       tags:
-      - repository
+      - Repository
       summary: Validate new repository
       description: Validate new repository based on variables passed in request
       operationId: validateRepository
@@ -59,6 +54,30 @@ paths:
                   $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    Problem:
+      description: problem response in case of error
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type contains a URI that identifies the problem type.
+          example: https://kubeshop.io/testkube/problems/invalidtestname
+        title:
+          type: string
+          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          example: Invalid test name
+        status:
+          type: integer
+          description: HTTP status code for this occurrence of the problem.
+          example: 500
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem.
+          example: Your test name can't contain forbidden characters like "}}}" passed
+        instance:
+          type: string
+          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
+          example: http://10.23.23.123:8088/tests
     Repository:
       description: repository representation for tests in git repositories
       type: object
@@ -110,30 +129,6 @@ components:
           - basic
           - header
           description: auth type for git requests
-    Problem:
-      description: problem response in case of error
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type contains a URI that identifies the problem type.
-          example: https://kubeshop.io/testkube/problems/invalidtestname
-        title:
-          type: string
-          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
-          example: Invalid test name
-        status:
-          type: integer
-          description: HTTP status code for this occurrence of the problem.
-          example: 500
-        detail:
-          type: string
-          description: A human-readable explanation specific to this occurrence of the problem.
-          example: Your test name can't contain forbidden characters like "}}}" passed
-        instance:
-          type: string
-          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
-          example: http://10.23.23.123:8088/tests
     SecretRef:
       required:
       - name
@@ -150,3 +145,6 @@ components:
         key:
           type: string
           description: object key
+externalDocs:
+  description: Find out more about Testkube
+  url: https://testkube.kubeshop.io/

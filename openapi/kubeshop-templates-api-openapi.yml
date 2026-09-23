@@ -1,25 +1,20 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Testkube Standalone Agent api templates API
-  description: API for Testkube Standalone Agent
+  title: Testkube Templates API
+  description: Testkube provides a Kubernetes-native framework for test definition, execution and results
   contact:
-    email: info@testkube.io
+    email: contact@testkube.io
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
   version: 1.0.0
-servers:
-- url: https://api.testkube.io
-  description: Testkube Cloud Control Plane API Endpoint
-- url: https://<your-testkube-api-host>
-  description: Testkube On-Prem API Endpoint
 tags:
-- name: templates
+- name: Templates
 paths:
   /templates:
     get:
       tags:
-      - templates
+      - Templates
       summary: List templates
       description: List templates available in cluster
       operationId: listTemplates
@@ -55,6 +50,41 @@ paths:
                   $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    TemplateType:
+      description: template type by purpose
+      type: string
+      enum:
+      - job
+      - container
+      - cronjob
+      - scraper
+      - pvc
+      - webhook
+      - pod
+    Problem:
+      description: problem response in case of error
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type contains a URI that identifies the problem type.
+          example: https://kubeshop.io/testkube/problems/invalidtestname
+        title:
+          type: string
+          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          example: Invalid test name
+        status:
+          type: integer
+          description: HTTP status code for this occurrence of the problem.
+          example: 500
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem.
+          example: Your test name can't contain forbidden characters like "}}}" passed
+        instance:
+          type: string
+          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
+          example: http://10.23.23.123:8088/tests
     Template:
       description: Golang based template
       type: object
@@ -85,41 +115,6 @@ components:
           example:
             env: prod
             app: backend
-    Problem:
-      description: problem response in case of error
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type contains a URI that identifies the problem type.
-          example: https://kubeshop.io/testkube/problems/invalidtestname
-        title:
-          type: string
-          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
-          example: Invalid test name
-        status:
-          type: integer
-          description: HTTP status code for this occurrence of the problem.
-          example: 500
-        detail:
-          type: string
-          description: A human-readable explanation specific to this occurrence of the problem.
-          example: Your test name can't contain forbidden characters like "}}}" passed
-        instance:
-          type: string
-          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
-          example: http://10.23.23.123:8088/tests
-    TemplateType:
-      description: template type by purpose
-      type: string
-      enum:
-      - job
-      - container
-      - cronjob
-      - scraper
-      - pvc
-      - webhook
-      - pod
   parameters:
     Selector:
       in: query
@@ -127,3 +122,6 @@ components:
       schema:
         type: string
         description: Labels to filter by
+externalDocs:
+  description: Find out more about Testkube
+  url: https://testkube.kubeshop.io/

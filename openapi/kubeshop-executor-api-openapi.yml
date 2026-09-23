@@ -1,18 +1,13 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Testkube Standalone Agent api executor API
-  description: API for Testkube Standalone Agent
+  title: Testkube Executor API
+  description: Testkube provides a Kubernetes-native framework for test definition, execution and results
   contact:
-    email: info@testkube.io
+    email: contact@testkube.io
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
   version: 1.0.0
-servers:
-- url: https://api.testkube.io
-  description: Testkube Cloud Control Plane API Endpoint
-- url: https://<your-testkube-api-host>
-  description: Testkube On-Prem API Endpoint
 tags:
 - name: executor
   description: Executor operations
@@ -119,67 +114,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/Problem'
   /executors/{id}:
-    delete:
-      parameters:
-      - $ref: '#/components/parameters/ID'
-      tags:
-      - executor
-      summary: Delete executor
-      description: Deletes executor by its name
-      operationId: deleteExecutor
-      responses:
-        204:
-          description: executor deleted successfuly
-        502:
-          description: problem with communicating with kubernetes cluster
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-    get:
-      parameters:
-      - $ref: '#/components/parameters/ID'
-      tags:
-      - executor
-      summary: Get executor details
-      description: Returns executors data with executions passed to executor
-      operationId: getExecutor
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ExecutorDetails'
-            text/yaml:
-              schema:
-                type: string
-        400:
-          description: problem with input for CRD generation
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        502:
-          description: problem with communicating with kubernetes cluster
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        500:
-          description: problem with getting executor data
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
     patch:
       parameters:
       - $ref: '#/components/parameters/ID'
@@ -229,51 +163,43 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Problem'
-  /executor-by-types:
-    get:
-      parameters:
-      - $ref: '#/components/parameters/TestType'
-      tags:
-      - executor
-      summary: Get executor details by type
-      description: Returns executors data with executions passed to executor
-      operationId: getExecutorByType
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ExecutorDetails'
-            text/yaml:
-              schema:
-                type: string
-        400:
-          description: problem with input for CRD generation
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        502:
-          description: problem with communicating with kubernetes cluster
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        500:
-          description: problem with getting executor data
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    ExecutionStatus:
+      type: string
+      enum:
+      - queued
+      - running
+      - passed
+      - failed
+      - aborted
+      - timeout
+      - skipped
+      - canceled
+    Problem:
+      description: problem response in case of error
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type contains a URI that identifies the problem type.
+          example: https://kubeshop.io/testkube/problems/invalidtestname
+        title:
+          type: string
+          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          example: Invalid test name
+        status:
+          type: integer
+          description: HTTP status code for this occurrence of the problem.
+          example: 500
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem.
+          example: Your test name can't contain forbidden characters like "}}}" passed
+        instance:
+          type: string
+          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
+          example: http://10.23.23.123:8088/tests
     RunningContext:
       description: running context for test or test suite execution
       type: object
@@ -293,6 +219,114 @@ components:
         context:
           type: string
           description: Context value depending from its type
+    ObjectRef:
+      required:
+      - name
+      type: object
+      properties:
+        namespace:
+          type: string
+          description: object kubernetes namespace
+          example: testkube
+        name:
+          type: string
+          description: object name
+          example: name
+    LocalObjectReference:
+      description: Reference to Kubernetes object
+      type: object
+      properties:
+        name:
+          type: string
+    ExecutorUpdateRequest:
+      description: executor update request body
+      type:
+      - object
+      - 'null'
+      allOf:
+      - $ref: '#/components/schemas/Executor'
+      - $ref: '#/components/schemas/ObjectRef'
+    ExecutionsTotals:
+      type: object
+      description: various execution counters
+      required:
+      - results
+      - passed
+      - failed
+      - queued
+      - running
+      - paused
+      properties:
+        results:
+          type: integer
+          description: the total number of executions available
+        passed:
+          type: integer
+          description: the total number of passed executions available
+        failed:
+          type: integer
+          description: the total number of failed executions available
+        queued:
+          type: integer
+          description: the total number of queued executions available
+        running:
+          type: integer
+          description: the total number of running executions available
+    ExecutorMeta:
+      description: Executor meta data
+      type: object
+      properties:
+        iconURI:
+          description: URI for executor icon
+          type: string
+          example: /assets/k6.jpg
+        docsURI:
+          description: URI for executor docs
+          type: string
+          example: https://docs.testkube.io/test-types/executor-k6
+        tooltips:
+          type: object
+          description: executor tooltips
+          additionalProperties:
+            type: string
+          example:
+            general: please provide k6 test script for execution
+    ExecutionsResult:
+      description: the result for a page of executions
+      type: object
+      required:
+      - totals
+      - results
+      properties:
+        totals:
+          $ref: '#/components/schemas/ExecutionsTotals'
+        filtered:
+          $ref: '#/components/schemas/ExecutionsTotals'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExecutionSummary'
+    ExecutorDetails:
+      description: Executor details with Executor data and additional information like list of executions
+      type: object
+      properties:
+        name:
+          description: Executor name
+          type: string
+        executor:
+          $ref: '#/components/schemas/Executor'
+        executions:
+          $ref: '#/components/schemas/ExecutionsResult'
+    ExecutorUpsertRequest:
+      description: executor create request body
+      type: object
+      required:
+      - name
+      - namespace
+      - types
+      allOf:
+      - $ref: '#/components/schemas/Executor'
+      - $ref: '#/components/schemas/ObjectRef'
     ExecutionSummary:
       description: Execution summary
       type: object
@@ -357,141 +391,6 @@ components:
         runningContext:
           $ref: '#/components/schemas/RunningContext'
           description: running context for the test execution
-    ExecutionsResult:
-      description: the result for a page of executions
-      type: object
-      required:
-      - totals
-      - results
-      properties:
-        totals:
-          $ref: '#/components/schemas/ExecutionsTotals'
-        filtered:
-          $ref: '#/components/schemas/ExecutionsTotals'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExecutionSummary'
-    ExecutionStatus:
-      type: string
-      enum:
-      - queued
-      - running
-      - passed
-      - failed
-      - aborted
-      - timeout
-      - skipped
-      - canceled
-    ExecutorMeta:
-      description: Executor meta data
-      type: object
-      properties:
-        iconURI:
-          description: URI for executor icon
-          type: string
-          example: /assets/k6.jpg
-        docsURI:
-          description: URI for executor docs
-          type: string
-          example: https://docs.testkube.io/test-types/executor-k6
-        tooltips:
-          type: object
-          description: executor tooltips
-          additionalProperties:
-            type: string
-          example:
-            general: please provide k6 test script for execution
-    ExecutorDetails:
-      description: Executor details with Executor data and additional information like list of executions
-      type: object
-      properties:
-        name:
-          description: Executor name
-          type: string
-        executor:
-          $ref: '#/components/schemas/Executor'
-        executions:
-          $ref: '#/components/schemas/ExecutionsResult'
-    LocalObjectReference:
-      description: Reference to Kubernetes object
-      type: object
-      properties:
-        name:
-          type: string
-    ExecutorUpsertRequest:
-      description: executor create request body
-      type: object
-      required:
-      - name
-      - namespace
-      - types
-      allOf:
-      - $ref: '#/components/schemas/Executor'
-      - $ref: '#/components/schemas/ObjectRef'
-    Problem:
-      description: problem response in case of error
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type contains a URI that identifies the problem type.
-          example: https://kubeshop.io/testkube/problems/invalidtestname
-        title:
-          type: string
-          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
-          example: Invalid test name
-        status:
-          type: integer
-          description: HTTP status code for this occurrence of the problem.
-          example: 500
-        detail:
-          type: string
-          description: A human-readable explanation specific to this occurrence of the problem.
-          example: Your test name can't contain forbidden characters like "}}}" passed
-        instance:
-          type: string
-          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
-          example: http://10.23.23.123:8088/tests
-    ExecutionsTotals:
-      type: object
-      description: various execution counters
-      required:
-      - results
-      - passed
-      - failed
-      - queued
-      - running
-      - paused
-      properties:
-        results:
-          type: integer
-          description: the total number of executions available
-        passed:
-          type: integer
-          description: the total number of passed executions available
-        failed:
-          type: integer
-          description: the total number of failed executions available
-        queued:
-          type: integer
-          description: the total number of queued executions available
-        running:
-          type: integer
-          description: the total number of running executions available
-    ObjectRef:
-      required:
-      - name
-      type: object
-      properties:
-        namespace:
-          type: string
-          description: object kubernetes namespace
-          example: testkube
-        name:
-          type: string
-          description: object name
-          example: name
     SlavesMeta:
       description: Slave data for executing tests in distributed environment
       type: object
@@ -502,13 +401,6 @@ components:
           example: kubeshop/ex-slaves-image:latest
       required:
       - image
-    ExecutorUpdateRequest:
-      description: executor update request body
-      type: object
-      nullable: true
-      allOf:
-      - $ref: '#/components/schemas/Executor'
-      - $ref: '#/components/schemas/ObjectRef'
     Executor:
       description: CRD based executor data
       type: object
@@ -583,13 +475,6 @@ components:
           type: boolean
           description: use data dir as working dir for executor
   parameters:
-    TestType:
-      in: query
-      name: testType
-      schema:
-        type: string
-      required: true
-      description: test type of the executor
     Selector:
       in: query
       name: selector
@@ -603,3 +488,6 @@ components:
         type: string
       required: true
       description: unique id of the object
+externalDocs:
+  description: Find out more about Testkube
+  url: https://testkube.kubeshop.io/

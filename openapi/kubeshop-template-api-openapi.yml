@@ -1,25 +1,20 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Testkube Standalone Agent api template API
-  description: API for Testkube Standalone Agent
+  title: Testkube Template API
+  description: Testkube provides a Kubernetes-native framework for test definition, execution and results
   contact:
-    email: info@testkube.io
+    email: contact@testkube.io
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
   version: 1.0.0
-servers:
-- url: https://api.testkube.io
-  description: Testkube Cloud Control Plane API Endpoint
-- url: https://<your-testkube-api-host>
-  description: Testkube On-Prem API Endpoint
 tags:
-- name: template
+- name: Template
 paths:
   /templates:
     post:
       tags:
-      - template
+      - Template
       summary: Create new template
       description: Create new template based on variables passed in request
       operationId: createTemplate
@@ -64,7 +59,7 @@ paths:
                   $ref: '#/components/schemas/Problem'
     delete:
       tags:
-      - template
+      - Template
       summary: Delete templates
       description: Deletes labeled templates
       operationId: deleteTemplates
@@ -82,88 +77,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Problem'
   /templates/{id}:
-    delete:
-      parameters:
-      - $ref: '#/components/parameters/ID'
-      tags:
-      - template
-      summary: Delete template
-      description: Deletes template by its name
-      operationId: deleteTemplate
-      responses:
-        204:
-          description: template deleted successfuly
-        404:
-          description: template not found
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        502:
-          description: problem with communicating with kubernetes cluster
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-    get:
-      parameters:
-      - $ref: '#/components/parameters/ID'
-      tags:
-      - template
-      summary: Get template details
-      description: Returns template
-      operationId: getTemplate
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Template'
-            text/yaml:
-              schema:
-                type: string
-        400:
-          description: problem with input for CRD generation
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        404:
-          description: template not found
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        500:
-          description: problem with getting template data
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        502:
-          description: problem with communicating with kubernetes cluster
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
     patch:
       parameters:
       - $ref: '#/components/parameters/ID'
       tags:
-      - template
+      - Template
       summary: Update new template
       description: Update new template based on variables passed in request
       operationId: updateTemplate
@@ -209,20 +127,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/Problem'
 components:
-  parameters:
-    Selector:
-      in: query
-      name: selector
-      schema:
-        type: string
-        description: Labels to filter by
-    ID:
-      in: path
-      name: id
-      schema:
-        type: string
-      required: true
-      description: unique id of the object
   schemas:
     TemplateType:
       description: template type by purpose
@@ -235,6 +139,11 @@ components:
       - pvc
       - webhook
       - pod
+    TemplateCreateRequest:
+      description: template create request body
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Template'
     Problem:
       description: problem response in case of error
       type: object
@@ -289,14 +198,27 @@ components:
           example:
             env: prod
             app: backend
-    TemplateCreateRequest:
-      description: template create request body
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Template'
     TemplateUpdateRequest:
       description: template update request body
-      type: object
-      nullable: true
+      type:
+      - object
+      - 'null'
       allOf:
       - $ref: '#/components/schemas/Template'
+  parameters:
+    ID:
+      in: path
+      name: id
+      schema:
+        type: string
+      required: true
+      description: unique id of the object
+    Selector:
+      in: query
+      name: selector
+      schema:
+        type: string
+        description: Labels to filter by
+externalDocs:
+  description: Find out more about Testkube
+  url: https://testkube.kubeshop.io/

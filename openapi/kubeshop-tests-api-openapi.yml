@@ -1,26 +1,21 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Testkube Standalone Agent api tests API
-  description: API for Testkube Standalone Agent
+  title: Testkube Tests API
+  description: Testkube provides a Kubernetes-native framework for test definition, execution and results
   contact:
-    email: info@testkube.io
+    email: contact@testkube.io
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
   version: 1.0.0
-servers:
-- url: https://api.testkube.io
-  description: Testkube Cloud Control Plane API Endpoint
-- url: https://<your-testkube-api-host>
-  description: Testkube On-Prem API Endpoint
 tags:
-- name: tests
+- name: Tests
   description: Tests operations
 paths:
   /test-suites/{id}/metrics:
     get:
       tags:
-      - tests
+      - Tests
       parameters:
       - $ref: '#/components/parameters/ID'
       - $ref: '#/components/parameters/LastNDays'
@@ -43,70 +38,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Problem'
-  /executions:
-    post:
-      parameters:
-      - $ref: '#/components/parameters/Namespace'
-      - $ref: '#/components/parameters/Selector'
-      - $ref: '#/components/parameters/ExecutionSelector'
-      - $ref: '#/components/parameters/ConcurrencyLevel'
-      tags:
-      - tests
-      summary: Starts new test executions
-      description: New test executions returns new executions details on successful executions start
-      operationId: executeTests
-      requestBody:
-        description: body passed to configure executions
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ExecutionRequest'
-      responses:
-        201:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ExecutionResult'
-        400:
-          description: problem with request body
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        404:
-          description: test not found
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        502:
-          description: problem with communicating with kubernetes cluster
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        500:
-          description: problem with test executions
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
   /tests:
     get:
       tags:
-      - tests
+      - Tests
       summary: List tests
       description: List available tests
       operationId: listTests
@@ -143,7 +78,7 @@ paths:
                   $ref: '#/components/schemas/Problem'
     post:
       tags:
-      - tests
+      - Tests
       summary: Create new test
       description: Create new test based on file content, uri or git based data
       operationId: createTest
@@ -188,7 +123,7 @@ paths:
                   $ref: '#/components/schemas/Problem'
     delete:
       tags:
-      - tests
+      - Tests
       summary: Delete tests
       description: Deletes all or labeled tests
       operationId: deleteTests
@@ -226,7 +161,7 @@ paths:
       parameters:
       - $ref: '#/components/parameters/ID'
       tags:
-      - tests
+      - Tests
       summary: Update test
       description: Update test based on test content or git based data
       operationId: updateTest
@@ -273,7 +208,7 @@ paths:
                   $ref: '#/components/schemas/Problem'
     get:
       tags:
-      - tests
+      - Tests
       parameters:
       - $ref: '#/components/parameters/ID'
       summary: Get test
@@ -315,7 +250,7 @@ paths:
                   $ref: '#/components/schemas/Problem'
     delete:
       tags:
-      - tests
+      - Tests
       parameters:
       - $ref: '#/components/parameters/ID'
       - $ref: '#/components/parameters/SkipDeleteExecutions'
@@ -353,7 +288,7 @@ paths:
   /tests/{id}/abort:
     post:
       tags:
-      - tests
+      - Tests
       parameters:
       - $ref: '#/components/parameters/ID'
       summary: Abort all executions of a test
@@ -389,7 +324,7 @@ paths:
   /tests/{id}/metrics:
     get:
       tags:
-      - tests
+      - Tests
       parameters:
       - $ref: '#/components/parameters/ID'
       - $ref: '#/components/parameters/LastNDays'
@@ -423,7 +358,7 @@ paths:
   /test-with-executions:
     get:
       tags:
-      - tests
+      - Tests
       summary: List test with executions
       description: List available test with executions
       operationId: listTestWithExecutions
@@ -472,7 +407,7 @@ paths:
   /test-with-executions/{id}:
     get:
       tags:
-      - tests
+      - Tests
       parameters:
       - $ref: '#/components/parameters/ID'
       summary: Get test with execution
@@ -520,620 +455,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Problem'
-  /tests/{id}/executions:
-    post:
-      parameters:
-      - $ref: '#/components/parameters/ID'
-      - $ref: '#/components/parameters/Namespace'
-      - $ref: '#/components/parameters/TestExecutionName'
-      tags:
-      - tests
-      summary: Starts new test execution
-      description: New test execution returns new execution details on successful execution start
-      operationId: executeTest
-      requestBody:
-        description: body passed to configure execution
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ExecutionRequest'
-      responses:
-        201:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ExecutionResult'
-        400:
-          description: problem with request body
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        404:
-          description: test not found
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        502:
-          description: problem with communicating with kubernetes cluster
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        500:
-          description: problem with test execution
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-    get:
-      parameters:
-      - $ref: '#/components/parameters/ID'
-      - $ref: '#/components/parameters/LastNDays'
-      - $ref: '#/components/parameters/PageSize'
-      - $ref: '#/components/parameters/PageIndex'
-      - $ref: '#/components/parameters/ExecutionsStatusFilter'
-      - $ref: '#/components/parameters/StartDateFilter'
-      - $ref: '#/components/parameters/EndDateFilter'
-      tags:
-      - tests
-      summary: Get all test executions
-      description: Returns array of all available test executions
-      operationId: listTestExecutions
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ExecutionsResult'
-        404:
-          description: test or execution not found
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        500:
-          description: problem with getting test executions from storage
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-  /tests/{id}/executions/{executionID}:
-    get:
-      parameters:
-      - $ref: '#/components/parameters/ID'
-      - $ref: '#/components/parameters/executionID'
-      tags:
-      - tests
-      summary: Get test execution
-      description: Returns execution with given executionID
-      operationId: getTestExecution
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Execution'
-        404:
-          description: execution not found
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        500:
-          description: problem with getting test executions from storage
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        502:
-          description: problem with reading secrets from kubernetes cluster
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-    patch:
-      parameters:
-      - $ref: '#/components/parameters/ID'
-      - $ref: '#/components/parameters/executionID'
-      tags:
-      - tests
-      summary: Aborts execution
-      description: Aborts execution with given executionID
-      operationId: abortExecution
-      responses:
-        204:
-          description: no content
-        502:
-          description: problem with read information from kubernetes cluster
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-  /uploads:
-    post:
-      tags:
-      - tests
-      summary: Upload file
-      description: Upload file to be used in executions and tests
-      operationId: uploads
-      requestBody:
-        $ref: '#/components/requestBodies/UploadsBody'
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: string
-            text/yaml:
-              schema:
-                type: string
-        400:
-          description: problem with the input
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        500:
-          description: could not upload file
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    RunningContext:
-      description: running context for test or test suite execution
-      type: object
-      required:
-      - type
-      properties:
-        type:
-          type: string
-          description: One of possible context types
-          enum:
-          - userCLI
-          - userUI
-          - testsuite
-          - testtrigger
-          - scheduler
-          - testworkflow
-        context:
-          type: string
-          description: Context value depending from its type
-    TestUpdateRequest:
-      description: test update request body
-      type: object
-      nullable: true
-      allOf:
-      - $ref: '#/components/schemas/Test'
-    TestStatus:
-      type: object
-      description: test status
-      properties:
-        latestExecution:
-          $ref: '#/components/schemas/ExecutionCore'
-    ArtifactRequest:
-      description: artifact request body with test artifacts
-      type: object
-      properties:
-        storageClassName:
-          type: string
-          description: artifact storage class name for container executor
-          example: artifact-volume-local
-        volumeMountPath:
-          type: string
-          description: artifact volume mount path for container executor
-        dirs:
-          type: array
-          items:
-            type: string
-          description: artifact directories for scraping
-        masks:
-          type: array
-          items:
-            type: string
-          description: regexp to filter scraped artifacts, single or comma separated
-        storageBucket:
-          type: string
-          description: artifact bucket storage
-          example: test1-artifacts
-        omitFolderPerExecution:
-          type: boolean
-          description: don't use a separate folder for execution artifacts
-        sharedBetweenPods:
-          type: boolean
-          description: whether to share volume between pods
-        useDefaultStorageClassName:
-          type: boolean
-          description: whether to use default storage class name
-        sidecarScraper:
-          type: boolean
-          description: run scraper as pod sidecar container
-    TestUpsertRequest:
-      description: test create request body
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Test'
-    Variables:
-      type: object
-      description: execution variables passed to executor converted to vars for usage in tests
-      additionalProperties:
-        $ref: '#/components/schemas/Variable'
-      example:
-        var1:
-          name: var1
-          type: basic
-          value: value1
-        secret1:
-          name: secret1
-          type: secret
-          value: secretvalue1
-    ExecutionCore:
-      type: object
-      description: test execution core
-      properties:
-        id:
-          type: string
-          description: execution id
-          format: bson objectId
-          example: 62f395e004109209b50edfc4
-        number:
-          type: integer
-          description: execution number
-          example: 1
-        startTime:
-          type: string
-          description: test start time
-          format: date-time
-        endTime:
-          type: string
-          description: test end time
-          format: date-time
-        status:
-          $ref: '#/components/schemas/ExecutionStatus'
-    ExecutionsTotals:
-      type: object
-      description: various execution counters
-      required:
-      - results
-      - passed
-      - failed
-      - queued
-      - running
-      - paused
-      properties:
-        results:
-          type: integer
-          description: the total number of executions available
-        passed:
-          type: integer
-          description: the total number of passed executions available
-        failed:
-          type: integer
-          description: the total number of failed executions available
-        queued:
-          type: integer
-          description: the total number of queued executions available
-        running:
-          type: integer
-          description: the total number of running executions available
-    PodRequest:
-      description: pod request body
-      type: object
-      properties:
-        resources:
-          $ref: '#/components/schemas/PodResourcesRequest'
-          description: pod resources request parameters
-        podTemplate:
-          type: string
-          description: pod template extensions
-        podTemplateReference:
-          type: string
-          description: name of the template resource
-    ExecutionsMetrics:
-      type: object
-      properties:
-        passFailRatio:
-          type: number
-          description: Percentage pass to fail ratio
-          example: 50
-        executionDurationP50:
-          type: string
-          description: 50th percentile of all durations
-          example: 7m2.71s
-        executionDurationP50ms:
-          type: integer
-          description: 50th percentile of all durations in milliseconds
-          example: 422
-        executionDurationP90:
-          type: string
-          description: 90th percentile of all durations
-          example: 7m2.71s
-        executionDurationP90ms:
-          type: integer
-          description: 90th percentile of all durations in milliseconds
-          example: 422
-        executionDurationP95:
-          type: string
-          description: 95th percentile of all durations
-          example: 7m2.71s
-        executionDurationP95ms:
-          type: integer
-          description: 95th percentile of all durations in milliseconds
-          example: 422
-        executionDurationP99:
-          type: string
-          description: 99th percentile of all durations
-          example: 7m2.71s
-        executionDurationP99ms:
-          type: integer
-          description: 99th percentile of all durations in milliseconds
-          example: 422
-        totalExecutions:
-          type: integer
-          description: total executions number
-          example: 2
-        failedExecutions:
-          type: integer
-          description: failed executions number
-          example: 1
-        executions:
-          type: array
-          description: List of test/testsuite executions
-          items:
-            $ref: '#/components/schemas/ExecutionsMetricsExecutions'
-    ConfigMapRef:
-      required:
-      - name
-      - key
-      type: object
-      description: Testkube internal reference for data in Kubernetes config maps
-      properties:
-        namespace:
-          type: string
-          description: object kubernetes namespace
-        name:
-          type: string
-          description: object name
-        key:
-          type: string
-          description: object key
-    Test:
-      type: object
-      properties:
-        name:
-          type: string
-          description: test name
-          example: test1
-        namespace:
-          type: string
-          description: test namespace
-          example: testkube
-        description:
-          type: string
-          description: test description
-          example: this test is used for that purpose
-        type:
-          type: string
-          description: test type
-          example: postman/collection
-        content:
-          $ref: '#/components/schemas/TestContent'
-          description: test content
-        source:
-          type: string
-          description: reference to test source resource
-          example: my-private-repository-test
-        created:
-          type: string
-          format: date-time
-          example: '2022-07-30T06:54:15Z'
-        labels:
-          type: object
-          description: test labels
-          additionalProperties:
-            type: string
-          example:
-            env: prod
-            app: backend
-        schedule:
-          type: string
-          description: schedule to run test
-          example: '* * * * *'
-        readOnly:
-          type: boolean
-          description: if test is offline and cannot be executed
-        uploads:
-          type: array
-          items:
-            type: string
-          description: list of file paths that will be needed from uploads
-          example:
-          - settings/config.txt
-        executionRequest:
-          $ref: '#/components/schemas/ExecutionRequest'
-        status:
-          $ref: '#/components/schemas/TestStatus'
-    ExecutionsMetricsExecutions:
-      type: object
-      properties:
-        executionId:
-          type: string
-        groupId:
-          type: string
-        duration:
-          type: string
-        durationMs:
-          type: integer
-        status:
-          type: string
-        name:
-          type: string
-        startTime:
-          type: string
-          format: date-time
-        runnerId:
-          type: string
-    ResourceRequest:
-      description: resource request specification
-      type: object
-      properties:
-        cpu:
-          type: string
-          description: requested cpu units
-          example: 250m
-        memory:
-          type: string
-          description: requested memory units
-          example: 64Mi
-    ExecutionStatus:
-      type: string
-      enum:
-      - queued
-      - running
-      - passed
-      - failed
-      - aborted
-      - timeout
-      - skipped
-      - canceled
-    TestContentRequest:
-      description: test content request body
-      type: object
-      properties:
-        repository:
-          $ref: '#/components/schemas/RepositoryParameters'
-    Variable:
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-        type:
-          $ref: '#/components/schemas/VariableType'
-        secretRef:
-          $ref: '#/components/schemas/SecretRef'
-        configMapRef:
-          $ref: '#/components/schemas/ConfigMapRef'
-    PodResourcesRequest:
-      description: pod resources request specification
-      type: object
-      properties:
-        requests:
-          $ref: '#/components/schemas/ResourceRequest'
-          description: pod resources requests
-        limits:
-          $ref: '#/components/schemas/ResourceRequest'
-          description: pod resources limits
-    LocalObjectReference:
-      description: Reference to Kubernetes object
-      type: object
-      properties:
-        name:
-          type: string
-    RepositoryParameters:
-      description: repository parameters for tests in git repositories
-      type: object
-      properties:
-        branch:
-          type: string
-          description: branch/tag name for checkout
-          example: main
-        commit:
-          type: string
-          description: commit id (sha) for checkout
-          example: b928cbb7186944ab9275937ec1ac3d3738ca2e1d
-        path:
-          type: string
-          description: if needed we can checkout particular path (dir or file) in case of BIG/mono repositories
-          example: test/perf
-        workingDir:
-          type: string
-          description: if provided we checkout the whole repository and run test from this directory
-          example: /
-    Repository:
-      description: repository representation for tests in git repositories
-      type: object
-      required:
-      - type
-      - uri
-      properties:
-        type:
-          type: string
-          enum:
-          - git
-          description: VCS repository type
-        uri:
-          type: string
-          description: uri of content file or git directory
-          example: https://github.com/kubeshop/testkube
-        branch:
-          type: string
-          description: branch/tag name for checkout
-          example: main
-        commit:
-          type: string
-          description: commit id (sha) for checkout
-          example: b928cbb7186944ab9275937ec1ac3d3738ca2e1d
-        path:
-          type: string
-          description: if needed we can checkout particular path (dir or file) in case of BIG/mono repositories
-          example: test/perf
-        username:
-          type: string
-          description: git auth username for private repositories
-        token:
-          type: string
-          description: git auth token for private repositories
-        usernameSecret:
-          $ref: '#/components/schemas/SecretRef'
-        tokenSecret:
-          $ref: '#/components/schemas/SecretRef'
-        certificateSecret:
-          type: string
-          description: secret with certificate for private repositories. Should contain one key ending with .crt such as "mycorp.crt", whose value is the certificate file content, suitable for git config http.sslCAInfo
-        workingDir:
-          type: string
-          description: if provided we checkout the whole repository and run test from this directory
-          example: /
-        authType:
-          type: string
-          enum:
-          - basic
-          - header
-          description: auth type for git requests
     ExecutionRequest:
       description: test execution request body
       type: object
@@ -1353,261 +676,6 @@ components:
           example:
           - true
           - false
-    ExecutionSummary:
-      description: Execution summary
-      type: object
-      required:
-      - id
-      - name
-      - testName
-      - testType
-      - status
-      properties:
-        id:
-          type: string
-          description: execution id
-          format: bson objectId
-          example: 62f395e004109209b50edfc4
-        name:
-          type: string
-          description: execution name
-          example: test-suite1-test1
-        number:
-          type: integer
-          description: execution number
-          example: 1
-        testName:
-          type: string
-          description: name of the test
-          example: test1
-        testNamespace:
-          type: string
-          description: name of the test
-          example: testkube
-        testType:
-          type: string
-          description: the type of test for this execution
-          example: postman/collection
-        status:
-          $ref: '#/components/schemas/ExecutionStatus'
-        startTime:
-          type: string
-          description: test execution start time
-          format: date-time
-        endTime:
-          type: string
-          description: test execution end time
-          format: date-time
-        duration:
-          type: string
-          description: calculated test duration
-          example: 00:00:13
-        durationMs:
-          type: integer
-          description: calculated test duration in ms
-          example: 10000
-        labels:
-          type: object
-          description: test and execution labels
-          additionalProperties:
-            type: string
-          example:
-            env: prod
-            app: backend
-        runningContext:
-          $ref: '#/components/schemas/RunningContext'
-          description: running context for the test execution
-    ExecutionsResult:
-      description: the result for a page of executions
-      type: object
-      required:
-      - totals
-      - results
-      properties:
-        totals:
-          $ref: '#/components/schemas/ExecutionsTotals'
-        filtered:
-          $ref: '#/components/schemas/ExecutionsTotals'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExecutionSummary'
-    TestContent:
-      type: object
-      properties:
-        type:
-          type: string
-          description: "type of sources a runner can get data from.\n  string: String content (e.g. Postman JSON file).\n  file-uri: content stored on the webserver.\n  git-file: the file stored in the Git repo in the given repository.path field (Deprecated: use git instead).\n  git-dir: the entire git repo or git subdirectory depending on the  repository.path field (Testkube does a shadow clone and sparse checkout to limit IOs in the case of monorepos). (Deprecated: use git instead).\n  git: automatically provisions either a file, directory or whole git repository depending on the repository.path field.\n"
-          enum:
-          - string
-          - file-uri
-          - git-file
-          - git-dir
-          - git
-        repository:
-          $ref: '#/components/schemas/Repository'
-        data:
-          type: string
-          description: test content data as string
-        uri:
-          type: string
-          description: test content
-          example: https://github.com/kubeshop/testkube
-    TestWithExecutionSummary:
-      description: Test with latest Execution result summary
-      type: object
-      required:
-      - test
-      properties:
-        test:
-          $ref: '#/components/schemas/Test'
-        latestExecution:
-          $ref: '#/components/schemas/ExecutionSummary'
-    ExecutionResult:
-      description: execution result returned from executor
-      type: object
-      required:
-      - status
-      properties:
-        status:
-          $ref: '#/components/schemas/ExecutionStatus'
-        output:
-          type: string
-          description: RAW Test execution output, depends of reporter used in particular tool
-        outputType:
-          type: string
-          description: output type depends of reporter used in particular tool
-          enum:
-          - text/plain
-          - application/junit+xml
-          - application/json
-        errorMessage:
-          type: string
-          description: error message when status is error, separate to output as output can be partial in case of error
-        steps:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExecutionStepResult'
-          description: execution steps (for collection of requests)
-        reports:
-          type: object
-          properties:
-            junit:
-              type: string
-    AssertionResult:
-      description: execution result data
-      type: object
-      properties:
-        name:
-          type: string
-          example: assertion1
-        status:
-          type: string
-          enum:
-          - passed
-          - failed
-        errorMessage:
-          type: string
-          nullable: true
-    Problem:
-      description: problem response in case of error
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type contains a URI that identifies the problem type.
-          example: https://kubeshop.io/testkube/problems/invalidtestname
-        title:
-          type: string
-          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
-          example: Invalid test name
-        status:
-          type: integer
-          description: HTTP status code for this occurrence of the problem.
-          example: 500
-        detail:
-          type: string
-          description: A human-readable explanation specific to this occurrence of the problem.
-          example: Your test name can't contain forbidden characters like "}}}" passed
-        instance:
-          type: string
-          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
-          example: http://10.23.23.123:8088/tests
-    ExecutionStepResult:
-      description: execution result data
-      type: object
-      required:
-      - name
-      - status
-      properties:
-        name:
-          type: string
-          description: step name
-          example: step1
-        duration:
-          type: string
-          format: duration
-          example: 10m0s
-        status:
-          type: string
-          description: execution step status
-          enum:
-          - passed
-          - failed
-        assertionResults:
-          type: array
-          items:
-            $ref: '#/components/schemas/AssertionResult'
-    SecretRef:
-      required:
-      - name
-      - key
-      type: object
-      description: Testkube internal reference for secret storage in Kubernetes secrets
-      properties:
-        namespace:
-          type: string
-          description: object kubernetes namespace
-        name:
-          type: string
-          description: object name
-        key:
-          type: string
-          description: object key
-    EnvReference:
-      description: Reference to env resource
-      type: object
-      required:
-      - reference
-      properties:
-        reference:
-          $ref: '#/components/schemas/LocalObjectReference'
-        mount:
-          type: boolean
-          description: whether we shoud mount resource
-          example: /etc/data
-        mountPath:
-          type: string
-          description: where we shoud mount resource
-        mapToVariables:
-          type: boolean
-          description: whether we shoud map to variables from resource
-          default: false
-    TestWithExecution:
-      description: Test with latest Execution result
-      type: object
-      required:
-      - test
-      properties:
-        test:
-          $ref: '#/components/schemas/Test'
-        latestExecution:
-          $ref: '#/components/schemas/Execution'
-    VariableType:
-      type: string
-      enum:
-      - basic
-      - secret
     Execution:
       type: object
       description: test execution
@@ -1784,51 +852,645 @@ components:
           example:
           - true
           - false
+    ExecutionsMetrics:
+      type: object
+      properties:
+        passFailRatio:
+          type: number
+          description: Percentage pass to fail ratio
+          example: 50
+        executionDurationP50:
+          type: string
+          description: 50th percentile of all durations
+          example: 7m2.71s
+        executionDurationP50ms:
+          type: integer
+          description: 50th percentile of all durations in milliseconds
+          example: 422
+        executionDurationP90:
+          type: string
+          description: 90th percentile of all durations
+          example: 7m2.71s
+        executionDurationP90ms:
+          type: integer
+          description: 90th percentile of all durations in milliseconds
+          example: 422
+        executionDurationP95:
+          type: string
+          description: 95th percentile of all durations
+          example: 7m2.71s
+        executionDurationP95ms:
+          type: integer
+          description: 95th percentile of all durations in milliseconds
+          example: 422
+        executionDurationP99:
+          type: string
+          description: 99th percentile of all durations
+          example: 7m2.71s
+        executionDurationP99ms:
+          type: integer
+          description: 99th percentile of all durations in milliseconds
+          example: 422
+        totalExecutions:
+          type: integer
+          description: total executions number
+          example: 2
+        failedExecutions:
+          type: integer
+          description: failed executions number
+          example: 1
+        executions:
+          type: array
+          description: List of test/testsuite executions
+          items:
+            $ref: '#/components/schemas/ExecutionsMetricsExecutions'
+    LocalObjectReference:
+      description: Reference to Kubernetes object
+      type: object
+      properties:
+        name:
+          type: string
+    ResourceRequest:
+      description: resource request specification
+      type: object
+      properties:
+        cpu:
+          type: string
+          description: requested cpu units
+          example: 250m
+        memory:
+          type: string
+          description: requested memory units
+          example: 64Mi
+    RepositoryParameters:
+      description: repository parameters for tests in git repositories
+      type: object
+      properties:
+        branch:
+          type: string
+          description: branch/tag name for checkout
+          example: main
+        commit:
+          type: string
+          description: commit id (sha) for checkout
+          example: b928cbb7186944ab9275937ec1ac3d3738ca2e1d
+        path:
+          type: string
+          description: if needed we can checkout particular path (dir or file) in case of BIG/mono repositories
+          example: test/perf
+        workingDir:
+          type: string
+          description: if provided we checkout the whole repository and run test from this directory
+          example: /
+    TestUpsertRequest:
+      description: test create request body
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Test'
+    Variable:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        type:
+          $ref: '#/components/schemas/VariableType'
+        secretRef:
+          $ref: '#/components/schemas/SecretRef'
+        configMapRef:
+          $ref: '#/components/schemas/ConfigMapRef'
+    TestContent:
+      type: object
+      properties:
+        type:
+          type: string
+          description: "type of sources a runner can get data from.\n  string: String content (e.g. Postman JSON file).\n  file-uri: content stored on the webserver.\n  git-file: the file stored in the Git repo in the given repository.path field (Deprecated: use git instead).\n  git-dir: the entire git repo or git subdirectory depending on the  repository.path field (Testkube does a shadow clone and sparse checkout to limit IOs in the case of monorepos). (Deprecated: use git instead).\n  git: automatically provisions either a file, directory or whole git repository depending on the repository.path field.\n"
+          enum:
+          - string
+          - file-uri
+          - git-file
+          - git-dir
+          - git
+        repository:
+          $ref: '#/components/schemas/Repository'
+        data:
+          type: string
+          description: test content data as string
+        uri:
+          type: string
+          description: test content
+          example: https://github.com/kubeshop/testkube
+    TestWithExecutionSummary:
+      description: Test with latest Execution result summary
+      type: object
+      required:
+      - test
+      properties:
+        test:
+          $ref: '#/components/schemas/Test'
+        latestExecution:
+          $ref: '#/components/schemas/ExecutionSummary'
+    ConfigMapRef:
+      required:
+      - name
+      - key
+      type: object
+      description: Testkube internal reference for data in Kubernetes config maps
+      properties:
+        namespace:
+          type: string
+          description: object kubernetes namespace
+        name:
+          type: string
+          description: object name
+        key:
+          type: string
+          description: object key
+    EnvReference:
+      description: Reference to env resource
+      type: object
+      required:
+      - reference
+      properties:
+        reference:
+          $ref: '#/components/schemas/LocalObjectReference'
+        mount:
+          type: boolean
+          description: whether we shoud mount resource
+          example: /etc/data
+        mountPath:
+          type: string
+          description: where we shoud mount resource
+        mapToVariables:
+          type: boolean
+          description: whether we shoud map to variables from resource
+          default: false
+    ExecutionStatus:
+      type: string
+      enum:
+      - queued
+      - running
+      - passed
+      - failed
+      - aborted
+      - timeout
+      - skipped
+      - canceled
+    TestContentRequest:
+      description: test content request body
+      type: object
+      properties:
+        repository:
+          $ref: '#/components/schemas/RepositoryParameters'
+    AssertionResult:
+      description: execution result data
+      type: object
+      properties:
+        name:
+          type: string
+          example: assertion1
+        status:
+          type: string
+          enum:
+          - passed
+          - failed
+        errorMessage:
+          type:
+          - string
+          - 'null'
+    VariableType:
+      type: string
+      enum:
+      - basic
+      - secret
+    TestStatus:
+      type: object
+      description: test status
+      properties:
+        latestExecution:
+          $ref: '#/components/schemas/ExecutionCore'
+    ExecutionSummary:
+      description: Execution summary
+      type: object
+      required:
+      - id
+      - name
+      - testName
+      - testType
+      - status
+      properties:
+        id:
+          type: string
+          description: execution id
+          format: bson objectId
+          example: 62f395e004109209b50edfc4
+        name:
+          type: string
+          description: execution name
+          example: test-suite1-test1
+        number:
+          type: integer
+          description: execution number
+          example: 1
+        testName:
+          type: string
+          description: name of the test
+          example: test1
+        testNamespace:
+          type: string
+          description: name of the test
+          example: testkube
+        testType:
+          type: string
+          description: the type of test for this execution
+          example: postman/collection
+        status:
+          $ref: '#/components/schemas/ExecutionStatus'
+        startTime:
+          type: string
+          description: test execution start time
+          format: date-time
+        endTime:
+          type: string
+          description: test execution end time
+          format: date-time
+        duration:
+          type: string
+          description: calculated test duration
+          example: 00:00:13
+        durationMs:
+          type: integer
+          description: calculated test duration in ms
+          example: 10000
+        labels:
+          type: object
+          description: test and execution labels
+          additionalProperties:
+            type: string
+          example:
+            env: prod
+            app: backend
+        runningContext:
+          $ref: '#/components/schemas/RunningContext'
+          description: running context for the test execution
+    TestUpdateRequest:
+      description: test update request body
+      type:
+      - object
+      - 'null'
+      allOf:
+      - $ref: '#/components/schemas/Test'
+    ArtifactRequest:
+      description: artifact request body with test artifacts
+      type: object
+      properties:
+        storageClassName:
+          type: string
+          description: artifact storage class name for container executor
+          example: artifact-volume-local
+        volumeMountPath:
+          type: string
+          description: artifact volume mount path for container executor
+        dirs:
+          type: array
+          items:
+            type: string
+          description: artifact directories for scraping
+        masks:
+          type: array
+          items:
+            type: string
+          description: regexp to filter scraped artifacts, single or comma separated
+        storageBucket:
+          type: string
+          description: artifact bucket storage
+          example: test1-artifacts
+        omitFolderPerExecution:
+          type: boolean
+          description: don't use a separate folder for execution artifacts
+        sharedBetweenPods:
+          type: boolean
+          description: whether to share volume between pods
+        useDefaultStorageClassName:
+          type: boolean
+          description: whether to use default storage class name
+        sidecarScraper:
+          type: boolean
+          description: run scraper as pod sidecar container
+    Problem:
+      description: problem response in case of error
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type contains a URI that identifies the problem type.
+          example: https://kubeshop.io/testkube/problems/invalidtestname
+        title:
+          type: string
+          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          example: Invalid test name
+        status:
+          type: integer
+          description: HTTP status code for this occurrence of the problem.
+          example: 500
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem.
+          example: Your test name can't contain forbidden characters like "}}}" passed
+        instance:
+          type: string
+          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
+          example: http://10.23.23.123:8088/tests
+    Repository:
+      description: repository representation for tests in git repositories
+      type: object
+      required:
+      - type
+      - uri
+      properties:
+        type:
+          type: string
+          enum:
+          - git
+          description: VCS repository type
+        uri:
+          type: string
+          description: uri of content file or git directory
+          example: https://github.com/kubeshop/testkube
+        branch:
+          type: string
+          description: branch/tag name for checkout
+          example: main
+        commit:
+          type: string
+          description: commit id (sha) for checkout
+          example: b928cbb7186944ab9275937ec1ac3d3738ca2e1d
+        path:
+          type: string
+          description: if needed we can checkout particular path (dir or file) in case of BIG/mono repositories
+          example: test/perf
+        username:
+          type: string
+          description: git auth username for private repositories
+        token:
+          type: string
+          description: git auth token for private repositories
+        usernameSecret:
+          $ref: '#/components/schemas/SecretRef'
+        tokenSecret:
+          $ref: '#/components/schemas/SecretRef'
+        certificateSecret:
+          type: string
+          description: secret with certificate for private repositories. Should contain one key ending with .crt such as "mycorp.crt", whose value is the certificate file content, suitable for git config http.sslCAInfo
+        workingDir:
+          type: string
+          description: if provided we checkout the whole repository and run test from this directory
+          example: /
+        authType:
+          type: string
+          enum:
+          - basic
+          - header
+          description: auth type for git requests
+    RunningContext:
+      description: running context for test or test suite execution
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          description: One of possible context types
+          enum:
+          - userCLI
+          - userUI
+          - testsuite
+          - testtrigger
+          - scheduler
+          - testworkflow
+        context:
+          type: string
+          description: Context value depending from its type
+    ExecutionStepResult:
+      description: execution result data
+      type: object
+      required:
+      - name
+      - status
+      properties:
+        name:
+          type: string
+          description: step name
+          example: step1
+        duration:
+          type: string
+          format: duration
+          example: 10m0s
+        status:
+          type: string
+          description: execution step status
+          enum:
+          - passed
+          - failed
+        assertionResults:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssertionResult'
+    ExecutionCore:
+      type: object
+      description: test execution core
+      properties:
+        id:
+          type: string
+          description: execution id
+          format: bson objectId
+          example: 62f395e004109209b50edfc4
+        number:
+          type: integer
+          description: execution number
+          example: 1
+        startTime:
+          type: string
+          description: test start time
+          format: date-time
+        endTime:
+          type: string
+          description: test end time
+          format: date-time
+        status:
+          $ref: '#/components/schemas/ExecutionStatus'
+    SecretRef:
+      required:
+      - name
+      - key
+      type: object
+      description: Testkube internal reference for secret storage in Kubernetes secrets
+      properties:
+        namespace:
+          type: string
+          description: object kubernetes namespace
+        name:
+          type: string
+          description: object name
+        key:
+          type: string
+          description: object key
+    PodResourcesRequest:
+      description: pod resources request specification
+      type: object
+      properties:
+        requests:
+          $ref: '#/components/schemas/ResourceRequest'
+          description: pod resources requests
+        limits:
+          $ref: '#/components/schemas/ResourceRequest'
+          description: pod resources limits
+    Variables:
+      type: object
+      description: execution variables passed to executor converted to vars for usage in tests
+      additionalProperties:
+        $ref: '#/components/schemas/Variable'
+      example:
+        var1:
+          name: var1
+          type: basic
+          value: value1
+        secret1:
+          name: secret1
+          type: secret
+          value: secretvalue1
+    TestWithExecution:
+      description: Test with latest Execution result
+      type: object
+      required:
+      - test
+      properties:
+        test:
+          $ref: '#/components/schemas/Test'
+        latestExecution:
+          $ref: '#/components/schemas/Execution'
+    ExecutionsMetricsExecutions:
+      type: object
+      properties:
+        executionId:
+          type: string
+        groupId:
+          type: string
+        duration:
+          type: string
+        durationMs:
+          type: integer
+        status:
+          type: string
+        name:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        runnerId:
+          type: string
+    Test:
+      type: object
+      properties:
+        name:
+          type: string
+          description: test name
+          example: test1
+        namespace:
+          type: string
+          description: test namespace
+          example: testkube
+        description:
+          type: string
+          description: test description
+          example: this test is used for that purpose
+        type:
+          type: string
+          description: test type
+          example: postman/collection
+        content:
+          $ref: '#/components/schemas/TestContent'
+          description: test content
+        source:
+          type: string
+          description: reference to test source resource
+          example: my-private-repository-test
+        created:
+          type: string
+          format: date-time
+          example: '2022-07-30T06:54:15Z'
+        labels:
+          type: object
+          description: test labels
+          additionalProperties:
+            type: string
+          example:
+            env: prod
+            app: backend
+        schedule:
+          type: string
+          description: schedule to run test
+          example: '* * * * *'
+        readOnly:
+          type: boolean
+          description: if test is offline and cannot be executed
+        uploads:
+          type: array
+          items:
+            type: string
+          description: list of file paths that will be needed from uploads
+          example:
+          - settings/config.txt
+        executionRequest:
+          $ref: '#/components/schemas/ExecutionRequest'
+        status:
+          $ref: '#/components/schemas/TestStatus'
+    PodRequest:
+      description: pod request body
+      type: object
+      properties:
+        resources:
+          $ref: '#/components/schemas/PodResourcesRequest'
+          description: pod resources request parameters
+        podTemplate:
+          type: string
+          description: pod template extensions
+        podTemplateReference:
+          type: string
+          description: name of the template resource
+    ExecutionResult:
+      description: execution result returned from executor
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          $ref: '#/components/schemas/ExecutionStatus'
+        output:
+          type: string
+          description: RAW Test execution output, depends of reporter used in particular tool
+        outputType:
+          type: string
+          description: output type depends of reporter used in particular tool
+          enum:
+          - text/plain
+          - application/junit+xml
+          - application/json
+        errorMessage:
+          type: string
+          description: error message when status is error, separate to output as output can be partial in case of error
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExecutionStepResult'
+          description: execution steps (for collection of requests)
+        reports:
+          type: object
+          properties:
+            junit:
+              type: string
   parameters:
-    TestExecutionName:
-      in: query
-      name: testExecutionName
-      schema:
-        type: string
-        description: test execution name stated the test execution
-    TextSearch:
-      in: query
-      name: textSearch
-      schema:
-        type: string
-        default: ''
-      description: text to search in name and test name
-      required: false
-    Namespace:
-      in: query
-      name: namespace
-      schema:
-        type: string
-        default: testkube
-        description: Namespace of the object
-    executionID:
-      in: path
-      name: executionID
-      schema:
-        type: string
-      required: true
-      description: unique id of the object execution
-    PageIndex:
-      in: query
-      name: page
-      schema:
-        type: integer
-        default: 0
-      description: the page index to start at
-      required: false
-    EndDateFilter:
-      in: query
-      name: endDate
-      schema:
-        type: string
-        format: date
-      required: false
-      description: endDate for filtering
     Limit:
       in: query
       name: limit
@@ -1837,21 +1499,20 @@ components:
         default: 7
       description: limit records count same as pageSize
       required: false
-    StartDateFilter:
-      in: query
-      name: startDate
+    ID:
+      in: path
+      name: id
       schema:
         type: string
-        format: date
-      required: false
-      description: startDate for filtering in ISO-8601 format, i.e. "yyyy-mm-dd"
-    SkipDeleteCRD:
+      required: true
+      description: unique id of the object
+    PageIndex:
       in: query
-      name: skipDeleteCRD
+      name: page
       schema:
-        type: boolean
-        default: false
-      description: dont delete CRD
+        type: integer
+        default: 0
+      description: the page index to start at
       required: false
     SkipDeleteExecutions:
       in: query
@@ -1861,20 +1522,6 @@ components:
         default: false
       description: dont delete executions
       required: false
-    PageSize:
-      in: query
-      name: pageSize
-      schema:
-        type: integer
-        default: 100
-      description: the number of executions to get, setting to 0 will return only totals
-      required: false
-    ExecutionSelector:
-      in: query
-      name: executionSelector
-      schema:
-        type: string
-        description: Execution Labels to add to executions
     LastNDays:
       in: query
       name: last
@@ -1883,18 +1530,22 @@ components:
         default: 7
       description: last N days to show
       required: false
-    Selector:
+    TextSearch:
       in: query
-      name: selector
+      name: textSearch
       schema:
         type: string
-        description: Labels to filter by
-    ConcurrencyLevel:
+        default: ''
+      description: text to search in name and test name
+      required: false
+    PageSize:
       in: query
-      name: concurrency
+      name: pageSize
       schema:
         type: integer
-        default: 10
+        default: 100
+      description: the number of executions to get, setting to 0 will return only totals
+      required: false
     ExecutionsStatusFilter:
       in: query
       name: status
@@ -1902,30 +1553,20 @@ components:
         $ref: '#/components/schemas/ExecutionStatus'
       description: optional status filter containing multiple values separated by comma
       required: false
-    ID:
-      in: path
-      name: id
+    SkipDeleteCRD:
+      in: query
+      name: skipDeleteCRD
+      schema:
+        type: boolean
+        default: false
+      description: dont delete CRD
+      required: false
+    Selector:
+      in: query
+      name: selector
       schema:
         type: string
-      required: true
-      description: unique id of the object
-  requestBodies:
-    UploadsBody:
-      description: Upload files request body data
-      required: true
-      content:
-        multipart/form-data:
-          schema:
-            type: object
-            properties:
-              parentName:
-                type: string
-                example: test-1
-              parentType:
-                type: string
-                enum:
-                - test
-                - execution
-              filePath:
-                type: string
-                example: folder/file.txt
+        description: Labels to filter by
+externalDocs:
+  description: Find out more about Testkube
+  url: https://testkube.kubeshop.io/
