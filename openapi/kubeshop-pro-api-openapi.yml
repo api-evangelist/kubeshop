@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Testkube Test Workflows API
+  title: Testkube Pro API
   description: Testkube provides a Kubernetes-native framework for test definition, execution and results
   contact:
     email: contact@testkube.io
@@ -9,12 +9,12 @@ info:
     url: https://opensource.org/licenses/MIT
   version: 1.0.0
 tags:
-- name: test-workflows
+- name: pro
 paths:
   /test-workflows:
     get:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/Selector'
       summary: List test workflows
@@ -58,7 +58,7 @@ paths:
                   $ref: '#/components/schemas/Problem'
     delete:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/Selector'
       - $ref: '#/components/parameters/TestWorkflowNames'
@@ -94,7 +94,7 @@ paths:
                   $ref: '#/components/schemas/Problem'
     post:
       tags:
-      - test-workflows
+      - pro
       summary: Create test workflow
       description: Create test workflow in the kubernetes cluster
       operationId: createTestWorkflow
@@ -146,7 +146,7 @@ paths:
                   $ref: '#/components/schemas/Problem'
     put:
       tags:
-      - test-workflows
+      - pro
       summary: Validate test workflow
       description: Validate test workflow specification against CRD schema
       operationId: validateTestWorkflow
@@ -179,7 +179,7 @@ paths:
   /test-workflow-with-executions:
     get:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/Selector'
       summary: List test workflows with latest execution
@@ -224,7 +224,7 @@ paths:
   /test-workflow-with-executions/{id}:
     get:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/ID'
       summary: Get test workflow details with latest execution
@@ -264,45 +264,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Problem'
-  /test-workflow-with-executions/{id}/tags:
-    get:
-      tags:
-      - test-workflows
-      parameters:
-      - $ref: '#/components/parameters/ID'
-      summary: List test workflow execution tags
-      description: List test workflow execution tags for all executed test workflows
-      operationId: listTestWorkflowWithExecutionTags
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties:
-                  type: array
-                  items:
-                    type: string
-                example:
-                  app:
-                  - backend
-                  env:
-                  - prod
-                  toDelete:
-                  - 'yes'
-        502:
-          description: problem communicating with kubernetes cluster
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
   /test-workflows/{id}/executions:
     get:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/ID'
       - $ref: '#/components/parameters/TagSelector'
@@ -348,7 +313,7 @@ paths:
                   $ref: '#/components/schemas/Problem'
     post:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/ID'
       - $ref: '#/components/parameters/TestWorkflowExecutionName'
@@ -395,45 +360,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Problem'
-  /test-workflows/{id}/tags:
-    get:
-      tags:
-      - test-workflows
-      parameters:
-      - $ref: '#/components/parameters/ID'
-      summary: List test workflow execution tags
-      description: List test workflow execution tags for all executed test workflows
-      operationId: listTestWorkflowTagsByTestWorkflow
-      responses:
-        200:
-          description: successful list operation
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties:
-                  type: array
-                  items:
-                    type: string
-                example:
-                  app:
-                  - backend
-                  env:
-                  - prod
-                  toDelete:
-                  - 'yes'
-        502:
-          description: problem communicating with kubernetes cluster
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
   /test-workflows/{id}/metrics:
     get:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/ID'
       summary: Get test workflow metrics
@@ -476,7 +406,7 @@ paths:
   /test-workflows/{id}/executions/{executionID}:
     get:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/ID'
       - $ref: '#/components/parameters/executionID'
@@ -520,7 +450,7 @@ paths:
   /test-workflows/{id}/executions/{executionID}/abort:
     post:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/ID'
       - $ref: '#/components/parameters/executionID'
@@ -554,52 +484,13 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Problem'
-  /test-workflows/{id}/executions/{executionID}/rerun:
-    post:
-      tags:
-      - test-workflows
-      parameters:
-      - $ref: '#/components/parameters/ID'
-      - $ref: '#/components/parameters/executionID'
-      summary: Rerun test workflow execution
-      operationId: rerunTestWorkflowExecutionByTestWorkflow
-      requestBody:
-        description: test workflow running context
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TestWorkflowRunningContext'
-      responses:
-        200:
-          description: successful execution
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TestWorkflowExecution'
-        400:
-          description: problem with body parsing - probably some bad input occurs
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        502:
-          description: problem communicating with kubernetes cluster
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
   /test-workflow-executions:
     post:
       parameters:
       - $ref: '#/components/parameters/Selector'
       - $ref: '#/components/parameters/ConcurrencyLevel'
       tags:
-      - test-workflows
+      - pro
       summary: Execute test workflows
       description: Execute test workflows in the kubernetes cluster
       operationId: executeTestWorkflows
@@ -645,7 +536,7 @@ paths:
                   $ref: '#/components/schemas/Problem'
     get:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/ID'
       - $ref: '#/components/parameters/TagSelector'
@@ -692,7 +583,7 @@ paths:
   /test-workflow-executions/{executionID}:
     get:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/executionID'
       summary: Get test workflow execution
@@ -739,7 +630,7 @@ paths:
       parameters:
       - $ref: '#/components/parameters/executionID'
       tags:
-      - test-workflows
+      - pro
       summary: Get test workflow execution's artifacts by ID
       description: Returns artifacts of the given executionID
       operationId: getTestWorkflowExecutionArtifacts
@@ -782,7 +673,7 @@ paths:
       - $ref: '#/components/parameters/executionID'
       - $ref: '#/components/parameters/Filename'
       tags:
-      - test-workflows
+      - pro
       summary: Download test workflow artifact
       description: Download the artifact file from the given execution
       operationId: downloadTestWorkflowArtifact
@@ -824,7 +715,7 @@ paths:
       - $ref: '#/components/parameters/executionID'
       - $ref: '#/components/parameters/Mask'
       tags:
-      - test-workflows
+      - pro
       summary: Download test workflow artifact archive
       description: Download the artifact archive from the given execution
       operationId: downloadTestWorkflowArtifactArchive
@@ -863,7 +754,7 @@ paths:
   /test-workflow-executions/{executionID}/abort:
     post:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/executionID'
       - $ref: '#/components/parameters/ForceAgent'
@@ -896,48 +787,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Problem'
-  /test-workflow-executions/{executionID}/rerun:
-    post:
-      tags:
-      - test-workflows
-      parameters:
-      - $ref: '#/components/parameters/executionID'
-      summary: Rerun test workflow execution
-      operationId: rerunTestWorkflowExecution
-      requestBody:
-        description: test workflow running context
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TestWorkflowRunningContext'
-      responses:
-        200:
-          description: successful execution
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TestWorkflowExecution'
-        400:
-          description: problem with body parsing - probably some bad input occurs
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
-        502:
-          description: problem communicating with kubernetes cluster
-          content:
-            application/problem+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Problem'
   /test-workflows/{id}/abort:
     post:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/ID'
       summary: Abort all test workflow executions
@@ -972,7 +825,7 @@ paths:
   /preview-test-workflow:
     post:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/InlineTemplates'
       summary: Preview test workflow
@@ -1027,7 +880,7 @@ paths:
   /test-workflows/{id}:
     get:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/ID'
       summary: Get test workflow details
@@ -1069,7 +922,7 @@ paths:
                   $ref: '#/components/schemas/Problem'
     put:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/ID'
       summary: Update test workflow details
@@ -1121,7 +974,7 @@ paths:
                   $ref: '#/components/schemas/Problem'
     delete:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/ID'
       - $ref: '#/components/parameters/SkipDeleteExecutions'
@@ -1159,7 +1012,7 @@ paths:
   /test-workflow-templates:
     get:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/Selector'
       summary: List test workflow templates
@@ -1203,7 +1056,7 @@ paths:
                   $ref: '#/components/schemas/Problem'
     delete:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/Selector'
       summary: Delete test workflow templates
@@ -1238,7 +1091,7 @@ paths:
                   $ref: '#/components/schemas/Problem'
     post:
       tags:
-      - test-workflows
+      - pro
       summary: Create test workflow template
       description: Create test workflow template in the kubernetes cluster
       operationId: createTestWorkflowTemplate
@@ -1290,7 +1143,7 @@ paths:
                   $ref: '#/components/schemas/Problem'
     put:
       tags:
-      - test-workflows
+      - pro
       summary: Validate test workflow template
       description: Validate test workflow template specification against CRD schema
       operationId: validateTestWorkflowTemplate
@@ -1323,7 +1176,7 @@ paths:
   /test-workflow-templates/{id}:
     get:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/ID'
       summary: Get test workflow template details
@@ -1365,7 +1218,7 @@ paths:
                   $ref: '#/components/schemas/Problem'
     put:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/ID'
       summary: Update test workflow template details
@@ -1417,7 +1270,7 @@ paths:
                   $ref: '#/components/schemas/Problem'
     delete:
       tags:
-      - test-workflows
+      - pro
       parameters:
       - $ref: '#/components/parameters/ID'
       summary: Delete test workflow template
@@ -2006,6 +1859,12 @@ components:
         initialization:
           type: string
           description: maximum time for initialization/transitioning before steps run (e.g. 60s, 2m)
+    TestWorkflowStatusSummary:
+      type: object
+      description: test workflow status
+      properties:
+        health:
+          $ref: '#/components/schemas/TestWorkflowExecutionHealth'
     TestWorkflowRunningContextActor:
       description: running context actor for test workflow execution
       type: object
@@ -2029,12 +1888,6 @@ components:
           description: reference test workflow execution id
         type:
           $ref: '#/components/schemas/TestWorkflowRunningContextActorType'
-    TestWorkflowStatusSummary:
-      type: object
-      description: test workflow status
-      properties:
-        health:
-          $ref: '#/components/schemas/TestWorkflowExecutionHealth'
     SeccompProfile:
       type: object
       properties:

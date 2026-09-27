@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Testkube Templates API
+  title: Testkube Config API
   description: Testkube provides a Kubernetes-native framework for test definition, execution and results
   contact:
     email: contact@testkube.io
@@ -9,39 +9,76 @@ info:
     url: https://opensource.org/licenses/MIT
   version: 1.0.0
 tags:
-- name: Templates
+- name: Config
 paths:
-  /templates:
-    get:
+  /config:
+    patch:
       tags:
-      - Templates
-      summary: List templates
-      description: List templates available in cluster
-      operationId: listTemplates
-      parameters:
-      - $ref: '#/components/parameters/Selector'
+      - Config
+      summary: Update config
+      description: Updates config in cluster storage state
+      operationId: updateConfigKey
+      requestBody:
+        description: config request body data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Config'
       responses:
         200:
-          description: successful operation
+          description: update successful
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Template'
-            text/yaml:
-              schema:
-                type: string
+                $ref: '#/components/schemas/Config'
         400:
-          description: problem with input for CRD generation
+          description: problem with input
           content:
             application/problem+json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Problem'
-        502:
-          description: problem with read information from kubernetes cluster
+        404:
+          description: config not found
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        500:
+          description: problem with updating key in cluster storage
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+    get:
+      tags:
+      - Config
+      summary: Get config
+      description: Get config from cluster storage state
+      operationId: getConfig
+      responses:
+        200:
+          description: get successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Config'
+        404:
+          description: config not found
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        500:
+          description: problem with getting config from cluster storage
           content:
             application/problem+json:
               schema:
@@ -74,54 +111,20 @@ components:
           type: string
           description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
           example: http://10.23.23.123:8088/tests
-    Template:
-      description: Golang based template
+    Config:
+      description: Testkube API config data structure
       type: object
       required:
-      - name
-      - type
-      - body
+      - id
+      - clusterId
+      - enableTelemetry
       properties:
-        name:
+        id:
           type: string
-          description: template name for reference
-          example: webhook-template
-        namespace:
+        clusterId:
           type: string
-          description: template namespace
-          example: testkube
-        type:
-          $ref: '#/components/schemas/TemplateType'
-        body:
-          type: string
-          description: template body to use
-          example: '{"id": "{{ .Id }}"}'
-        labels:
-          type: object
-          description: template labels
-          additionalProperties:
-            type: string
-          example:
-            env: prod
-            app: backend
-    TemplateType:
-      description: template type by purpose
-      type: string
-      enum:
-      - job
-      - container
-      - cronjob
-      - scraper
-      - pvc
-      - webhook
-      - pod
-  parameters:
-    Selector:
-      in: query
-      name: selector
-      schema:
-        type: string
-        description: Labels to filter by
+        enableTelemetry:
+          type: boolean
 externalDocs:
   description: Find out more about Testkube
   url: https://testkube.kubeshop.io/

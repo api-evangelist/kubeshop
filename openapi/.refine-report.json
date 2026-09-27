@@ -8,7 +8,9 @@
     "kubeshop-organizations-api-openapi.yml",
     "kubeshop-status-pages-api-openapi.yml",
     "kubeshop-users-api-openapi.yml",
-    "kubeshop-api-api-openapi.yml",
+    "kubeshop-config-api-openapi.yml",
+    "kubeshop-debug-api-openapi.yml",
+    "kubeshop-export-api-openapi.yml",
     "kubeshop-artifacts-api-openapi.yml",
     "kubeshop-cluster-resources-api-openapi.yml",
     "kubeshop-executions-api-openapi.yml",
@@ -16,6 +18,7 @@
     "kubeshop-keymap-api-openapi.yml",
     "kubeshop-labels-api-openapi.yml",
     "kubeshop-logs-api-openapi.yml",
+    "kubeshop-pro-api-openapi.yml",
     "kubeshop-repository-api-openapi.yml",
     "kubeshop-secrets-api-openapi.yml",
     "kubeshop-tags-api-openapi.yml",
@@ -29,7 +32,9 @@
     "kubeshop-webhook-api-openapi.yml",
     "kubeshop-webhook-template-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -220,6 +225,13 @@
     "kubeshop-testkube-control-plane-openapi-original.yml: declared missing tag: Status Pages",
     "kubeshop-testkube-control-plane-openapi-original.yml: declared missing tag: Users",
     "kubeshop-testkube-openapi-original.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "kubeshop-testkube-openapi-original.yml: tagged paths PATCH /config -> Config",
+    "kubeshop-testkube-openapi-original.yml: tagged paths GET /config -> Config",
+    "kubeshop-testkube-openapi-original.yml: tagged paths GET /debug -> Debug",
+    "kubeshop-testkube-openapi-original.yml: tagged paths GET /export -> Export",
+    "kubeshop-testkube-openapi-original.yml: declared missing tag: Config",
+    "kubeshop-testkube-openapi-original.yml: declared missing tag: Debug",
+    "kubeshop-testkube-openapi-original.yml: declared missing tag: Export",
     "kubeshop-testkube-openapi-original.yml: declared missing tag: cluster-resources",
     "kubeshop-testkube-openapi-original.yml: declared missing tag: pro",
     "kubeshop-testkube-openapi-original.yml: declared missing tag: repository",
@@ -230,8 +242,8 @@
     "kubeshop-testkube-openapi-original.yml: declared missing tag: test-sources",
     "kubeshop-testkube-openapi-original.yml: declared missing tag: test-workflows",
     "kubeshop-testkube-openapi-original.yml: declared missing tag: webhook-template",
-    "kubeshop-testkube-openapi-original.yml: multi-axis tagging (21 tags, 20 first tags, 2.37x duplication over 131 operations) \u2014 split on first tag, 125 operations narrowed",
-    "apis.yml register: already-registered"
+    "superseded outputs removed: kubeshop-api-api-openapi.yml",
+    "apis.yml register: written (+4 apis, 26 total)"
   ],
   "skipped": [
     "_original/kubeshop-testkube-agent-openapi-original.yml: archived document superseded by a larger archived document",

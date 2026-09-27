@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Testkube Templates API
+  title: Testkube Export API
   description: Testkube provides a Kubernetes-native framework for test definition, execution and results
   contact:
     email: contact@testkube.io
@@ -9,39 +9,59 @@ info:
     url: https://opensource.org/licenses/MIT
   version: 1.0.0
 tags:
-- name: Templates
+- name: Export
 paths:
-  /templates:
+  /export:
     get:
       tags:
-      - Templates
-      summary: List templates
-      description: List templates available in cluster
-      operationId: listTemplates
+      - Export
+      summary: Export execution data
+      description: Exports all execution metadata, logs and workflow sequence numbers as a gzipped tar archive. The archive size is limited by the server (configured via the EXPORT_ARCHIVE_MAX_SIZE env var); use the 'since' parameter to narrow the date range if the limit is exceeded.
+      operationId: exportExecutions
       parameters:
-      - $ref: '#/components/parameters/Selector'
+      - name: since
+        in: query
+        required: false
+        description: Export only executions created after this date. Accepts ISO 8601 date (YYYY-MM-DD) or RFC 3339 timestamp (e.g. 2025-01-01T00:00:00Z).
+        schema:
+          type: string
+        examples:
+          date:
+            value: '2025-01-01'
+          datetime:
+            value: '2025-01-01T00:00:00Z'
       responses:
         200:
           description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Template'
-            text/yaml:
+          headers:
+            Content-Disposition:
+              description: Content disposition with the archive filename
               schema:
                 type: string
+                example: attachment; filename="testkube-export.tar.gz"
+          content:
+            application/gzip:
+              schema:
+                type: string
+                format: binary
         400:
-          description: problem with input for CRD generation
+          description: invalid 'since' parameter value
           content:
             application/problem+json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Problem'
-        502:
-          description: problem with read information from kubernetes cluster
+        413:
+          description: export archive exceeds the server-configured size limit
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        500:
+          description: problem with exporting execution data
           content:
             application/problem+json:
               schema:
@@ -74,54 +94,6 @@ components:
           type: string
           description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
           example: http://10.23.23.123:8088/tests
-    Template:
-      description: Golang based template
-      type: object
-      required:
-      - name
-      - type
-      - body
-      properties:
-        name:
-          type: string
-          description: template name for reference
-          example: webhook-template
-        namespace:
-          type: string
-          description: template namespace
-          example: testkube
-        type:
-          $ref: '#/components/schemas/TemplateType'
-        body:
-          type: string
-          description: template body to use
-          example: '{"id": "{{ .Id }}"}'
-        labels:
-          type: object
-          description: template labels
-          additionalProperties:
-            type: string
-          example:
-            env: prod
-            app: backend
-    TemplateType:
-      description: template type by purpose
-      type: string
-      enum:
-      - job
-      - container
-      - cronjob
-      - scraper
-      - pvc
-      - webhook
-      - pod
-  parameters:
-    Selector:
-      in: query
-      name: selector
-      schema:
-        type: string
-        description: Labels to filter by
 externalDocs:
   description: Find out more about Testkube
   url: https://testkube.kubeshop.io/

@@ -77,6 +77,83 @@ paths:
                 items:
                   $ref: '#/components/schemas/Problem'
   /templates/{id}:
+    delete:
+      parameters:
+      - $ref: '#/components/parameters/ID'
+      tags:
+      - Template
+      summary: Delete template
+      description: Deletes template by its name
+      operationId: deleteTemplate
+      responses:
+        204:
+          description: template deleted successfuly
+        404:
+          description: template not found
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        502:
+          description: problem with communicating with kubernetes cluster
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+    get:
+      parameters:
+      - $ref: '#/components/parameters/ID'
+      tags:
+      - Template
+      summary: Get template details
+      description: Returns template
+      operationId: getTemplate
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+            text/yaml:
+              schema:
+                type: string
+        400:
+          description: problem with input for CRD generation
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        404:
+          description: template not found
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        500:
+          description: problem with getting template data
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        502:
+          description: problem with communicating with kubernetes cluster
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
     patch:
       parameters:
       - $ref: '#/components/parameters/ID'
@@ -127,6 +204,20 @@ paths:
                 items:
                   $ref: '#/components/schemas/Problem'
 components:
+  parameters:
+    Selector:
+      in: query
+      name: selector
+      schema:
+        type: string
+        description: Labels to filter by
+    ID:
+      in: path
+      name: id
+      schema:
+        type: string
+      required: true
+      description: unique id of the object
   schemas:
     TemplateType:
       description: template type by purpose
@@ -139,9 +230,11 @@ components:
       - pvc
       - webhook
       - pod
-    TemplateCreateRequest:
-      description: template create request body
-      type: object
+    TemplateUpdateRequest:
+      description: template update request body
+      type:
+      - object
+      - 'null'
       allOf:
       - $ref: '#/components/schemas/Template'
     Problem:
@@ -168,6 +261,11 @@ components:
           type: string
           description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
           example: http://10.23.23.123:8088/tests
+    TemplateCreateRequest:
+      description: template create request body
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Template'
     Template:
       description: Golang based template
       type: object
@@ -198,27 +296,6 @@ components:
           example:
             env: prod
             app: backend
-    TemplateUpdateRequest:
-      description: template update request body
-      type:
-      - object
-      - 'null'
-      allOf:
-      - $ref: '#/components/schemas/Template'
-  parameters:
-    ID:
-      in: path
-      name: id
-      schema:
-        type: string
-      required: true
-      description: unique id of the object
-    Selector:
-      in: query
-      name: selector
-      schema:
-        type: string
-        description: Labels to filter by
 externalDocs:
   description: Find out more about Testkube
   url: https://testkube.kubeshop.io/

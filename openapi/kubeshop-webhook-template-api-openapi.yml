@@ -113,6 +113,83 @@ paths:
                 items:
                   $ref: '#/components/schemas/Problem'
   /webhook-templates/{id}:
+    delete:
+      parameters:
+      - $ref: '#/components/parameters/ID'
+      tags:
+      - webhook-template
+      summary: Delete webhook template
+      description: Deletes webhook template by its name
+      operationId: deleteWebhookTemplate
+      responses:
+        204:
+          description: webhook template deleted successfuly
+        404:
+          description: webhook template not found
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        502:
+          description: problem with communicating with kubernetes cluster
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+    get:
+      parameters:
+      - $ref: '#/components/parameters/ID'
+      tags:
+      - webhook-template
+      summary: Get webhook template details
+      description: Returns webhook template
+      operationId: getWebhookTemplate
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookTemplate'
+            text/yaml:
+              schema:
+                type: string
+        400:
+          description: problem with input for CRD generation
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        404:
+          description: webhook template not found
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        500:
+          description: problem with getting webhook template data
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        502:
+          description: problem with communicating with kubernetes cluster
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
     patch:
       parameters:
       - $ref: '#/components/parameters/ID'
@@ -164,6 +241,58 @@ paths:
                   $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    SecretRef:
+      required:
+      - name
+      - key
+      type: object
+      description: Testkube internal reference for secret storage in Kubernetes secrets
+      properties:
+        namespace:
+          type: string
+          description: object kubernetes namespace
+        name:
+          type: string
+          description: object name
+        key:
+          type: string
+          description: object key
+    WebhookConfigValue:
+      type: object
+      description: configuration value
+      properties:
+        value:
+          description: public value to use in webhook template
+          $ref: '#/components/schemas/BoxedString'
+        secret:
+          description: private value stored in secret to use in webhook template
+          $ref: '#/components/schemas/SecretRef'
+    BoxedString:
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+      - value
+    EventType:
+      type: string
+      enum:
+      - queue-testworkflow
+      - start-testworkflow
+      - end-testworkflow-success
+      - end-testworkflow-failed
+      - end-testworkflow-aborted
+      - end-testworkflow-canceled
+      - end-testworkflow-not-passed
+      - become-testworkflow-up
+      - become-testworkflow-down
+      - become-testworkflow-failed
+      - become-testworkflow-aborted
+      - become-testworkflow-canceled
+      - become-testworkflow-not-passed
+      - created
+      - updated
+      - deleted
     WebhookTemplateUpdateRequest:
       description: webhook template update request body
       type:
@@ -171,6 +300,33 @@ components:
       - 'null'
       allOf:
       - $ref: '#/components/schemas/WebhookTemplate'
+    Source:
+      description: synchronisation sources
+      type: string
+      enum:
+      - kubernetes
+    ExecutionTarget:
+      type: object
+      properties:
+        match:
+          type: object
+          description: runner labels to match
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        not:
+          type: object
+          description: runner labels to NOT match
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        replicate:
+          type: array
+          description: list of runner labels to replicate the executions
+          items:
+            type: string
     Problem:
       description: problem response in case of error
       type: object
@@ -195,69 +351,6 @@ components:
           type: string
           description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
           example: http://10.23.23.123:8088/tests
-    ExecutionTarget:
-      type: object
-      properties:
-        match:
-          type: object
-          description: runner labels to match
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        not:
-          type: object
-          description: runner labels to NOT match
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        replicate:
-          type: array
-          description: list of runner labels to replicate the executions
-          items:
-            type: string
-    BoxedString:
-      type: object
-      properties:
-        value:
-          type: string
-      required:
-      - value
-    WebhookConfigValue:
-      type: object
-      description: configuration value
-      properties:
-        value:
-          description: public value to use in webhook template
-          $ref: '#/components/schemas/BoxedString'
-        secret:
-          description: private value stored in secret to use in webhook template
-          $ref: '#/components/schemas/SecretRef'
-    Syncable:
-      description: 'source information about resources that may have been synced from multiple sources.
-
-        An empty source indicates that the source was the UI/API for backwards compatibility.
-
-        '
-      type: object
-      properties:
-        creationSource:
-          description: the original source from which the resource was created
-          $ref: '#/components/schemas/Source'
-        lastModificationSource:
-          description: the source from which the last modification of the resource originated
-          $ref: '#/components/schemas/Source'
-    Source:
-      description: synchronisation sources
-      type: string
-      enum:
-      - kubernetes
-    WebhookConfig:
-      type: object
-      description: configuration values
-      additionalProperties:
-        $ref: '#/components/schemas/WebhookConfigValue'
     WebhookTemplate:
       description: CRD based webhook data template
       type: object
@@ -329,6 +422,25 @@ components:
           $ref: '#/components/schemas/Syncable'
         target:
           $ref: '#/components/schemas/ExecutionTarget'
+    Syncable:
+      description: 'source information about resources that may have been synced from multiple sources.
+
+        An empty source indicates that the source was the UI/API for backwards compatibility.
+
+        '
+      type: object
+      properties:
+        creationSource:
+          description: the original source from which the resource was created
+          $ref: '#/components/schemas/Source'
+        lastModificationSource:
+          description: the source from which the last modification of the resource originated
+          $ref: '#/components/schemas/Source'
+    WebhookConfig:
+      type: object
+      description: configuration values
+      additionalProperties:
+        $ref: '#/components/schemas/WebhookConfigValue'
     WebhookParameterSchema:
       type: object
       description: parameter definition
@@ -353,47 +465,18 @@ components:
           description: regular expression to match
       required:
       - name
-    SecretRef:
-      required:
-      - name
-      - key
-      type: object
-      description: Testkube internal reference for secret storage in Kubernetes secrets
-      properties:
-        namespace:
-          type: string
-          description: object kubernetes namespace
-        name:
-          type: string
-          description: object name
-        key:
-          type: string
-          description: object key
     WebhookTemplateCreateRequest:
       description: webhook template create request body
       type: object
       allOf:
       - $ref: '#/components/schemas/WebhookTemplate'
-    EventType:
-      type: string
-      enum:
-      - queue-testworkflow
-      - start-testworkflow
-      - end-testworkflow-success
-      - end-testworkflow-failed
-      - end-testworkflow-aborted
-      - end-testworkflow-canceled
-      - end-testworkflow-not-passed
-      - become-testworkflow-up
-      - become-testworkflow-down
-      - become-testworkflow-failed
-      - become-testworkflow-aborted
-      - become-testworkflow-canceled
-      - become-testworkflow-not-passed
-      - created
-      - updated
-      - deleted
   parameters:
+    Selector:
+      in: query
+      name: selector
+      schema:
+        type: string
+        description: Labels to filter by
     ID:
       in: path
       name: id
@@ -401,12 +484,6 @@ components:
         type: string
       required: true
       description: unique id of the object
-    Selector:
-      in: query
-      name: selector
-      schema:
-        type: string
-        description: Labels to filter by
 externalDocs:
   description: Find out more about Testkube
   url: https://testkube.kubeshop.io/

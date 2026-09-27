@@ -114,6 +114,83 @@ paths:
                 items:
                   $ref: '#/components/schemas/Problem'
   /webhooks/{id}:
+    delete:
+      parameters:
+      - $ref: '#/components/parameters/ID'
+      tags:
+      - Webhook
+      summary: Delete webhook
+      description: Deletes webhook by its name
+      operationId: deleteWebhook
+      responses:
+        204:
+          description: webhook deleted successfuly
+        404:
+          description: webhook not found
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        502:
+          description: problem with communicating with kubernetes cluster
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+    get:
+      parameters:
+      - $ref: '#/components/parameters/ID'
+      tags:
+      - Webhook
+      summary: Get webhook details
+      description: Returns webhook
+      operationId: getWebhook
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+            text/yaml:
+              schema:
+                type: string
+        400:
+          description: problem with input for CRD generation
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        404:
+          description: webhook not found
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        500:
+          description: problem with getting webhook data
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
+        502:
+          description: problem with communicating with kubernetes cluster
+          content:
+            application/problem+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Problem'
     patch:
       parameters:
       - $ref: '#/components/parameters/ID'
@@ -165,137 +242,6 @@ paths:
                   $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    Problem:
-      description: problem response in case of error
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type contains a URI that identifies the problem type.
-          example: https://kubeshop.io/testkube/problems/invalidtestname
-        title:
-          type: string
-          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
-          example: Invalid test name
-        status:
-          type: integer
-          description: HTTP status code for this occurrence of the problem.
-          example: 500
-        detail:
-          type: string
-          description: A human-readable explanation specific to this occurrence of the problem.
-          example: Your test name can't contain forbidden characters like "}}}" passed
-        instance:
-          type: string
-          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
-          example: http://10.23.23.123:8088/tests
-    ExecutionTarget:
-      type: object
-      properties:
-        match:
-          type: object
-          description: runner labels to match
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        not:
-          type: object
-          description: runner labels to NOT match
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        replicate:
-          type: array
-          description: list of runner labels to replicate the executions
-          items:
-            type: string
-    BoxedString:
-      type: object
-      properties:
-        value:
-          type: string
-      required:
-      - value
-    WebhookConfigValue:
-      type: object
-      description: configuration value
-      properties:
-        value:
-          description: public value to use in webhook template
-          $ref: '#/components/schemas/BoxedString'
-        secret:
-          description: private value stored in secret to use in webhook template
-          $ref: '#/components/schemas/SecretRef'
-    Syncable:
-      description: 'source information about resources that may have been synced from multiple sources.
-
-        An empty source indicates that the source was the UI/API for backwards compatibility.
-
-        '
-      type: object
-      properties:
-        creationSource:
-          description: the original source from which the resource was created
-          $ref: '#/components/schemas/Source'
-        lastModificationSource:
-          description: the source from which the last modification of the resource originated
-          $ref: '#/components/schemas/Source'
-    WebhookCreateRequest:
-      description: webhook create request body
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Webhook'
-    Source:
-      description: synchronisation sources
-      type: string
-      enum:
-      - kubernetes
-    WebhookConfig:
-      type: object
-      description: configuration values
-      additionalProperties:
-        $ref: '#/components/schemas/WebhookConfigValue'
-    WebhookUpdateRequest:
-      description: webhook update request body
-      type:
-      - object
-      - 'null'
-      allOf:
-      - $ref: '#/components/schemas/Webhook'
-    WebhookTemplateRef:
-      type: object
-      properties:
-        name:
-          description: webhook template name to use
-          type: string
-      required:
-      - name
-    WebhookParameterSchema:
-      type: object
-      description: parameter definition
-      properties:
-        name:
-          description: unique parameter name
-          type: string
-        description:
-          description: description for the parameter
-          type: string
-        required:
-          description: whether parameter is required
-          type: boolean
-          default: false
-        example:
-          description: example value for the parameter
-          type: string
-        default:
-          $ref: '#/components/schemas/BoxedString'
-        pattern:
-          type: string
-          description: regular expression to match
-      required:
-      - name
     SecretRef:
       required:
       - name
@@ -312,25 +258,6 @@ components:
         key:
           type: string
           description: object key
-    EventType:
-      type: string
-      enum:
-      - queue-testworkflow
-      - start-testworkflow
-      - end-testworkflow-success
-      - end-testworkflow-failed
-      - end-testworkflow-aborted
-      - end-testworkflow-canceled
-      - end-testworkflow-not-passed
-      - become-testworkflow-up
-      - become-testworkflow-down
-      - become-testworkflow-failed
-      - become-testworkflow-aborted
-      - become-testworkflow-canceled
-      - become-testworkflow-not-passed
-      - created
-      - updated
-      - deleted
     Webhook:
       description: CRD based webhook data
       type: object
@@ -412,7 +339,163 @@ components:
           $ref: '#/components/schemas/Syncable'
         target:
           $ref: '#/components/schemas/ExecutionTarget'
+    WebhookTemplateRef:
+      type: object
+      properties:
+        name:
+          description: webhook template name to use
+          type: string
+      required:
+      - name
+    WebhookUpdateRequest:
+      description: webhook update request body
+      type:
+      - object
+      - 'null'
+      allOf:
+      - $ref: '#/components/schemas/Webhook'
+    WebhookConfigValue:
+      type: object
+      description: configuration value
+      properties:
+        value:
+          description: public value to use in webhook template
+          $ref: '#/components/schemas/BoxedString'
+        secret:
+          description: private value stored in secret to use in webhook template
+          $ref: '#/components/schemas/SecretRef'
+    BoxedString:
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+      - value
+    EventType:
+      type: string
+      enum:
+      - queue-testworkflow
+      - start-testworkflow
+      - end-testworkflow-success
+      - end-testworkflow-failed
+      - end-testworkflow-aborted
+      - end-testworkflow-canceled
+      - end-testworkflow-not-passed
+      - become-testworkflow-up
+      - become-testworkflow-down
+      - become-testworkflow-failed
+      - become-testworkflow-aborted
+      - become-testworkflow-canceled
+      - become-testworkflow-not-passed
+      - created
+      - updated
+      - deleted
+    Source:
+      description: synchronisation sources
+      type: string
+      enum:
+      - kubernetes
+    Problem:
+      description: problem response in case of error
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type contains a URI that identifies the problem type.
+          example: https://kubeshop.io/testkube/problems/invalidtestname
+        title:
+          type: string
+          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          example: Invalid test name
+        status:
+          type: integer
+          description: HTTP status code for this occurrence of the problem.
+          example: 500
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem.
+          example: Your test name can't contain forbidden characters like "}}}" passed
+        instance:
+          type: string
+          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
+          example: http://10.23.23.123:8088/tests
+    WebhookCreateRequest:
+      description: webhook create request body
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Webhook'
+    ExecutionTarget:
+      type: object
+      properties:
+        match:
+          type: object
+          description: runner labels to match
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        not:
+          type: object
+          description: runner labels to NOT match
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        replicate:
+          type: array
+          description: list of runner labels to replicate the executions
+          items:
+            type: string
+    Syncable:
+      description: 'source information about resources that may have been synced from multiple sources.
+
+        An empty source indicates that the source was the UI/API for backwards compatibility.
+
+        '
+      type: object
+      properties:
+        creationSource:
+          description: the original source from which the resource was created
+          $ref: '#/components/schemas/Source'
+        lastModificationSource:
+          description: the source from which the last modification of the resource originated
+          $ref: '#/components/schemas/Source'
+    WebhookConfig:
+      type: object
+      description: configuration values
+      additionalProperties:
+        $ref: '#/components/schemas/WebhookConfigValue'
+    WebhookParameterSchema:
+      type: object
+      description: parameter definition
+      properties:
+        name:
+          description: unique parameter name
+          type: string
+        description:
+          description: description for the parameter
+          type: string
+        required:
+          description: whether parameter is required
+          type: boolean
+          default: false
+        example:
+          description: example value for the parameter
+          type: string
+        default:
+          $ref: '#/components/schemas/BoxedString'
+        pattern:
+          type: string
+          description: regular expression to match
+      required:
+      - name
   parameters:
+    Selector:
+      in: query
+      name: selector
+      schema:
+        type: string
+        description: Labels to filter by
     ID:
       in: path
       name: id
@@ -420,12 +503,6 @@ components:
         type: string
       required: true
       description: unique id of the object
-    Selector:
-      in: query
-      name: selector
-      schema:
-        type: string
-        description: Labels to filter by
 externalDocs:
   description: Find out more about Testkube
   url: https://testkube.kubeshop.io/

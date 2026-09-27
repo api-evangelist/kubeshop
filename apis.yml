@@ -11,17 +11,20 @@ description: Kubeshop is the company behind Testkube, an open-core, Kubernetes-n
   AI assistants over OAuth 2.1. The company is backed by Insight Partners.
 url: https://raw.githubusercontent.com/api-evangelist/kubeshop/refs/heads/main/apis.yml
 deliveryModel:
-  model: unknown
+  model: saas
+  license_evidence:
+    not_product:
+    - kubeshop/testkube
   open_source: unknown
   commercial: true
   callable_host: true
-  label: Delivery model not determined — needs a product licence on record
+  label: Hosted service · you call their endpoint
   confidence: low
   source:
   - openapi
   - pricing
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: unknown
@@ -56,7 +59,7 @@ tags:
 - DevOps
 - Cloud-Native
 - Quality Assurance
-- Open-Source
+- Open Source
 - MCP
 tags_raw:
 - Company
@@ -71,31 +74,15 @@ tags_raw:
 - Quality Assurance
 - Open Source
 - Model Context Protocol
+- Open-Source
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 apis:
-- aid: kubeshop:kubeshop-api-api
-  name: Kubeshop api
-  description: Testkube API operations
-  humanURL: https://docs.testkube.io/openapi/overview
-  baseURL: https://api.testkube.io
-  tags: []
-  tags_raw:
-  - api
-  properties:
-  - type: OpenAPI
-    url: openapi/kubeshop-api-api-openapi.yml
-  - type: Documentation
-    url: https://docs.testkube.io/openapi/overview
-  - type: Documentation
-    url: https://docs.testkube.io/openapi/agent/default--test-workflows
-  - type: SourceCode
-    url: https://github.com/kubeshop/testkube
 - aid: kubeshop:kubeshop-artifacts-api
-  name: Kubeshop artifacts API
+  name: Kubeshop Artifacts API
   description: Artifact operations
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
@@ -113,7 +100,7 @@ apis:
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
 - aid: kubeshop:kubeshop-cluster-resources-api
-  name: Kubeshop cluster-resources API
+  name: Kubeshop Cluster Resources API
   description: The cluster-resources API from Kubeshop — 1 operation(s) for cluster-resources.
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
@@ -147,7 +134,7 @@ apis:
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
 - aid: kubeshop:kubeshop-executor-api
-  name: Kubeshop executor API
+  name: Kubeshop Executor API
   description: Executor operations
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
@@ -163,7 +150,7 @@ apis:
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
 - aid: kubeshop:kubeshop-keymap-api
-  name: Kubeshop keymap API
+  name: Kubeshop Keymap API
   description: Keymap for fields in a form
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
@@ -179,7 +166,7 @@ apis:
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
 - aid: kubeshop:kubeshop-labels-api
-  name: Kubeshop labels API
+  name: Kubeshop Labels API
   description: Listing all available labels
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
@@ -197,7 +184,7 @@ apis:
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
 - aid: kubeshop:kubeshop-logs-api
-  name: Kubeshop logs API
+  name: Kubeshop Logs API
   description: Log operations
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
@@ -233,7 +220,7 @@ apis:
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
 - aid: kubeshop:kubeshop-repository-api
-  name: Kubeshop repository API
+  name: Kubeshop Repository API
   description: The repository API from Kubeshop — 1 operation(s) for repository.
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
@@ -251,7 +238,7 @@ apis:
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
 - aid: kubeshop:kubeshop-secrets-api
-  name: Kubeshop secrets API
+  name: Kubeshop Secrets API
   description: The secrets API from Kubeshop — 2 operation(s) for secrets.
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
@@ -285,7 +272,7 @@ apis:
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
 - aid: kubeshop:kubeshop-tags-api
-  name: Kubeshop tags API
+  name: Kubeshop Tags API
   description: The tags API from Kubeshop — 1 operation(s) for tags.
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
@@ -303,7 +290,7 @@ apis:
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
 - aid: kubeshop:kubeshop-template-api
-  name: Kubeshop template API
+  name: Kubeshop Template API
   description: The template API from Kubeshop — 2 operation(s) for template.
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
@@ -321,7 +308,7 @@ apis:
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
 - aid: kubeshop:kubeshop-templates-api
-  name: Kubeshop templates API
+  name: Kubeshop Templates API
   description: The templates API from Kubeshop — 1 operation(s) for templates.
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
@@ -339,7 +326,7 @@ apis:
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
 - aid: kubeshop:kubeshop-test-sources-api
-  name: Kubeshop test-sources API
+  name: Kubeshop Test Sources API
   description: The test-sources API from Kubeshop — 2 operation(s) for test-sources.
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
@@ -355,7 +342,7 @@ apis:
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
 - aid: kubeshop:kubeshop-test-suites-api
-  name: Kubeshop test-suites API
+  name: Kubeshop Test Suites API
   description: Test suites orchestration operations
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
@@ -373,7 +360,7 @@ apis:
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
 - aid: kubeshop:kubeshop-test-triggers-api
-  name: Kubeshop test-triggers API
+  name: Kubeshop Test Triggers API
   description: Test Triggers CRUD operations
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
@@ -405,7 +392,7 @@ apis:
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
 - aid: kubeshop:kubeshop-tests-api
-  name: Kubeshop tests API
+  name: Kubeshop Tests API
   description: Tests operations
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
@@ -441,7 +428,7 @@ apis:
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
 - aid: kubeshop:kubeshop-webhook-api
-  name: Kubeshop webhook API
+  name: Kubeshop Webhook API
   description: Webhook operations
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
@@ -459,7 +446,7 @@ apis:
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
 - aid: kubeshop:kubeshop-webhook-template-api
-  name: Kubeshop webhook-template API
+  name: Kubeshop Webhook Template API
   description: The webhook-template API from Kubeshop — 2 operation(s) for webhook-template.
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
@@ -468,6 +455,70 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/kubeshop-webhook-template-api-openapi.yml
+  - type: Documentation
+    url: https://docs.testkube.io/openapi/overview
+  - type: Documentation
+    url: https://docs.testkube.io/openapi/agent/default--test-workflows
+  - type: SourceCode
+    url: https://github.com/kubeshop/testkube
+- aid: kubeshop:kubeshop-config-api
+  name: Kubeshop Config API
+  description: The Config API from Kubeshop — 1 operation(s) for config.
+  humanURL: https://docs.testkube.io/openapi/overview
+  baseURL: https://api.testkube.io
+  tags:
+  - Config
+  properties:
+  - type: OpenAPI
+    url: openapi/kubeshop-config-api-openapi.yml
+  - type: Documentation
+    url: https://docs.testkube.io/openapi/overview
+  - type: Documentation
+    url: https://docs.testkube.io/openapi/agent/default--test-workflows
+  - type: SourceCode
+    url: https://github.com/kubeshop/testkube
+- aid: kubeshop:kubeshop-debug-api
+  name: Kubeshop Debug API
+  description: The Debug API from Kubeshop — 1 operation(s) for debug.
+  humanURL: https://docs.testkube.io/openapi/overview
+  baseURL: https://api.testkube.io
+  tags:
+  - Debug
+  properties:
+  - type: OpenAPI
+    url: openapi/kubeshop-debug-api-openapi.yml
+  - type: Documentation
+    url: https://docs.testkube.io/openapi/overview
+  - type: Documentation
+    url: https://docs.testkube.io/openapi/agent/default--test-workflows
+  - type: SourceCode
+    url: https://github.com/kubeshop/testkube
+- aid: kubeshop:kubeshop-export-api
+  name: Kubeshop Export API
+  description: The Export API from Kubeshop — 1 operation(s) for export.
+  humanURL: https://docs.testkube.io/openapi/overview
+  baseURL: https://api.testkube.io
+  tags:
+  - Export
+  properties:
+  - type: OpenAPI
+    url: openapi/kubeshop-export-api-openapi.yml
+  - type: Documentation
+    url: https://docs.testkube.io/openapi/overview
+  - type: Documentation
+    url: https://docs.testkube.io/openapi/agent/default--test-workflows
+  - type: SourceCode
+    url: https://github.com/kubeshop/testkube
+- aid: kubeshop:kubeshop-pro-api
+  name: Kubeshop Pro API
+  description: The pro API from Kubeshop — 18 operation(s) for pro.
+  humanURL: https://docs.testkube.io/openapi/overview
+  baseURL: https://api.testkube.io
+  tags:
+  - pro
+  properties:
+  - type: OpenAPI
+    url: openapi/kubeshop-pro-api-openapi.yml
   - type: Documentation
     url: https://docs.testkube.io/openapi/overview
   - type: Documentation

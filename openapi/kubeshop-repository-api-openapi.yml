@@ -54,6 +54,22 @@ paths:
                   $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    SecretRef:
+      required:
+      - name
+      - key
+      type: object
+      description: Testkube internal reference for secret storage in Kubernetes secrets
+      properties:
+        namespace:
+          type: string
+          description: object kubernetes namespace
+        name:
+          type: string
+          description: object name
+        key:
+          type: string
+          description: object key
     Problem:
       description: problem response in case of error
       type: object
@@ -129,22 +145,6 @@ components:
           - basic
           - header
           description: auth type for git requests
-    SecretRef:
-      required:
-      - name
-      - key
-      type: object
-      description: Testkube internal reference for secret storage in Kubernetes secrets
-      properties:
-        namespace:
-          type: string
-          description: object kubernetes namespace
-        name:
-          type: string
-          description: object name
-        key:
-          type: string
-          description: object key
 externalDocs:
   description: Find out more about Testkube
   url: https://testkube.kubeshop.io/

@@ -58,15 +58,25 @@ paths:
       tags:
       - Status Pages
 components:
-  parameters:
-    StatusPageID:
-      name: statusPageID
-      in: path
-      description: unique id of the status page
-      required: true
-      schema:
-        type: string
   responses:
+    Incidents:
+      description: list of incidents
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Incidents'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    BadRequestError:
+      description: 400 Bad Request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
     UnauthorizedError:
       description: 401 Unauthorized
       content:
@@ -79,25 +89,82 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
-    Incidents:
-      description: list of incidents
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Incidents'
-    BadRequestError:
-      description: 400 Bad Request
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    InternalServerError:
-      description: 500 Internal Server Error
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
   schemas:
+    StatusObservable:
+      type: object
+      properties:
+        name:
+          description: Name of the test or test suite that will be observed
+          type: string
+          example: Backend API
+        type:
+          description: Type of the observed entity
+          type: string
+          enum:
+          - test
+          - test-suite
+          - workflow
+        status:
+          description: the status of the executions
+          type: string
+          enum:
+          - unknown
+          - operational
+          - partial_outage
+          - major_outage
+      required:
+      - name
+      - type
+    StatusService:
+      type: object
+      properties:
+        name:
+          description: Name of the Service
+          type: string
+          example: API Services
+        contents:
+          description: Collection of Test Workflows, Tests and Test Suites that are relevant to the service
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusObservable'
+        operability:
+          description: Percentage of passed tests
+          type: number
+          example: 99.999
+        status:
+          description: The aggregated status of the Test Workflows, Tests and Test Suites
+          type: string
+          enum:
+          - unknown
+          - operational
+          - partial_outage
+          - major_outage
+        timeline:
+          description: Partial results from test/test suite executions divided by the interval
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusTimelineSlice'
+      required:
+      - name
+    BasicObjectWithOptionalID:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
     Problem:
       description: problem response in case of error
       type: object
@@ -132,37 +199,6 @@ components:
       - status
       - detail
       - instance
-    StatusService:
-      type: object
-      properties:
-        name:
-          description: Name of the Service
-          type: string
-          example: API Services
-        contents:
-          description: Collection of Test Workflows, Tests and Test Suites that are relevant to the service
-          type: array
-          items:
-            $ref: '#/components/schemas/StatusObservable'
-        operability:
-          description: Percentage of passed tests
-          type: number
-          example: 99.999
-        status:
-          description: The aggregated status of the Test Workflows, Tests and Test Suites
-          type: string
-          enum:
-          - unknown
-          - operational
-          - partial_outage
-          - major_outage
-        timeline:
-          description: Partial results from test/test suite executions divided by the interval
-          type: array
-          items:
-            $ref: '#/components/schemas/StatusTimelineSlice'
-      required:
-      - name
     StatusPage:
       allOf:
       - $ref: '#/components/schemas/BasicObjectWithOptionalID'
@@ -194,31 +230,6 @@ components:
             description: Globally unique chosen identifier for the status page used in the public URL
             type: string
             example: mySlugName
-    StatusObservable:
-      type: object
-      properties:
-        name:
-          description: Name of the test or test suite that will be observed
-          type: string
-          example: Backend API
-        type:
-          description: Type of the observed entity
-          type: string
-          enum:
-          - test
-          - test-suite
-          - workflow
-        status:
-          description: the status of the executions
-          type: string
-          enum:
-          - unknown
-          - operational
-          - partial_outage
-          - major_outage
-      required:
-      - name
-      - type
     Incident:
       allOf:
       - $ref: '#/components/schemas/BasicObjectWithOptionalID'
@@ -297,25 +308,14 @@ components:
             $ref: '#/components/schemas/Incident'
       required:
       - elements
-    BasicObjectWithOptionalID:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
+  parameters:
+    StatusPageID:
+      name: statusPageID
+      in: path
+      description: unique id of the status page
+      required: true
+      schema:
+        type: string
   securitySchemes:
     BearerAuth:
       type: http
