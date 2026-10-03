@@ -242,20 +242,6 @@ paths:
                   $ref: '#/components/schemas/Problem'
 components:
   parameters:
-    Filename:
-      in: path
-      name: filename
-      schema:
-        type: string
-      required: true
-      description: filename of the object usually used for artifacts
-    executionID:
-      in: path
-      name: executionID
-      schema:
-        type: string
-      required: true
-      description: unique id of the object execution
     ID:
       in: path
       name: id
@@ -263,6 +249,13 @@ components:
         type: string
       required: true
       description: unique id of the object
+    executionID:
+      in: path
+      name: executionID
+      schema:
+        type: string
+      required: true
+      description: unique id of the object execution
     Mask:
       in: query
       name: mask
@@ -270,6 +263,13 @@ components:
         type: string
         description: mask to filter files
       required: false
+    Filename:
+      in: path
+      name: filename
+      schema:
+        type: string
+      required: true
+      description: filename of the object usually used for artifacts
   schemas:
     Problem:
       description: problem response in case of error

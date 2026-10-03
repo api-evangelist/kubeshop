@@ -269,6 +269,46 @@ paths:
                   $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    TestSource:
+      description: Test source resource for shared test content
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/TestContent'
+      properties:
+        name:
+          type: string
+          description: test source name
+          example: testsource1
+        namespace:
+          type: string
+          description: test source namespace
+          example: testkube
+        labels:
+          type: object
+          description: test source labels
+          additionalProperties:
+            type: string
+    TestContent:
+      type: object
+      properties:
+        type:
+          type: string
+          description: "type of sources a runner can get data from.\n  string: String content (e.g. Postman JSON file).\n  file-uri: content stored on the webserver.\n  git-file: the file stored in the Git repo in the given repository.path field (Deprecated: use git instead).\n  git-dir: the entire git repo or git subdirectory depending on the  repository.path field (Testkube does a shadow clone and sparse checkout to limit IOs in the case of monorepos). (Deprecated: use git instead).\n  git: automatically provisions either a file, directory or whole git repository depending on the repository.path field.\n"
+          enum:
+          - string
+          - file-uri
+          - git-file
+          - git-dir
+          - git
+        repository:
+          $ref: '#/components/schemas/Repository'
+        data:
+          type: string
+          description: test content data as string
+        uri:
+          type: string
+          description: test content
+          example: https://github.com/kubeshop/testkube
     SecretRef:
       required:
       - name
@@ -285,6 +325,25 @@ components:
         key:
           type: string
           description: object key
+    TestSourceUpsertRequest:
+      description: test source create request body
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/TestContent'
+      properties:
+        name:
+          type: string
+          description: test source name
+          example: testsource1
+        namespace:
+          type: string
+          description: test source namespace
+          example: testkube
+        labels:
+          type: object
+          description: test source labels
+          additionalProperties:
+            type: string
     Repository:
       description: repository representation for tests in git repositories
       type: object
@@ -336,46 +395,16 @@ components:
           - basic
           - header
           description: auth type for git requests
-    TestSource:
-      description: Test source resource for shared test content
+    TestSourceBatchRequest:
+      description: Test source batch request
       type: object
-      allOf:
-      - $ref: '#/components/schemas/TestContent'
+      required:
+      - batch
       properties:
-        name:
-          type: string
-          description: test source name
-          example: testsource1
-        namespace:
-          type: string
-          description: test source namespace
-          example: testkube
-        labels:
-          type: object
-          description: test source labels
-          additionalProperties:
-            type: string
-    TestSourceUpdateRequest:
-      description: test source update request body
-      type:
-      - object
-      - 'null'
-      allOf:
-      - $ref: '#/components/schemas/TestContent'
-      properties:
-        name:
-          type: string
-          description: test source name
-          example: testsource1
-        namespace:
-          type: string
-          description: test source namespace
-          example: testkube
-        labels:
-          type: object
-          description: test source labels
-          additionalProperties:
-            type: string
+        batch:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestSourceUpsertRequest'
     Problem:
       description: problem response in case of error
       type: object
@@ -400,9 +429,11 @@ components:
           type: string
           description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
           example: http://10.23.23.123:8088/tests
-    TestSourceUpsertRequest:
-      description: test source create request body
-      type: object
+    TestSourceUpdateRequest:
+      description: test source update request body
+      type:
+      - object
+      - 'null'
       allOf:
       - $ref: '#/components/schemas/TestContent'
       properties:
@@ -419,27 +450,6 @@ components:
           description: test source labels
           additionalProperties:
             type: string
-    TestContent:
-      type: object
-      properties:
-        type:
-          type: string
-          description: "type of sources a runner can get data from.\n  string: String content (e.g. Postman JSON file).\n  file-uri: content stored on the webserver.\n  git-file: the file stored in the Git repo in the given repository.path field (Deprecated: use git instead).\n  git-dir: the entire git repo or git subdirectory depending on the  repository.path field (Testkube does a shadow clone and sparse checkout to limit IOs in the case of monorepos). (Deprecated: use git instead).\n  git: automatically provisions either a file, directory or whole git repository depending on the repository.path field.\n"
-          enum:
-          - string
-          - file-uri
-          - git-file
-          - git-dir
-          - git
-        repository:
-          $ref: '#/components/schemas/Repository'
-        data:
-          type: string
-          description: test content data as string
-        uri:
-          type: string
-          description: test content
-          example: https://github.com/kubeshop/testkube
     TestSourceBatchResult:
       description: Test source batch result
       type: object
@@ -471,23 +481,7 @@ components:
           - name7
           - name8
           - name9
-    TestSourceBatchRequest:
-      description: Test source batch request
-      type: object
-      required:
-      - batch
-      properties:
-        batch:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestSourceUpsertRequest'
   parameters:
-    Selector:
-      in: query
-      name: selector
-      schema:
-        type: string
-        description: Labels to filter by
     ID:
       in: path
       name: id
@@ -495,6 +489,12 @@ components:
         type: string
       required: true
       description: unique id of the object
+    Selector:
+      in: query
+      name: selector
+      schema:
+        type: string
+        description: Labels to filter by
 externalDocs:
   description: Find out more about Testkube
   url: https://testkube.kubeshop.io/

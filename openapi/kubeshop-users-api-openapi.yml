@@ -65,8 +65,16 @@ paths:
       - Users
 components:
   responses:
-    InternalServerError:
-      description: 500 Internal Server Error
+    NoContent:
+      description: No content after resource created
+    ForbiddenError:
+      description: 403 Forbidden
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    MethodNotAllowedError:
+      description: 405 Method Not Allowed
       content:
         application/problem+json:
           schema:
@@ -77,83 +85,58 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
-    NoContent:
-      description: No content after resource created
-    Setting:
-      description: Setting for organization/environment/user
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Setting'
-    UnauthorizedError:
-      description: 401 Unauthorized
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
     Settings:
       description: Settings for organization/environment/user
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Settings'
-    MethodNotAllowedError:
-      description: 405 Method Not Allowed
+    UnauthorizedError:
+      description: 401 Unauthorized
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
-    ForbiddenError:
-      description: 403 Forbidden
+    Setting:
+      description: Setting for organization/environment/user
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Setting'
+    InternalServerError:
+      description: 500 Internal Server Error
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
+  requestBodies:
+    Preferences:
+      description: User preferences upsert
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserPreferences'
+    SettingUpsert:
+      description: Settings upsert request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Setting'
+      required: true
   schemas:
-    Any: {}
-    Settings:
+    UserPreferences:
       type: object
       properties:
-        elements:
+        id:
+          description: preference id
+          type: string
+        values:
           type: array
           items:
-            $ref: '#/components/schemas/Setting'
+            type: string
       required:
-      - elements
-    Problem:
-      description: problem response in case of error
-      type: object
-      properties:
-        type:
-          description: Type contains a URI that identifies the problem type.
-          type: string
-          example: https://kubeshop.io/testkube/problems/invalidtestname
-        title:
-          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
-          type: string
-          example: Invalid test name
-        status:
-          description: HTTP status code for this occurrence of the problem.
-          type: integer
-          example: 500
-        errorCode:
-          description: A more specific type of the error
-          type: string
-          example: user-limit
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
-          type: string
-          example: Your test name can't contain forbidden characters like "}}}" passed
-        instance:
-          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
-          type: string
-          example: http://10.23.23.123:8088/tests
-      required:
-      - type
-      - title
-      - status
-      - detail
-      - instance
+      - id
+      - values
     Setting:
       description: Generic Settings
       type: object
@@ -205,33 +188,50 @@ components:
       required:
       - key
       - valueType
-    UserPreferences:
+    Settings:
       type: object
       properties:
-        id:
-          description: preference id
-          type: string
-        values:
+        elements:
           type: array
           items:
-            type: string
-      required:
-      - id
-      - values
-  requestBodies:
-    SettingUpsert:
-      description: Settings upsert request
-      content:
-        application/json:
-          schema:
             $ref: '#/components/schemas/Setting'
-      required: true
-    Preferences:
-      description: User preferences upsert
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserPreferences'
+      required:
+      - elements
+    Problem:
+      description: problem response in case of error
+      type: object
+      properties:
+        type:
+          description: Type contains a URI that identifies the problem type.
+          type: string
+          example: https://kubeshop.io/testkube/problems/invalidtestname
+        title:
+          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+          example: Invalid test name
+        status:
+          description: HTTP status code for this occurrence of the problem.
+          type: integer
+          example: 500
+        errorCode:
+          description: A more specific type of the error
+          type: string
+          example: user-limit
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+          example: Your test name can't contain forbidden characters like "}}}" passed
+        instance:
+          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
+          type: string
+          example: http://10.23.23.123:8088/tests
+      required:
+      - type
+      - title
+      - status
+      - detail
+      - instance
+    Any: {}
   parameters:
     ID:
       name: id

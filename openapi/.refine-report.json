@@ -32,9 +32,7 @@
     "kubeshop-webhook-api-openapi.yml",
     "kubeshop-webhook-template-api-openapi.yml"
   ],
-  "archived": [
-    "deleted 1 superseded output(s) from the previous generation"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -242,20 +240,22 @@
     "kubeshop-testkube-openapi-original.yml: declared missing tag: test-sources",
     "kubeshop-testkube-openapi-original.yml: declared missing tag: test-workflows",
     "kubeshop-testkube-openapi-original.yml: declared missing tag: webhook-template",
-    "superseded outputs removed: kubeshop-api-api-openapi.yml",
-    "apis.yml register: written (+4 apis, 26 total)"
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "_original/kubeshop-testkube-agent-openapi-original.yml: archived document superseded by a larger archived document",
-    "kubeshop-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "kubeshop-artifacts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "kubeshop-cluster-resources-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kubeshop-config-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kubeshop-debug-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "kubeshop-executions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "kubeshop-executor-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kubeshop-export-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "kubeshop-keymap-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "kubeshop-labels-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "kubeshop-logs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "kubeshop-organizations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "kubeshop-pro-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "kubeshop-repository-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "kubeshop-secrets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "kubeshop-status-pages-api-openapi.yml: previously refined output, superseded by openapi/_original/",

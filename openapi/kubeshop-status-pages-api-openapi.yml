@@ -58,38 +58,30 @@ paths:
       tags:
       - Status Pages
 components:
-  responses:
-    Incidents:
-      description: list of incidents
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Incidents'
-    InternalServerError:
-      description: 500 Internal Server Error
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    BadRequestError:
-      description: 400 Bad Request
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    UnauthorizedError:
-      description: 401 Unauthorized
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    NotFoundError:
-      description: 404 Not Found
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
   schemas:
+    StatusTimelineSlice:
+      type: object
+      properties:
+        startTime:
+          type: string
+        endTime:
+          type: string
+        status:
+          description: The aggregated status of the Test Workflows, Tests and Test Suites
+          type: string
+          enum:
+          - unknown
+          - operational
+          - partial_outage
+          - major_outage
+        observables:
+          description: Collection of Test Workflows, Tests and Test Suites that are relevant to the service with their status
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            test-1: operational
+            test-2: major_outage
     StatusObservable:
       type: object
       properties:
@@ -115,6 +107,15 @@ components:
       required:
       - name
       - type
+    Incidents:
+      type: object
+      properties:
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Incident'
+      required:
+      - elements
     StatusService:
       type: object
       properties:
@@ -146,25 +147,52 @@ components:
             $ref: '#/components/schemas/StatusTimelineSlice'
       required:
       - name
-    BasicObjectWithOptionalID:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        labels:
-          type: object
-          additionalProperties:
+    Incident:
+      allOf:
+      - $ref: '#/components/schemas/BasicObjectWithOptionalID'
+      - type: object
+        properties:
+          name:
+            description: Name of the incident
             type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
+            example: API migration problem
+          severity:
+            description: the severity of the outage caused by the incident
+            type: string
+            enum:
+            - critical
+            - major
+            - minor
+            - low
+            - info
+          visibility:
+            description: specifies how public the incident is
+            type: string
+            enum:
+            - draft
+            - published
+            - archived
+          description:
+            description: incident details in markdown
+            type: string
+            example: API Service was down due to unexpected changes in one of the dependencies.
+          startDate:
+            description: start of the incident
+            type:
+            - string
+            - 'null'
+            format: date-time
+          endDate:
+            description: end of the incident
+            type:
+            - string
+            - 'null'
+            format: date-time
+        required:
+        - name
+        - severity
+        - visibility
+        - description
     Problem:
       description: problem response in case of error
       type: object
@@ -230,84 +258,25 @@ components:
             description: Globally unique chosen identifier for the status page used in the public URL
             type: string
             example: mySlugName
-    Incident:
-      allOf:
-      - $ref: '#/components/schemas/BasicObjectWithOptionalID'
-      - type: object
-        properties:
-          name:
-            description: Name of the incident
-            type: string
-            example: API migration problem
-          severity:
-            description: the severity of the outage caused by the incident
-            type: string
-            enum:
-            - critical
-            - major
-            - minor
-            - low
-            - info
-          visibility:
-            description: specifies how public the incident is
-            type: string
-            enum:
-            - draft
-            - published
-            - archived
-          description:
-            description: incident details in markdown
-            type: string
-            example: API Service was down due to unexpected changes in one of the dependencies.
-          startDate:
-            description: start of the incident
-            type:
-            - string
-            - 'null'
-            format: date-time
-          endDate:
-            description: end of the incident
-            type:
-            - string
-            - 'null'
-            format: date-time
-        required:
-        - name
-        - severity
-        - visibility
-        - description
-    StatusTimelineSlice:
+    BasicObjectWithOptionalID:
       type: object
       properties:
-        startTime:
+        id:
           type: string
-        endTime:
+        name:
           type: string
-        status:
-          description: The aggregated status of the Test Workflows, Tests and Test Suites
+        description:
           type: string
-          enum:
-          - unknown
-          - operational
-          - partial_outage
-          - major_outage
-        observables:
-          description: Collection of Test Workflows, Tests and Test Suites that are relevant to the service with their status
+        labels:
           type: object
           additionalProperties:
             type: string
-          example:
-            test-1: operational
-            test-2: major_outage
-    Incidents:
-      type: object
-      properties:
-        elements:
-          type: array
-          items:
-            $ref: '#/components/schemas/Incident'
-      required:
-      - elements
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
   parameters:
     StatusPageID:
       name: statusPageID
@@ -316,6 +285,37 @@ components:
       required: true
       schema:
         type: string
+  responses:
+    Incidents:
+      description: list of incidents
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Incidents'
+    BadRequestError:
+      description: 400 Bad Request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    NotFoundError:
+      description: 404 Not Found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    UnauthorizedError:
+      description: 401 Unauthorized
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
   securitySchemes:
     BearerAuth:
       type: http
