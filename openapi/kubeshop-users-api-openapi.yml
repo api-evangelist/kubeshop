@@ -64,35 +64,37 @@ paths:
       tags:
       - Users
 components:
+  requestBodies:
+    SettingUpsert:
+      description: Settings upsert request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Setting'
+      required: true
+    Preferences:
+      description: User preferences upsert
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserPreferences'
   responses:
-    NoContent:
-      description: No content after resource created
-    ForbiddenError:
-      description: 403 Forbidden
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    MethodNotAllowedError:
-      description: 405 Method Not Allowed
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
     BadRequestError:
       description: 400 Bad Request
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
-    Settings:
-      description: Settings for organization/environment/user
+    InternalServerError:
+      description: 500 Internal Server Error
       content:
-        application/json:
+        application/problem+json:
           schema:
-            $ref: '#/components/schemas/Settings'
-    UnauthorizedError:
-      description: 401 Unauthorized
+            $ref: '#/components/schemas/Problem'
+    NoContent:
+      description: No content after resource created
+    MethodNotAllowedError:
+      description: 405 Method Not Allowed
       content:
         application/problem+json:
           schema:
@@ -103,40 +105,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Setting'
-    InternalServerError:
-      description: 500 Internal Server Error
+    UnauthorizedError:
+      description: 401 Unauthorized
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
-  requestBodies:
-    Preferences:
-      description: User preferences upsert
+    ForbiddenError:
+      description: 403 Forbidden
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Settings:
+      description: Settings for organization/environment/user
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/UserPreferences'
-    SettingUpsert:
-      description: Settings upsert request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Setting'
-      required: true
+            $ref: '#/components/schemas/Settings'
   schemas:
-    UserPreferences:
-      type: object
-      properties:
-        id:
-          description: preference id
-          type: string
-        values:
-          type: array
-          items:
-            type: string
-      required:
-      - id
-      - values
+    Any: {}
     Setting:
       description: Generic Settings
       type: object
@@ -231,7 +219,19 @@ components:
       - status
       - detail
       - instance
-    Any: {}
+    UserPreferences:
+      type: object
+      properties:
+        id:
+          description: preference id
+          type: string
+        values:
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - values
   parameters:
     ID:
       name: id

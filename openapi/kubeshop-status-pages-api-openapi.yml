@@ -59,63 +59,6 @@ paths:
       - Status Pages
 components:
   schemas:
-    StatusTimelineSlice:
-      type: object
-      properties:
-        startTime:
-          type: string
-        endTime:
-          type: string
-        status:
-          description: The aggregated status of the Test Workflows, Tests and Test Suites
-          type: string
-          enum:
-          - unknown
-          - operational
-          - partial_outage
-          - major_outage
-        observables:
-          description: Collection of Test Workflows, Tests and Test Suites that are relevant to the service with their status
-          type: object
-          additionalProperties:
-            type: string
-          example:
-            test-1: operational
-            test-2: major_outage
-    StatusObservable:
-      type: object
-      properties:
-        name:
-          description: Name of the test or test suite that will be observed
-          type: string
-          example: Backend API
-        type:
-          description: Type of the observed entity
-          type: string
-          enum:
-          - test
-          - test-suite
-          - workflow
-        status:
-          description: the status of the executions
-          type: string
-          enum:
-          - unknown
-          - operational
-          - partial_outage
-          - major_outage
-      required:
-      - name
-      - type
-    Incidents:
-      type: object
-      properties:
-        elements:
-          type: array
-          items:
-            $ref: '#/components/schemas/Incident'
-      required:
-      - elements
     StatusService:
       type: object
       properties:
@@ -193,40 +136,6 @@ components:
         - severity
         - visibility
         - description
-    Problem:
-      description: problem response in case of error
-      type: object
-      properties:
-        type:
-          description: Type contains a URI that identifies the problem type.
-          type: string
-          example: https://kubeshop.io/testkube/problems/invalidtestname
-        title:
-          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
-          type: string
-          example: Invalid test name
-        status:
-          description: HTTP status code for this occurrence of the problem.
-          type: integer
-          example: 500
-        errorCode:
-          description: A more specific type of the error
-          type: string
-          example: user-limit
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
-          type: string
-          example: Your test name can't contain forbidden characters like "}}}" passed
-        instance:
-          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
-          type: string
-          example: http://10.23.23.123:8088/tests
-      required:
-      - type
-      - title
-      - status
-      - detail
-      - instance
     StatusPage:
       allOf:
       - $ref: '#/components/schemas/BasicObjectWithOptionalID'
@@ -277,29 +186,100 @@ components:
         updatedAt:
           type: string
           format: date-time
-  parameters:
-    StatusPageID:
-      name: statusPageID
-      in: path
-      description: unique id of the status page
-      required: true
-      schema:
-        type: string
-  responses:
     Incidents:
-      description: list of incidents
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Incidents'
+      type: object
+      properties:
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Incident'
+      required:
+      - elements
+    Problem:
+      description: problem response in case of error
+      type: object
+      properties:
+        type:
+          description: Type contains a URI that identifies the problem type.
+          type: string
+          example: https://kubeshop.io/testkube/problems/invalidtestname
+        title:
+          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+          example: Invalid test name
+        status:
+          description: HTTP status code for this occurrence of the problem.
+          type: integer
+          example: 500
+        errorCode:
+          description: A more specific type of the error
+          type: string
+          example: user-limit
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+          example: Your test name can't contain forbidden characters like "}}}" passed
+        instance:
+          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
+          type: string
+          example: http://10.23.23.123:8088/tests
+      required:
+      - type
+      - title
+      - status
+      - detail
+      - instance
+    StatusTimelineSlice:
+      type: object
+      properties:
+        startTime:
+          type: string
+        endTime:
+          type: string
+        status:
+          description: The aggregated status of the Test Workflows, Tests and Test Suites
+          type: string
+          enum:
+          - unknown
+          - operational
+          - partial_outage
+          - major_outage
+        observables:
+          description: Collection of Test Workflows, Tests and Test Suites that are relevant to the service with their status
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            test-1: operational
+            test-2: major_outage
+    StatusObservable:
+      type: object
+      properties:
+        name:
+          description: Name of the test or test suite that will be observed
+          type: string
+          example: Backend API
+        type:
+          description: Type of the observed entity
+          type: string
+          enum:
+          - test
+          - test-suite
+          - workflow
+        status:
+          description: the status of the executions
+          type: string
+          enum:
+          - unknown
+          - operational
+          - partial_outage
+          - major_outage
+      required:
+      - name
+      - type
+  responses:
     BadRequestError:
       description: 400 Bad Request
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    InternalServerError:
-      description: 500 Internal Server Error
       content:
         application/problem+json:
           schema:
@@ -310,12 +290,32 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Incidents:
+      description: list of incidents
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Incidents'
     UnauthorizedError:
       description: 401 Unauthorized
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
+  parameters:
+    StatusPageID:
+      name: statusPageID
+      in: path
+      description: unique id of the status page
+      required: true
+      schema:
+        type: string
   securitySchemes:
     BearerAuth:
       type: http

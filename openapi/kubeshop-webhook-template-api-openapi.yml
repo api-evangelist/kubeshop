@@ -241,21 +241,6 @@ paths:
                   $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    WebhookConfig:
-      type: object
-      description: configuration values
-      additionalProperties:
-        $ref: '#/components/schemas/WebhookConfigValue'
-    WebhookConfigValue:
-      type: object
-      description: configuration value
-      properties:
-        value:
-          description: public value to use in webhook template
-          $ref: '#/components/schemas/BoxedString'
-        secret:
-          description: private value stored in secret to use in webhook template
-          $ref: '#/components/schemas/SecretRef'
     WebhookTemplateUpdateRequest:
       description: webhook template update request body
       type:
@@ -263,30 +248,6 @@ components:
       - 'null'
       allOf:
       - $ref: '#/components/schemas/WebhookTemplate'
-    WebhookParameterSchema:
-      type: object
-      description: parameter definition
-      properties:
-        name:
-          description: unique parameter name
-          type: string
-        description:
-          description: description for the parameter
-          type: string
-        required:
-          description: whether parameter is required
-          type: boolean
-          default: false
-        example:
-          description: example value for the parameter
-          type: string
-        default:
-          $ref: '#/components/schemas/BoxedString'
-        pattern:
-          type: string
-          description: regular expression to match
-      required:
-      - name
     WebhookTemplate:
       description: CRD based webhook data template
       type: object
@@ -358,25 +319,61 @@ components:
           $ref: '#/components/schemas/Syncable'
         target:
           $ref: '#/components/schemas/ExecutionTarget'
-    EventType:
+    SecretRef:
+      required:
+      - name
+      - key
+      type: object
+      description: Testkube internal reference for secret storage in Kubernetes secrets
+      properties:
+        namespace:
+          type: string
+          description: object kubernetes namespace
+        name:
+          type: string
+          description: object name
+        key:
+          type: string
+          description: object key
+    WebhookTemplateCreateRequest:
+      description: webhook template create request body
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/WebhookTemplate'
+    WebhookConfigValue:
+      type: object
+      description: configuration value
+      properties:
+        value:
+          description: public value to use in webhook template
+          $ref: '#/components/schemas/BoxedString'
+        secret:
+          description: private value stored in secret to use in webhook template
+          $ref: '#/components/schemas/SecretRef'
+    Syncable:
+      description: 'source information about resources that may have been synced from multiple sources.
+
+        An empty source indicates that the source was the UI/API for backwards compatibility.
+
+        '
+      type: object
+      properties:
+        creationSource:
+          description: the original source from which the resource was created
+          $ref: '#/components/schemas/Source'
+        lastModificationSource:
+          description: the source from which the last modification of the resource originated
+          $ref: '#/components/schemas/Source'
+    WebhookConfig:
+      type: object
+      description: configuration values
+      additionalProperties:
+        $ref: '#/components/schemas/WebhookConfigValue'
+    Source:
+      description: synchronisation sources
       type: string
       enum:
-      - queue-testworkflow
-      - start-testworkflow
-      - end-testworkflow-success
-      - end-testworkflow-failed
-      - end-testworkflow-aborted
-      - end-testworkflow-canceled
-      - end-testworkflow-not-passed
-      - become-testworkflow-up
-      - become-testworkflow-down
-      - become-testworkflow-failed
-      - become-testworkflow-aborted
-      - become-testworkflow-canceled
-      - become-testworkflow-not-passed
-      - created
-      - updated
-      - deleted
+      - kubernetes
     ExecutionTarget:
       type: object
       properties:
@@ -399,41 +396,6 @@ components:
           description: list of runner labels to replicate the executions
           items:
             type: string
-    Syncable:
-      description: 'source information about resources that may have been synced from multiple sources.
-
-        An empty source indicates that the source was the UI/API for backwards compatibility.
-
-        '
-      type: object
-      properties:
-        creationSource:
-          description: the original source from which the resource was created
-          $ref: '#/components/schemas/Source'
-        lastModificationSource:
-          description: the source from which the last modification of the resource originated
-          $ref: '#/components/schemas/Source'
-    WebhookTemplateCreateRequest:
-      description: webhook template create request body
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/WebhookTemplate'
-    SecretRef:
-      required:
-      - name
-      - key
-      type: object
-      description: Testkube internal reference for secret storage in Kubernetes secrets
-      properties:
-        namespace:
-          type: string
-          description: object kubernetes namespace
-        name:
-          type: string
-          description: object name
-        key:
-          type: string
-          description: object key
     Problem:
       description: problem response in case of error
       type: object
@@ -458,11 +420,30 @@ components:
           type: string
           description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
           example: http://10.23.23.123:8088/tests
-    Source:
-      description: synchronisation sources
-      type: string
-      enum:
-      - kubernetes
+    WebhookParameterSchema:
+      type: object
+      description: parameter definition
+      properties:
+        name:
+          description: unique parameter name
+          type: string
+        description:
+          description: description for the parameter
+          type: string
+        required:
+          description: whether parameter is required
+          type: boolean
+          default: false
+        example:
+          description: example value for the parameter
+          type: string
+        default:
+          $ref: '#/components/schemas/BoxedString'
+        pattern:
+          type: string
+          description: regular expression to match
+      required:
+      - name
     BoxedString:
       type: object
       properties:
@@ -470,7 +451,32 @@ components:
           type: string
       required:
       - value
+    EventType:
+      type: string
+      enum:
+      - queue-testworkflow
+      - start-testworkflow
+      - end-testworkflow-success
+      - end-testworkflow-failed
+      - end-testworkflow-aborted
+      - end-testworkflow-canceled
+      - end-testworkflow-not-passed
+      - become-testworkflow-up
+      - become-testworkflow-down
+      - become-testworkflow-failed
+      - become-testworkflow-aborted
+      - become-testworkflow-canceled
+      - become-testworkflow-not-passed
+      - created
+      - updated
+      - deleted
   parameters:
+    Selector:
+      in: query
+      name: selector
+      schema:
+        type: string
+        description: Labels to filter by
     ID:
       in: path
       name: id
@@ -478,12 +484,6 @@ components:
         type: string
       required: true
       description: unique id of the object
-    Selector:
-      in: query
-      name: selector
-      schema:
-        type: string
-        description: Labels to filter by
 externalDocs:
   description: Find out more about Testkube
   url: https://testkube.kubeshop.io/

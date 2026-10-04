@@ -1305,32 +1305,142 @@ paths:
                   $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    TestWorkflowPause:
+    WindowsSecurityContextOptions:
       type: object
       properties:
-        ref:
+        gmsaCredentialSpecName:
+          $ref: '#/components/schemas/BoxedString'
+        gmsaCredentialSpec:
+          $ref: '#/components/schemas/BoxedString'
+        runAsUserName:
+          $ref: '#/components/schemas/BoxedString'
+        hostProcess:
+          $ref: '#/components/schemas/BoxedBoolean'
+    TestWorkflowTarballFilePattern:
+      type: object
+      description: dynamic expression or static list of file patterns to pack
+      properties:
+        static:
+          type: array
+          items: {}
+        expression:
           type: string
-          description: step at which it was paused
-        pausedAt:
-          type: string
-          format: date-time
-          description: when the pause has started
-        resumedAt:
-          type: string
-          format: date-time
-          description: when the pause has ended
-      required:
-      - ref
-      - pausedAt
-    HostAlias:
+    NodeSelector:
       type: object
       properties:
-        ip:
-          type: string
-        hostnames:
+        nodeSelectorTerms:
           type: array
           items:
+            $ref: '#/components/schemas/NodeSelectorTerm'
+    SeccompProfile:
+      type: object
+      properties:
+        type:
+          type: string
+        localhostProfile:
+          $ref: '#/components/schemas/BoxedString'
+    NodeSelectorTerm:
+      type: object
+      properties:
+        matchExpressions:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeSelectorRequirement'
+        matchFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeSelectorRequirement'
+    ExecAction:
+      type: object
+      properties:
+        command:
+          type: array
+          description: Command is the command line to execute inside the container, the working directory for the command is root ('/') in the container's filesystem. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
+          items:
             type: string
+    TestWorkflowStepExecuteTestWorkflowRef:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/TestWorkflowStepExecuteStrategy'
+      - properties:
+          name:
+            type: string
+            description: TestWorkflow name to include
+          description:
+            type: string
+            description: TestWorkflow execution description to display
+          executionName:
+            type: string
+            description: TestWorkflow execution name override
+          tarball:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/TestWorkflowTarballRequest'
+          config:
+            $ref: '#/components/schemas/TestWorkflowConfigValue'
+          selector:
+            $ref: '#/components/schemas/LabelSelector'
+            description: label selector for test workflow
+          target:
+            $ref: '#/components/schemas/ExecutionTarget'
+    TestWorkflowRetryPolicy:
+      type: object
+      properties:
+        count:
+          type: integer
+          minimum: 1
+          description: how many times at most it should retry
+        until:
+          type: string
+          description: until when it should retry (defaults to "passed")
+      required:
+      - count
+    SilentMode:
+      type: object
+      description: controls what aspects of an execution should be silent (not tracked/processed)
+      properties:
+        webhooks:
+          type: boolean
+          description: disable webhooks for this execution
+          default: false
+        insights:
+          type: boolean
+          description: exclude from insights and analytics dashboards
+          default: false
+        health:
+          type: boolean
+          description: exclude from health and flakiness calculations
+          default: false
+        metrics:
+          type: boolean
+          description: exclude from prometheus metrics
+          default: false
+        cdevents:
+          type: boolean
+          description: disable CDEvents for this execution
+          default: false
+    TestWorkflowReportSummary:
+      type: object
+      properties:
+        tests:
+          type: integer
+          description: total number of test cases
+        passed:
+          type: integer
+          description: number of passed test cases
+        failed:
+          type: integer
+          description: number of failed test cases
+        skipped:
+          type: integer
+          description: number of skipped test cases
+        errored:
+          type: integer
+          description: number of error test cases
+        duration:
+          type: integer
+          format: int64
+          description: total duration of all test cases in milliseconds
     PodDNSConfigOption:
       type: object
       properties:
@@ -1338,50 +1448,443 @@ components:
           type: string
         value:
           $ref: '#/components/schemas/BoxedString'
-    VariableType:
-      type: string
-      enum:
-      - basic
-      - secret
-    TestWorkflowStepControl:
+    TestWorkflowExecutionSchema:
+      type: object
+      description: test workflow execution configuration
+      properties:
+        tags:
+          $ref: '#/components/schemas/TestWorkflowTagValue'
+        target:
+          $ref: '#/components/schemas/ExecutionTarget'
+        silent:
+          type: boolean
+          description: indicates that all executions should be silent by default. When true, SilentMode is activated for all executions (Webhooks, Insights, Health, Metrics, Cdevents all set to true).
+          default: false
+    TestWorkflowExecution:
       type: object
       properties:
-        paused:
-          type: boolean
-          description: should the step be paused initially
-        negative:
-          type: boolean
-          description: is the step expected to fail
-        optional:
-          type: boolean
-          description: is the step optional, so the failure won't affect the TestWorkflow result
-        retry:
-          $ref: '#/components/schemas/TestWorkflowRetryPolicy'
-        timeout:
+        id:
           type: string
-          description: maximum time this step may take
-    TestWorkflowTemplateRef:
+          description: unique execution identifier
+          format: bson objectId
+          example: 62f395e004109209b50edfc1
+        groupId:
+          type: string
+          description: identifier for group of correlated executions
+          format: bson objectId
+          example: 62f395e004109209b50edfc1
+        runnerId:
+          type: string
+          description: identifier of the runner where it has been executed
+        runnerTarget:
+          $ref: '#/components/schemas/ExecutionTarget'
+        runnerOriginalTarget:
+          $ref: '#/components/schemas/ExecutionTarget'
+        name:
+          type: string
+          description: execution name
+          example: some-workflow-name-1
+        namespace:
+          type: string
+          description: execution namespace
+          example: my-testkube
+        number:
+          type: integer
+          description: sequence number for the execution
+        scheduledAt:
+          type: string
+          format: date-time
+          description: when the execution has been scheduled to run
+        assignedAt:
+          type: string
+          format: date-time
+          description: when the execution has been assigned to some runner
+        statusAt:
+          type: string
+          format: date-time
+          description: when the execution result's status has changed last time (queued, passed, failed)
+        signature:
+          type: array
+          description: structured tree of steps
+          items:
+            $ref: '#/components/schemas/TestWorkflowSignature'
+        result:
+          $ref: '#/components/schemas/TestWorkflowResult'
+        output:
+          type: array
+          description: additional information from the steps, like referenced executed tests or artifacts
+          items:
+            $ref: '#/components/schemas/TestWorkflowOutput'
+        reports:
+          type: array
+          description: generated reports from the steps, like junit
+          items:
+            $ref: '#/components/schemas/TestWorkflowReport'
+        resourceAggregations:
+          $ref: '#/components/schemas/TestWorkflowExecutionResourceAggregationsReport'
+        workflow:
+          $ref: '#/components/schemas/TestWorkflow'
+        resolvedWorkflow:
+          $ref: '#/components/schemas/TestWorkflow'
+        testWorkflowExecutionName:
+          type: string
+          description: test workflow execution name started the test workflow execution
+        disableWebhooks:
+          type: boolean
+          description: whether webhooks on the execution of this test workflow are disabled
+          default: false
+          example:
+          - true
+          - false
+        silentMode:
+          $ref: '#/components/schemas/SilentMode'
+        tags:
+          $ref: '#/components/schemas/TestWorkflowTagValue'
+        runningContext:
+          description: running context for the test workflow execution (Pro edition only)
+          $ref: '#/components/schemas/TestWorkflowRunningContext'
+        configParams:
+          $ref: '#/components/schemas/TestWorkflowExecutionConfig'
+        runtime:
+          $ref: '#/components/schemas/TestWorkflowExecutionRuntime'
+      required:
+      - id
+      - name
+      - workflow
+    TestWorkflowConfigSchema:
+      type: object
+      description: configuration definition
+      additionalProperties:
+        $ref: '#/components/schemas/TestWorkflowParameterSchema'
+    GRPCAction:
+      type: object
+      properties:
+        port:
+          type: integer
+        service:
+          $ref: '#/components/schemas/BoxedString'
+    TestWorkflowRunningContext:
+      description: running context for test workflow execution
+      type: object
+      required:
+      - interface
+      - actor
+      properties:
+        interface:
+          $ref: '#/components/schemas/TestWorkflowRunningContextInterface'
+        actor:
+          $ref: '#/components/schemas/TestWorkflowRunningContextActor'
+    PodSchedulingGate:
       type: object
       properties:
         name:
           type: string
-          description: TestWorkflowTemplate name to include
-        config:
-          $ref: '#/components/schemas/TestWorkflowConfigValue'
-      required:
-      - name
-    PersistentVolumeClaimVolumeSource:
-      description: 'persistentVolumeClaimVolumeSource represents a reference to a PersistentVolumeClaim in the same namespace. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims'
+    GCEPersistentDiskVolumeSource:
+      description: 'gcePersistentDisk represents a GCE Disk resource that is attached to a kubelet''s host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk'
       properties:
-        claimName:
-          description: 'claimName is the name of a PersistentVolumeClaim in the same namespace as the pod using this volume. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims'
+        fsType:
+          description: 'fsType is filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk TODO: how do we prevent errors in the filesystem from compromising the machine'
+          type: string
+        partition:
+          description: 'partition is the partition in the volume that you want to mount. If omitted, the default is to mount by volume name. Examples: For volume /dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty). More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk'
+          format: int32
+          type: integer
+        pdName:
+          description: 'pdName is unique name of the PD resource in GCE. Used to identify the disk in GCE. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk'
           type: string
         readOnly:
-          description: readOnly Will force the ReadOnly setting in VolumeMounts. Default false.
+          description: 'readOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk'
           type: boolean
       required:
-      - claimName
+      - pdName
       type: object
+    EnvReference:
+      description: Reference to env resource
+      type: object
+      required:
+      - reference
+      properties:
+        reference:
+          $ref: '#/components/schemas/LocalObjectReference'
+        mount:
+          type: boolean
+          description: whether we shoud mount resource
+          example: /etc/data
+        mountPath:
+          type: string
+          description: where we shoud mount resource
+        mapToVariables:
+          type: boolean
+          description: whether we shoud map to variables from resource
+          default: false
+    ConfigMapEnvSource:
+      type: object
+      properties:
+        name:
+          type: string
+        optional:
+          type:
+          - boolean
+          - 'null'
+          default: false
+      required:
+      - name
+    TypedLocalObjectReference:
+      description: TypedLocalObjectReference contains enough information to let you locate the typed referenced object inside the same namespace
+      type: object
+      properties:
+        apiGroup:
+          description: api group is the group for the resource being referenced
+          $ref: '#/components/schemas/BoxedString'
+        kind:
+          description: kind is the type of resource being referenced
+          type: string
+        name:
+          description: name is the name of resource being referenced
+          type: string
+    TestWorkflowContainerConfig:
+      type: object
+      properties:
+        workingDir:
+          $ref: '#/components/schemas/BoxedString'
+        image:
+          type: string
+          description: image to be used for the container
+        imagePullPolicy:
+          $ref: '#/components/schemas/ImagePullPolicy'
+        env:
+          type: array
+          description: environment variables to append to the container
+          items:
+            $ref: '#/components/schemas/EnvVar'
+        envFrom:
+          type: array
+          description: external environment variables to append to the container
+          items:
+            $ref: '#/components/schemas/EnvFromSource'
+        command:
+          $ref: '#/components/schemas/BoxedStringList'
+        args:
+          $ref: '#/components/schemas/BoxedStringList'
+        resources:
+          $ref: '#/components/schemas/TestWorkflowResources'
+        securityContext:
+          $ref: '#/components/schemas/SecurityContext'
+        volumeMounts:
+          type: array
+          description: volumes to mount to the container
+          items:
+            $ref: '#/components/schemas/VolumeMount'
+    TestWorkflowExecutionResourceAggregationsByMeasurement:
+      type: object
+      description: 'TestWorkflowExecutionResourceAggregationsByMeasurement provides resource usage aggregations
+
+        for a specific measurement (e.g. CPU, Memory, etc.) across all steps in a TestWorkflowExecution.
+
+        '
+      additionalProperties:
+        type: object
+        description: 'TestWorkflowExecutionResourceAggregations provides resource usage aggregations
+
+          for a specific field (e.g. millicores, used...).
+
+          '
+        additionalProperties:
+          $ref: '#/components/schemas/TestWorkflowExecutionResourceAggregations'
+    TestWorkflowStepParallelFetch:
+      type: object
+      properties:
+        from:
+          type: string
+          description: path to fetch files from
+        to:
+          type: string
+          description: path to save the files to
+        files:
+          $ref: '#/components/schemas/TestWorkflowTarballFilePattern'
+      required:
+      - from
+    AWSElasticBlockStoreVolumeSource:
+      description: 'awsElasticBlockStore represents an AWS Disk resource that is attached to a kubelet''s host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore'
+      properties:
+        fsType:
+          description: 'fsType is the filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore TODO: how do we prevent errors in the filesystem from compromising the machine'
+          type: string
+        partition:
+          description: 'partition is the partition in the volume that you want to mount. If omitted, the default is to mount by volume name. Examples: For volume /dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).'
+          format: int32
+          type: integer
+        readOnly:
+          description: 'readOnly value true will force the readOnly setting in VolumeMounts. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore'
+          type: boolean
+        volumeID:
+          description: 'volumeID is unique ID of the persistent disk resource in AWS (Amazon EBS volume). More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore'
+          type: string
+      required:
+      - volumeID
+      type: object
+    HostPathVolumeSource:
+      description: 'hostPath represents a pre-existing file or directory on the host machine that is directly exposed to the container. This is generally used for system agents or other privileged things that are allowed to see the host machine. Most containers will NOT need this. More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath --- TODO(jonesdl) We need to restrict who can use host directory mounts and who can/can not mount host directories as read/write.'
+      properties:
+        path:
+          description: 'path of the directory on the host. If the path is a symlink, it will follow the link to the real path. More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath'
+          type: string
+        type:
+          $ref: '#/components/schemas/BoxedString'
+      required:
+      - path
+      type: object
+    EnvFromSource:
+      type: object
+      properties:
+        prefix:
+          type: string
+        configMapRef:
+          $ref: '#/components/schemas/ConfigMapEnvSource'
+        secretRef:
+          $ref: '#/components/schemas/SecretEnvSource'
+    WeightedPodAffinityTerm:
+      type: object
+      properties:
+        weight:
+          type: integer
+        podAffinityTerm:
+          $ref: '#/components/schemas/PodAffinityTerm'
+      required:
+      - podAffinityTerm
+    TestWorkflowSystem:
+      type: object
+      properties:
+        pureByDefault:
+          $ref: '#/components/schemas/BoxedBoolean'
+        isolatedContainers:
+          $ref: '#/components/schemas/BoxedBoolean'
+    NodeAffinity:
+      type: object
+      properties:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          $ref: '#/components/schemas/NodeSelector'
+        preferredDuringSchedulingIgnoredDuringExecution:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreferredSchedulingTerm'
+    TestWorkflowExecutionRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: custom execution name
+        config:
+          $ref: '#/components/schemas/TestWorkflowConfigValue'
+        runtime:
+          $ref: '#/components/schemas/TestWorkflowExecutionRuntime'
+          description: runtime configuration for the test workflow execution
+        testWorkflowExecutionName:
+          type: string
+          description: test workflow execution name started the test workflow execution
+        disableWebhooks:
+          type: boolean
+          description: whether webhooks on the execution of this test workflow are disabled
+          default: false
+        silentMode:
+          $ref: '#/components/schemas/SilentMode'
+        tags:
+          $ref: '#/components/schemas/TestWorkflowTagValue'
+        target:
+          $ref: '#/components/schemas/ExecutionTarget'
+        runningContext:
+          description: running context for the test workflow execution (Pro edition only)
+          $ref: '#/components/schemas/TestWorkflowRunningContext'
+        parentExecutionIds:
+          type: array
+          description: parent execution ids
+          items:
+            type: string
+    CephFSVolumeSource:
+      description: cephFS represents a Ceph FS mount on the host that shares a pod's lifetime
+      properties:
+        monitors:
+          description: 'monitors is Required: Monitors is a collection of Ceph monitors More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it'
+          items:
+            type: string
+          type: array
+        path:
+          description: 'path is Optional: Used as the mounted root, rather than the full Ceph tree, default is /'
+          type: string
+        readOnly:
+          description: 'readOnly is Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it'
+          type: boolean
+        secretFile:
+          description: 'secretFile is Optional: SecretFile is the path to key ring for User, default is /etc/ceph/user.secret More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it'
+          type: string
+        secretRef:
+          $ref: '#/components/schemas/LocalObjectReference'
+        user:
+          description: 'user is optional: User is the rados user name, default is admin More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it'
+          type: string
+      required:
+      - monitors
+      type: object
+    TestWorkflowWithExecutionSummary:
+      type: object
+      properties:
+        workflow:
+          $ref: '#/components/schemas/TestWorkflow'
+        latestExecution:
+          $ref: '#/components/schemas/TestWorkflowExecutionSummary'
+    TestWorkflowOutput:
+      type: object
+      properties:
+        ref:
+          type: string
+          description: step reference
+        name:
+          type: string
+          description: output kind name
+        value:
+          type: object
+          additionalProperties: {}
+          description: value returned
+    Variables:
+      type: object
+      description: execution variables passed to executor converted to vars for usage in tests
+      additionalProperties:
+        $ref: '#/components/schemas/Variable'
+      example:
+        var1:
+          name: var1
+          type: basic
+          value: value1
+        secret1:
+          name: secret1
+          type: secret
+          value: secretvalue1
+    PodDNSConfig:
+      type: object
+      properties:
+        nameservers:
+          type: array
+          items:
+            type: string
+        searches:
+          type: array
+          items:
+            type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodDNSConfigOption'
+    PodAffinity:
+      type: object
+      properties:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodAffinityTerm'
+        preferredDuringSchedulingIgnoredDuringExecution:
+          type: array
+          items:
+            $ref: '#/components/schemas/WeightedPodAffinityTerm'
     TestWorkflowStepParallel:
       type: object
       allOf:
@@ -1413,109 +1916,154 @@ components:
               $ref: '#/components/schemas/TestWorkflowStepParallelFetch'
           template:
             $ref: '#/components/schemas/TestWorkflowTemplateRef'
-    WeightedPodAffinityTerm:
+    ExecutionsMetricsExecutions:
       type: object
       properties:
-        weight:
+        executionId:
+          type: string
+        groupId:
+          type: string
+        duration:
+          type: string
+        durationMs:
           type: integer
-        podAffinityTerm:
-          $ref: '#/components/schemas/PodAffinityTerm'
-      required:
-      - podAffinityTerm
-    BoxedStringList:
+        status:
+          type: string
+        name:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        runnerId:
+          type: string
+    NodeSelectorRequirement:
+      type: object
+      properties:
+        key:
+          type: string
+        operator:
+          type: string
+        values:
+          type: array
+          items:
+            type: string
+    BoxedString:
       type: object
       properties:
         value:
-          type: array
-          items:
-            type: string
+          type: string
       required:
       - value
-    TestWorkflowParameterSchema:
+    TestWorkflowExecutionConfigValue:
       type: object
+      description: configuration values used in the test workflow execution
       properties:
-        description:
+        value:
           type: string
-          description: human-readable description for the property
-        type:
-          $ref: '#/components/schemas/TestWorkflowParameterType'
-        enum:
-          type: array
-          description: list of acceptable values
-          items:
-            type: string
-        example:
+          description: configuration value
+        emptyValue:
+          type: boolean
+          description: configuration value is empty
+        defaultValue:
           type: string
-          description: example value for the parameter
-        default:
-          $ref: '#/components/schemas/BoxedString'
-        format:
-          type: string
-          description: predefined format for the string
-        pattern:
-          type: string
-          description: regular expression to match
-        minLength:
-          $ref: '#/components/schemas/BoxedInteger'
-        maxLength:
-          $ref: '#/components/schemas/BoxedInteger'
-        minimum:
-          $ref: '#/components/schemas/BoxedInteger'
-        maximum:
-          $ref: '#/components/schemas/BoxedInteger'
-        exclusiveMinimum:
-          $ref: '#/components/schemas/BoxedInteger'
-        exclusiveMaximum:
-          $ref: '#/components/schemas/BoxedInteger'
-        multipleOf:
-          $ref: '#/components/schemas/BoxedInteger'
+          description: configuration value default
+        emptyDefaultValue:
+          type: boolean
+          description: configuration value default is empty
+        truncated:
+          type: boolean
+          description: indicates if the value is truncated
         sensitive:
           type: boolean
-          default: false
-          description: whether this value should be stored in the secret
+          description: marks value as sensitive
+    TestWorkflowPause:
+      type: object
+      properties:
+        ref:
+          type: string
+          description: step at which it was paused
+        pausedAt:
+          type: string
+          format: date-time
+          description: when the pause has started
+        resumedAt:
+          type: string
+          format: date-time
+          description: when the pause has ended
+      required:
+      - ref
+      - pausedAt
+    TestWorkflowContentTarball:
+      type: object
+      properties:
+        url:
+          type: string
+          description: url for the tarball to extract
+        path:
+          type: string
+          description: path where the tarball should be extracted
+        mount:
+          $ref: '#/components/schemas/BoxedBoolean'
+      required:
+      - url
+      - path
+    TestWorkflowResourcesList:
+      type: object
+      properties:
+        cpu:
+          type: string
+          description: number of CPUs
+          pattern: ^[0-9]+m?$
+        memory:
+          type: string
+          description: size of RAM memory
+          pattern: ^[0-9]+[GMK]i$
+        storage:
+          type: string
+          description: storage size
+          pattern: ^[0-9]+[GMK]i$
+        ephemeral-storage:
+          type: string
+          description: ephemeral storage size
+          pattern: ^[0-9]+[GMK]i$
+    TestWorkflowParameterType:
+      type: string
+      description: type of the config parameter
+      enum:
+      - string
+      - integer
+      - number
+      - boolean
+    TestWorkflowRunningContextInterface:
+      description: running context interface for test workflow execution
+      type: object
       required:
       - type
-    Volume:
-      type: object
-      description: Volume represents a named volume in a pod that may be accessed by any container in the pod.
       properties:
         name:
           type: string
-        hostPath:
-          $ref: '#/components/schemas/HostPathVolumeSource'
-        emptyDir:
-          $ref: '#/components/schemas/EmptyDirVolumeSource'
-        gcePersistentDisk:
-          $ref: '#/components/schemas/GCEPersistentDiskVolumeSource'
-        awsElasticBlockStore:
-          $ref: '#/components/schemas/AWSElasticBlockStoreVolumeSource'
-        secret:
-          $ref: '#/components/schemas/SecretVolumeSource'
-        nfs:
-          $ref: '#/components/schemas/NFSVolumeSource'
-        persistentVolumeClaim:
-          $ref: '#/components/schemas/PersistentVolumeClaimVolumeSource'
-        cephfs:
-          $ref: '#/components/schemas/CephFSVolumeSource'
-        azureFile:
-          $ref: '#/components/schemas/AzureFileVolumeSource'
-        azureDisk:
-          $ref: '#/components/schemas/AzureDiskVolumeSource'
-        configMap:
-          $ref: '#/components/schemas/ConfigMapVolumeSource'
-        csi:
-          $ref: '#/components/schemas/CSIVolumeSource'
-        projected:
-          $ref: '#/components/schemas/ProjectedVolumeSource'
-      required:
-      - name
-    TestWorkflowSpec:
+          description: interface name
+        type:
+          $ref: '#/components/schemas/TestWorkflowRunningContextInterfaceType'
+    TestWorkflowStepOperations:
       type: object
       properties:
-        use:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestWorkflowTemplateRef'
+        delay:
+          type: string
+          pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
+          description: delay before the step
+        shell:
+          type: string
+          description: script to run in a default shell for the container
+        run:
+          $ref: '#/components/schemas/TestWorkflowStepRun'
+        execute:
+          $ref: '#/components/schemas/TestWorkflowStepExecute'
+        artifacts:
+          $ref: '#/components/schemas/TestWorkflowStepArtifacts'
+    TestWorkflowTemplateSpec:
+      type: object
+      properties:
         concurrency:
           $ref: '#/components/schemas/TestWorkflowConcurrencyPolicy'
         config:
@@ -1527,7 +2075,7 @@ components:
         services:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/TestWorkflowServiceSpec'
+            $ref: '#/components/schemas/TestWorkflowIndependentServiceSpec'
         container:
           $ref: '#/components/schemas/TestWorkflowContainerConfig'
         job:
@@ -1537,15 +2085,15 @@ components:
         setup:
           type: array
           items:
-            $ref: '#/components/schemas/TestWorkflowStep'
+            $ref: '#/components/schemas/TestWorkflowIndependentStep'
         steps:
           type: array
           items:
-            $ref: '#/components/schemas/TestWorkflowStep'
+            $ref: '#/components/schemas/TestWorkflowIndependentStep'
         after:
           type: array
           items:
-            $ref: '#/components/schemas/TestWorkflowStep'
+            $ref: '#/components/schemas/TestWorkflowIndependentStep'
         events:
           type: array
           items:
@@ -1558,6 +2106,280 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/TestWorkflowPvcConfig'
+    Variable:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        type:
+          $ref: '#/components/schemas/VariableType'
+        secretRef:
+          $ref: '#/components/schemas/SecretRef'
+        configMapRef:
+          $ref: '#/components/schemas/ConfigMapRef'
+    TestWorkflowExecutionsResult:
+      type: object
+      properties:
+        totals:
+          $ref: '#/components/schemas/ExecutionsTotals'
+        filtered:
+          $ref: '#/components/schemas/ExecutionsTotals'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestWorkflowExecutionSummary'
+      required:
+      - totals
+      - filtered
+      - results
+    TestWorkflowRunningContextActorType:
+      description: supported actors for test workflow running context
+      type: string
+      enum:
+      - cron
+      - testtrigger
+      - user
+      - testworkflow
+      - testworkflowexecution
+      - program
+    TestWorkflowStepExecuteStrategy:
+      type: object
+      properties:
+        count:
+          $ref: '#/components/schemas/BoxedString'
+        maxCount:
+          $ref: '#/components/schemas/BoxedString'
+        matrix:
+          type: object
+          description: matrix of parameters to spawn instances
+          additionalProperties:
+            description: dynamic expression or static list of values
+            oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        shards:
+          type: object
+          description: parameters that should be distributed across sharded instances
+          additionalProperties:
+            description: dynamic expression or static list of values
+            oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+    TestWorkflowTagValue:
+      type: object
+      description: tag values to pass to the test workflow execution
+      additionalProperties:
+        type: string
+    ArtifactRequest:
+      description: artifact request body with test artifacts
+      type: object
+      properties:
+        storageClassName:
+          type: string
+          description: artifact storage class name for container executor
+          example: artifact-volume-local
+        volumeMountPath:
+          type: string
+          description: artifact volume mount path for container executor
+        dirs:
+          type: array
+          items:
+            type: string
+          description: artifact directories for scraping
+        masks:
+          type: array
+          items:
+            type: string
+          description: regexp to filter scraped artifacts, single or comma separated
+        storageBucket:
+          type: string
+          description: artifact bucket storage
+          example: test1-artifacts
+        omitFolderPerExecution:
+          type: boolean
+          description: don't use a separate folder for execution artifacts
+        sharedBetweenPods:
+          type: boolean
+          description: whether to share volume between pods
+        useDefaultStorageClassName:
+          type: boolean
+          description: whether to use default storage class name
+        sidecarScraper:
+          type: boolean
+          description: run scraper as pod sidecar container
+    TestWorkflowStepControl:
+      type: object
+      properties:
+        paused:
+          type: boolean
+          description: should the step be paused initially
+        negative:
+          type: boolean
+          description: is the step expected to fail
+        optional:
+          type: boolean
+          description: is the step optional, so the failure won't affect the TestWorkflow result
+        retry:
+          $ref: '#/components/schemas/TestWorkflowRetryPolicy'
+        timeout:
+          type: string
+          description: maximum time this step may take
+    TestWorkflowContent:
+      type: object
+      properties:
+        git:
+          $ref: '#/components/schemas/TestWorkflowContentGit'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestWorkflowContentFile'
+        tarball:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestWorkflowContentTarball'
+    TestWorkflowContentGit:
+      type: object
+      properties:
+        uri:
+          type: string
+          description: uri for the Git repository
+        revision:
+          type: string
+          description: branch, commit or a tag name to fetch
+        username:
+          type: string
+          description: plain text username to fetch with
+        usernameFrom:
+          $ref: '#/components/schemas/EnvVarSource'
+        token:
+          type: string
+          description: plain text token to fetch with
+        tokenFrom:
+          $ref: '#/components/schemas/EnvVarSource'
+        sshKey:
+          type: string
+          description: plain text SSH private key to fetch with
+        sshKeyFrom:
+          $ref: '#/components/schemas/EnvVarSource'
+        authType:
+          $ref: '#/components/schemas/ContentGitAuthType'
+        mountPath:
+          type: string
+          description: where to mount the fetched repository contents (defaults to "repo" directory in the data volume)
+        cone:
+          type: boolean
+          description: enable cone mode for sparse checkout with paths
+        paths:
+          type: array
+          description: paths to fetch for the sparse checkout
+          items:
+            type: string
+    TestWorkflowTarballRequest:
+      type: object
+      properties:
+        from:
+          type: string
+          description: path to load the files from
+        files:
+          $ref: '#/components/schemas/TestWorkflowTarballFilePattern'
+      required:
+      - from
+    LabelSelector:
+      type: object
+      properties:
+        matchLabels:
+          type: object
+          additionalProperties:
+            type: string
+        matchExpressions:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelSelectorRequirement'
+    TestWorkflowRunningContextInterfaceType:
+      description: supported interfaces for test workflow running context
+      type: string
+      enum:
+      - cli
+      - ui
+      - api
+      - ci/cd
+      - internal
+    TestWorkflowIndependentStep:
+      type: object
+      properties:
+        id:
+          type: string
+          description: stable identifier for referencing this step in expressions
+        name:
+          type: string
+          description: readable name for the step
+        condition:
+          type: string
+          description: expression to declare under which conditions the step should be run; defaults to "passed", except artifacts where it defaults to "always"
+        pure:
+          $ref: '#/components/schemas/BoxedBoolean'
+        paused:
+          type: boolean
+          description: should the step be paused initially
+        negative:
+          type: boolean
+          description: is the step expected to fail
+        optional:
+          type: boolean
+          description: is the step optional, so the failure won't affect the TestWorkflow result
+        retry:
+          $ref: '#/components/schemas/TestWorkflowRetryPolicy'
+        timeout:
+          type: string
+          description: maximum time this step may take
+        delay:
+          type: string
+          pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
+          description: delay before the step
+        content:
+          $ref: '#/components/schemas/TestWorkflowContent'
+        services:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/TestWorkflowIndependentServiceSpec'
+        shell:
+          type: string
+          description: script to run in a default shell for the container
+        run:
+          $ref: '#/components/schemas/TestWorkflowStepRun'
+        workingDir:
+          $ref: '#/components/schemas/BoxedString'
+        container:
+          $ref: '#/components/schemas/TestWorkflowContainerConfig'
+        execute:
+          $ref: '#/components/schemas/TestWorkflowStepExecute'
+        artifacts:
+          $ref: '#/components/schemas/TestWorkflowStepArtifacts'
+        parallel:
+          $ref: '#/components/schemas/TestWorkflowIndependentStepParallel'
+        setup:
+          type: array
+          description: nested setup steps to run
+          items:
+            $ref: '#/components/schemas/TestWorkflowIndependentStep'
+        steps:
+          type: array
+          description: nested steps to run
+          items:
+            $ref: '#/components/schemas/TestWorkflowIndependentStep'
+    BoxedBoolean:
+      type: object
+      properties:
+        value:
+          type: boolean
+      required:
+      - value
     ProjectedVolumeSource:
       type: object
       description: Represents a projected volume source
@@ -1678,43 +2500,637 @@ components:
                 - path
             type: object
           type: array
-    TestWorkflowContentGit:
+    TestWorkflowStepExecuteTestRef:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/TestWorkflowStepExecuteStrategy'
+      - properties:
+          name:
+            type: string
+            description: test name to schedule
+          description:
+            type: string
+            description: test execution description to display
+          count:
+            $ref: '#/components/schemas/BoxedString'
+          maxCount:
+            $ref: '#/components/schemas/BoxedString'
+          executionRequest:
+            $ref: '#/components/schemas/TestWorkflowStepExecuteTestExecutionRequest'
+          tarball:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/TestWorkflowTarballRequest'
+    TestWorkflowResultSummary:
       type: object
       properties:
-        uri:
+        status:
+          $ref: '#/components/schemas/TestWorkflowStatus'
+        predictedStatus:
+          $ref: '#/components/schemas/TestWorkflowStatus'
+        queuedAt:
           type: string
-          description: uri for the Git repository
-        revision:
+          format: date-time
+          description: when the pod was created
+        startedAt:
           type: string
-          description: branch, commit or a tag name to fetch
-        username:
+          format: date-time
+          description: when the pod has been successfully assigned
+        finishedAt:
           type: string
-          description: plain text username to fetch with
-        usernameFrom:
-          $ref: '#/components/schemas/EnvVarSource'
-        token:
+          format: date-time
+          description: when the pod has been completed
+        duration:
           type: string
-          description: plain text token to fetch with
-        tokenFrom:
-          $ref: '#/components/schemas/EnvVarSource'
-        sshKey:
+          description: Go-formatted (human-readable) duration
+        totalDuration:
           type: string
-          description: plain text SSH private key to fetch with
-        sshKeyFrom:
-          $ref: '#/components/schemas/EnvVarSource'
-        authType:
-          $ref: '#/components/schemas/ContentGitAuthType'
-        mountPath:
-          type: string
-          description: where to mount the fetched repository contents (defaults to "repo" directory in the data volume)
-        cone:
+          description: Go-formatted (human-readable) duration (incl. pause)
+        durationMs:
+          type: integer
+          description: Duration in milliseconds
+        totalDurationMs:
+          type: integer
+          description: Duration in milliseconds (incl. pause)
+        pausedMs:
+          type: integer
+          description: Pause duration in milliseconds
+      required:
+      - status
+      - predictedStatus
+      - durationMs
+      - totalDurationMs
+      - pausedMs
+    TestWorkflowStepExecute:
+      type: object
+      properties:
+        parallelism:
+          type: integer
+          description: how many resources could be scheduled in parallel
+        async:
           type: boolean
-          description: enable cone mode for sparse checkout with paths
-        paths:
+          description: only schedule the resources, don't watch for the results (unless it is needed for parallelism)
+        tests:
           type: array
-          description: paths to fetch for the sparse checkout
+          description: tests to schedule
+          items:
+            $ref: '#/components/schemas/TestWorkflowStepExecuteTestRef'
+        workflows:
+          type: array
+          description: workflows to schedule
+          items:
+            $ref: '#/components/schemas/TestWorkflowStepExecuteTestWorkflowRef'
+    AzureFileVolumeSource:
+      description: azureFile represents an Azure File Service mount on the host and bind mount to the pod.
+      properties:
+        readOnly:
+          description: readOnly defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
+          type: boolean
+        secretName:
+          description: secretName is the  name of secret that contains Azure Storage Account Name and Key
+          type: string
+        shareName:
+          description: shareName is the azure share Name
+          type: string
+      required:
+      - secretName
+      - shareName
+      type: object
+    ConfigMapRef:
+      required:
+      - name
+      - key
+      type: object
+      description: Testkube internal reference for data in Kubernetes config maps
+      properties:
+        namespace:
+          type: string
+          description: object kubernetes namespace
+        name:
+          type: string
+          description: object name
+        key:
+          type: string
+          description: object key
+    TestWorkflowResult:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/TestWorkflowStatus'
+        predictedStatus:
+          $ref: '#/components/schemas/TestWorkflowStatus'
+        queuedAt:
+          type: string
+          format: date-time
+          description: when the pod was created
+        startedAt:
+          type: string
+          format: date-time
+          description: when the pod has been successfully assigned
+        finishedAt:
+          type: string
+          format: date-time
+          description: when the pod has been completed
+        duration:
+          type: string
+          description: Go-formatted (human-readable) duration
+        totalDuration:
+          type: string
+          description: Go-formatted (human-readable) total duration (incl. pause)
+        durationMs:
+          type: integer
+          description: Duration in milliseconds
+        pausedMs:
+          type: integer
+          description: Pause duration in milliseconds
+        totalDurationMs:
+          type: integer
+          description: Total duration in milliseconds (incl. pause)
+        pauses:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestWorkflowPause'
+        initialization:
+          $ref: '#/components/schemas/TestWorkflowStepResult'
+        steps:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/TestWorkflowStepResult'
+      required:
+      - status
+      - predictedStatus
+      - durationMs
+      - pausedMs
+      - totalDurationMs
+    ResourceFieldRef:
+      type: object
+      required:
+      - resource
+      description: 'Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.'
+      properties:
+        containerName:
+          description: 'Container name: required for volumes, optional for env vars'
+          type: string
+        divisor:
+          type: string
+          pattern: ^[0-9]+(m|[GMK]i)$
+        resource:
+          description: 'Required: resource to select'
+          type: string
+    TestWorkflowCronJobConfig:
+      type: object
+      description: cron job configuration
+      required:
+      - cron
+      properties:
+        cron:
+          type: string
+          description: cron schedule to run a test workflow
+          example: '* * * * *'
+        labels:
+          type: object
+          description: labels to attach to the cron job
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: annotations to attach to the cron job
+          additionalProperties:
+            type: string
+        config:
+          $ref: '#/components/schemas/TestWorkflowConfigValue'
+        target:
+          $ref: '#/components/schemas/ExecutionTarget'
+        timezone:
+          $ref: '#/components/schemas/BoxedString'
+          description: cron timezone
+          example: America/New_York
+    TestWorkflowSpec:
+      type: object
+      properties:
+        use:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestWorkflowTemplateRef'
+        concurrency:
+          $ref: '#/components/schemas/TestWorkflowConcurrencyPolicy'
+        config:
+          $ref: '#/components/schemas/TestWorkflowConfigSchema'
+        system:
+          $ref: '#/components/schemas/TestWorkflowSystem'
+        content:
+          $ref: '#/components/schemas/TestWorkflowContent'
+        services:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/TestWorkflowServiceSpec'
+        container:
+          $ref: '#/components/schemas/TestWorkflowContainerConfig'
+        job:
+          $ref: '#/components/schemas/TestWorkflowJobConfig'
+        pod:
+          $ref: '#/components/schemas/TestWorkflowPodConfig'
+        setup:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestWorkflowStep'
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestWorkflowStep'
+        after:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestWorkflowStep'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestWorkflowEvent'
+        execution:
+          $ref: '#/components/schemas/TestWorkflowExecutionSchema'
+        timeouts:
+          $ref: '#/components/schemas/TestWorkflowTimeouts'
+        pvcs:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/TestWorkflowPvcConfig'
+    ImagePullPolicy:
+      type: string
+      enum:
+      - Always
+      - Never
+      - IfNotPresent
+    TestWorkflowExecutionRuntime:
+      description: runtime configuration for a specific test workflow execution
+      type: object
+      properties:
+        variables:
+          type: object
+          additionalProperties:
+            type: string
+          description: runtime variables passed to the test workflow execution
+    TestWorkflowReport:
+      type: object
+      properties:
+        ref:
+          type: string
+          description: step reference
+        kind:
+          type: string
+          enum:
+          - junit
+          description: report kind/type
+          example: junit
+        file:
+          type: string
+          description: file path to full report in artifact storage
+        summary:
+          $ref: '#/components/schemas/TestWorkflowReportSummary'
+    TestWorkflowEvent:
+      type: object
+      properties:
+        cronjob:
+          $ref: '#/components/schemas/TestWorkflowCronJobConfig'
+    PodResourceClaim:
+      type: object
+      properties:
+        name:
+          type: string
+        source:
+          $ref: '#/components/schemas/ClaimSource'
+    PodAffinityTerm:
+      type: object
+      properties:
+        labelSelector:
+          $ref: '#/components/schemas/LabelSelector'
+        namespaces:
+          type: array
           items:
             type: string
+        topologyKey:
+          type: string
+        namespaceSelector:
+          $ref: '#/components/schemas/LabelSelector'
+    TestWorkflowTemplate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: kubernetes resource name
+        namespace:
+          type: string
+          description: kubernetes namespace
+        description:
+          type: string
+          description: human-readable description
+        labels:
+          type: object
+          description: test workflow labels
+          additionalProperties:
+            type: string
+          example:
+            env: prod
+            app: backend
+        annotations:
+          type: object
+          description: test workflow annotations
+          additionalProperties:
+            type: string
+        created:
+          type: string
+          format: date-time
+          example: '2022-07-30T06:54:15Z'
+        updated:
+          type: string
+          format: date-time
+          example: '2022-07-30T06:54:15Z'
+        spec:
+          $ref: '#/components/schemas/TestWorkflowTemplateSpec'
+        sync:
+          $ref: '#/components/schemas/Syncable'
+    TestWorkflowConfigValue:
+      type: object
+      description: configuration values to pass to the template
+      additionalProperties:
+        type: string
+    ConfigMapVolumeSource:
+      description: configMap represents a configMap that should populate this volume
+      properties:
+        defaultMode:
+          $ref: '#/components/schemas/BoxedInteger'
+        items:
+          description: items if unspecified, each key-value pair in the Data field of the referenced ConfigMap will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the ConfigMap, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
+          items:
+            description: Maps a string key to a path within a volume.
+            properties:
+              key:
+                description: key is the key to project.
+                type: string
+              mode:
+                $ref: '#/components/schemas/BoxedInteger'
+              path:
+                description: path is the relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.
+                type: string
+            required:
+            - key
+            - path
+            type: object
+          type: array
+        name:
+          description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+          type: string
+        optional:
+          description: optional specify whether the ConfigMap or its keys must be defined
+          type: boolean
+      type: object
+    EnvVar:
+      type: object
+      properties:
+        global:
+          $ref: '#/components/schemas/BoxedBoolean'
+        name:
+          type: string
+        value:
+          type: string
+        valueFrom:
+          $ref: '#/components/schemas/EnvVarSource'
+    PodSecurityContext:
+      type: object
+      properties:
+        seLinuxOptions:
+          $ref: '#/components/schemas/SELinuxOptions'
+        windowsOptions:
+          $ref: '#/components/schemas/WindowsSecurityContextOptions'
+        runAsUser:
+          $ref: '#/components/schemas/TemplatableBoxedInteger'
+        runAsGroup:
+          $ref: '#/components/schemas/TemplatableBoxedInteger'
+        runAsNonRoot:
+          $ref: '#/components/schemas/BoxedBoolean'
+        supplementalGroups:
+          type: array
+          items:
+            type: integer
+            format: int64
+        supplementalGroupsPolicy:
+          $ref: '#/components/schemas/BoxedString'
+        fsGroup:
+          $ref: '#/components/schemas/TemplatableBoxedInteger'
+        sysctls:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sysctl'
+        fsGroupChangePolicy:
+          $ref: '#/components/schemas/BoxedString'
+        seccompProfile:
+          $ref: '#/components/schemas/SeccompProfile'
+        appArmorProfile:
+          $ref: '#/components/schemas/AppArmorProfile'
+        seLinuxChangePolicy:
+          $ref: '#/components/schemas/BoxedString'
+    TestWorkflowTimeouts:
+      type: object
+      description: configures timeout behavior for a workflow (queue, initialization)
+      properties:
+        queue:
+          type: string
+          description: maximum time the execution may spend in queue before starting (e.g. 30s, 5m)
+        initialization:
+          type: string
+          description: maximum time for initialization/transitioning before steps run (e.g. 60s, 2m)
+    ExecutionTarget:
+      type: object
+      properties:
+        match:
+          type: object
+          description: runner labels to match
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        not:
+          type: object
+          description: runner labels to NOT match
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        replicate:
+          type: array
+          description: list of runner labels to replicate the executions
+          items:
+            type: string
+    NFSVolumeSource:
+      description: 'nfs represents an NFS mount on the host that shares a pod''s lifetime More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs'
+      properties:
+        path:
+          description: 'path that is exported by the NFS server. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs'
+          type: string
+        readOnly:
+          description: 'readOnly here will force the NFS export to be mounted with read-only permissions. Defaults to false. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs'
+          type: boolean
+        server:
+          description: 'server is the hostname or IP address of the NFS server. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs'
+          type: string
+      required:
+      - path
+      - server
+      type: object
+    TestWorkflowResources:
+      type: object
+      properties:
+        limits:
+          $ref: '#/components/schemas/TestWorkflowResourcesList'
+        requests:
+          $ref: '#/components/schemas/TestWorkflowResourcesList'
+    HTTPGetAction:
+      type: object
+      properties:
+        path:
+          type: string
+        port:
+          type: string
+        host:
+          type: string
+        scheme:
+          type: string
+        httpHeaders:
+          type: array
+          items:
+            $ref: '#/components/schemas/HTTPHeader'
+    TestWorkflowIndependentServiceSpec:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/TestWorkflowStepExecuteStrategy'
+      - $ref: '#/components/schemas/TestWorkflowStepRun'
+      - properties:
+          description:
+            type: string
+            description: service description to display
+          timeout:
+            type: string
+            description: maximum time until reaching readiness
+          transfer:
+            type: array
+            description: list of files to send to parallel steps
+            items:
+              $ref: '#/components/schemas/TestWorkflowStepParallelTransfer'
+          content:
+            $ref: '#/components/schemas/TestWorkflowContent'
+          pod:
+            $ref: '#/components/schemas/TestWorkflowPodConfig'
+          logs:
+            $ref: '#/components/schemas/BoxedString'
+          restartPolicy:
+            type: string
+          readinessProbe:
+            $ref: '#/components/schemas/Probe'
+          pvcs:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/TestWorkflowPvcConfig'
+    Artifact:
+      type: object
+      description: API server artifact
+      properties:
+        name:
+          type: string
+          description: artifact file path
+        size:
+          type: integer
+          description: file size in bytes
+        executionName:
+          type: string
+          description: execution name that produced the artifact
+          example: test-1
+        status:
+          type: string
+          enum:
+          - ready
+          - processing
+          - failed
+    TestWorkflowConcurrencyPolicy:
+      type: object
+      description: configuration to control concurrent executions.
+      properties:
+        group:
+          type: string
+          description: Group ongoing executions by this identifier instead of by workflow name. Use the group identifier if you want the control concurrency across workflows.
+        max:
+          type: integer
+          description: The maximum amount of concurrent executions for this workflow or group. The scheduler will check the amount of ongoing executions for this workflow or group and only schedule this workflow when the amount is below its given maximum. When using a group identifier, it is recommended to keep the maximum in sync through a WorkflowTemplate.
+        cancelInProgress:
+          type: boolean
+          description: Whether the oldest in progress execution should be cancelled to be replaced with the latest queued one.
+          default: false
+    TestWorkflowExecutionStepResourceAggregations:
+      type: object
+      description: Step-based resource metrics aggregations (by measurement and field)
+      properties:
+        ref:
+          type: string
+          description: step reference
+        aggregations:
+          $ref: '#/components/schemas/TestWorkflowExecutionResourceAggregationsByMeasurement'
+    TestWorkflowPvcConfig:
+      type: object
+      properties:
+        accessModes:
+          description: 'Access mode for claim storage. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes'
+          type: array
+          items:
+            type: string
+        volumeMode:
+          description: 'Volume mode indicates the consumption of the volume as either a filesystem or block device. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#volume-mode'
+          $ref: '#/components/schemas/BoxedString'
+        resources:
+          description: Resources required for pvc
+          $ref: '#/components/schemas/TestWorkflowResources'
+        storageClassName:
+          description: 'Storage class name specifies the name of a StorageClass. More info: https://kubernetes.io/docs/concepts/storage/storage-classes/'
+          $ref: '#/components/schemas/BoxedString'
+        volumeName:
+          description: Volume name is used to identify the volume
+          type: string
+        selector:
+          description: Only the volumes whose labels match the selector can be bound to the claim
+          $ref: '#/components/schemas/LabelSelector'
+        dataSource:
+          description: 'Data source field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot) * An existing PVC (PersistentVolumeClaim)'
+          $ref: '#/components/schemas/TypedLocalObjectReference'
+        dataSourceRef:
+          description: Data source reference specifies the object from which to populate the volume with data, if a non-empty volume is desired
+          $ref: '#/components/schemas/TypedObjectReference'
+        volumeAttributesClassName:
+          description: 'Volume attributes class name may be used to set the VolumeAttributesClass used by this claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#volumeattributesclass'
+          $ref: '#/components/schemas/BoxedString'
+    SecurityContext:
+      type: object
+      properties:
+        capabilities:
+          $ref: '#/components/schemas/Capabilities'
+        privileged:
+          $ref: '#/components/schemas/BoxedBoolean'
+        seLinuxOptions:
+          $ref: '#/components/schemas/SELinuxOptions'
+        windowsOptions:
+          $ref: '#/components/schemas/WindowsSecurityContextOptions'
+        runAsUser:
+          $ref: '#/components/schemas/TemplatableBoxedInteger'
+        runAsGroup:
+          $ref: '#/components/schemas/TemplatableBoxedInteger'
+        runAsNonRoot:
+          $ref: '#/components/schemas/BoxedBoolean'
+        readOnlyRootFilesystem:
+          $ref: '#/components/schemas/BoxedBoolean'
+        allowPrivilegeEscalation:
+          $ref: '#/components/schemas/BoxedBoolean'
+        procMount:
+          $ref: '#/components/schemas/BoxedString'
+        seccompProfile:
+          $ref: '#/components/schemas/SeccompProfile'
+        appArmorProfile:
+          $ref: '#/components/schemas/AppArmorProfile'
     SELinuxOptions:
       type: object
       properties:
@@ -1726,29 +3142,64 @@ components:
           type: string
         level:
           type: string
-    CSIVolumeSource:
-      type: object
-      description: Represents a source location of a volume to mount, managed by an external CSI driver
-      properties:
-        driver:
-          type: string
-          description: driver is the name of the CSI driver that handles this volume.
-        readOnly:
-          $ref: '#/components/schemas/BoxedBoolean'
-        fsType:
-          $ref: '#/components/schemas/BoxedString'
-        volumeAttributes:
-          type: object
-          description: volumeAttributes stores driver-specific properties that are passed to the CSI driver. Consult your driver's documentation for supported values.
-          additionalProperties:
-            type: string
-        nodePublishSecretRef:
-          $ref: '#/components/schemas/LocalObjectReference'
-    PodSchedulingGate:
+    TestWorkflowContentFile:
       type: object
       properties:
-        name:
+        path:
           type: string
+          description: path where the file should be accessible at
+          minLength: 1
+        content:
+          type: string
+          description: plain-text content to put inside
+        contentFrom:
+          $ref: '#/components/schemas/EnvVarSource'
+        mode:
+          $ref: '#/components/schemas/BoxedInteger'
+      required:
+      - path
+    Source:
+      description: synchronisation sources
+      type: string
+      enum:
+      - kubernetes
+    TestWorkflowStepStatus:
+      type: string
+      enum:
+      - queued
+      - running
+      - paused
+      - passed
+      - failed
+      - timeout
+      - skipped
+      - aborted
+      - canceled
+    TestWorkflowExecutionHealth:
+      type: object
+      properties:
+        passRate:
+          type: number
+          format: float64
+          description: 'Recency-weighted fraction of executions that passed (value between 0.0 and 1.0).
+
+            '
+        flipRate:
+          type: number
+          format: float64
+          description: "Fraction of status changes among consecutive executions without recency weighting \n(value between 0.0 and 1.0).\n"
+        overallHealth:
+          type: number
+          format: float64
+          description: 'Combined health score, computed as passRate * (1 - flipRate)
+
+            (value between 0.0 and 1.0).
+
+            '
+      required:
+      - passRate
+      - flipRate
+      - overallHealth
     TestWorkflowStepResult:
       type: object
       properties:
@@ -1770,191 +3221,85 @@ components:
           type: string
           format: date-time
           description: when the container was finished
-    TestWorkflowExecutionConfigValue:
-      type: object
-      description: configuration values used in the test workflow execution
-      properties:
-        value:
-          type: string
-          description: configuration value
-        emptyValue:
-          type: boolean
-          description: configuration value is empty
-        defaultValue:
-          type: string
-          description: configuration value default
-        emptyDefaultValue:
-          type: boolean
-          description: configuration value default is empty
-        truncated:
-          type: boolean
-          description: indicates if the value is truncated
-        sensitive:
-          type: boolean
-          description: marks value as sensitive
-    TestWorkflowExecutionRequest:
+    TestWorkflowSignature:
       type: object
       properties:
+        ref:
+          type: string
+          description: step reference
+        id:
+          type: string
+          description: stable step identifier for expressions
         name:
           type: string
-          description: custom execution name
-        config:
-          $ref: '#/components/schemas/TestWorkflowConfigValue'
-        runtime:
-          $ref: '#/components/schemas/TestWorkflowExecutionRuntime'
-          description: runtime configuration for the test workflow execution
-        testWorkflowExecutionName:
+          description: step name
+        category:
           type: string
-          description: test workflow execution name started the test workflow execution
-        disableWebhooks:
+          description: step category, that may be used as name fallback
+        optional:
           type: boolean
-          description: whether webhooks on the execution of this test workflow are disabled
-          default: false
-        silentMode:
-          $ref: '#/components/schemas/SilentMode'
-        tags:
-          $ref: '#/components/schemas/TestWorkflowTagValue'
-        target:
-          $ref: '#/components/schemas/ExecutionTarget'
-        runningContext:
-          description: running context for the test workflow execution (Pro edition only)
-          $ref: '#/components/schemas/TestWorkflowRunningContext'
-        parentExecutionIds:
+          description: is the step/group meant to be optional
+        negative:
+          type: boolean
+          description: is the step/group meant to be negative
+        children:
           type: array
-          description: parent execution ids
+          items:
+            $ref: '#/components/schemas/TestWorkflowSignature'
+    LabelSelectorRequirement:
+      type: object
+      properties:
+        key:
+          type: string
+        operator:
+          type: string
+        values:
+          type: array
           items:
             type: string
-    TestWorkflowRunningContextInterface:
-      description: running context interface for test workflow execution
-      type: object
-      required:
-      - type
-      properties:
-        name:
-          type: string
-          description: interface name
-        type:
-          $ref: '#/components/schemas/TestWorkflowRunningContextInterfaceType'
-    TestWorkflowStepStatus:
-      type: string
-      enum:
-      - queued
-      - running
-      - paused
-      - passed
-      - failed
-      - timeout
-      - skipped
-      - aborted
-      - canceled
-    SecretEnvSource:
-      type: object
-      properties:
-        name:
-          type: string
-        optional:
-          type:
-          - boolean
-          - 'null'
-          default: false
+    SecretRef:
       required:
       - name
-    NodeSelector:
+      - key
+      type: object
+      description: Testkube internal reference for secret storage in Kubernetes secrets
+      properties:
+        namespace:
+          type: string
+          description: object kubernetes namespace
+        name:
+          type: string
+          description: object name
+        key:
+          type: string
+          description: object key
+    VariableType:
+      type: string
+      enum:
+      - basic
+      - secret
+    AppArmorProfile:
       type: object
       properties:
-        nodeSelectorTerms:
-          type: array
-          items:
-            $ref: '#/components/schemas/NodeSelectorTerm'
-    ArtifactRequest:
-      description: artifact request body with test artifacts
+        type:
+          type: string
+        localhostProfile:
+          $ref: '#/components/schemas/BoxedString'
+    TestWorkflowStepArtifacts:
       type: object
       properties:
-        storageClassName:
-          type: string
-          description: artifact storage class name for container executor
-          example: artifact-volume-local
-        volumeMountPath:
-          type: string
-          description: artifact volume mount path for container executor
-        dirs:
+        workingDir:
+          $ref: '#/components/schemas/BoxedString'
+        compress:
+          $ref: '#/components/schemas/TestWorkflowStepArtifactsCompression'
+        paths:
           type: array
+          description: file paths to fetch from the container
           items:
             type: string
-          description: artifact directories for scraping
-        masks:
-          type: array
-          items:
-            type: string
-          description: regexp to filter scraped artifacts, single or comma separated
-        storageBucket:
-          type: string
-          description: artifact bucket storage
-          example: test1-artifacts
-        omitFolderPerExecution:
-          type: boolean
-          description: don't use a separate folder for execution artifacts
-        sharedBetweenPods:
-          type: boolean
-          description: whether to share volume between pods
-        useDefaultStorageClassName:
-          type: boolean
-          description: whether to use default storage class name
-        sidecarScraper:
-          type: boolean
-          description: run scraper as pod sidecar container
-    TestWorkflowTarballRequest:
-      type: object
-      properties:
-        from:
-          type: string
-          description: path to load the files from
-        files:
-          $ref: '#/components/schemas/TestWorkflowTarballFilePattern'
+          minItems: 1
       required:
-      - from
-    TestWorkflowWithExecution:
-      type: object
-      properties:
-        workflow:
-          $ref: '#/components/schemas/TestWorkflow'
-        latestExecution:
-          $ref: '#/components/schemas/TestWorkflowExecution'
-    TestWorkflowRunningContextInterfaceType:
-      description: supported interfaces for test workflow running context
-      type: string
-      enum:
-      - cli
-      - ui
-      - api
-      - ci/cd
-      - internal
-    TestWorkflowExecutionResourceAggregationsByMeasurement:
-      type: object
-      description: 'TestWorkflowExecutionResourceAggregationsByMeasurement provides resource usage aggregations
-
-        for a specific measurement (e.g. CPU, Memory, etc.) across all steps in a TestWorkflowExecution.
-
-        '
-      additionalProperties:
-        type: object
-        description: 'TestWorkflowExecutionResourceAggregations provides resource usage aggregations
-
-          for a specific field (e.g. millicores, used...).
-
-          '
-        additionalProperties:
-          $ref: '#/components/schemas/TestWorkflowExecutionResourceAggregations'
-    TestWorkflowRunningContextActorType:
-      description: supported actors for test workflow running context
-      type: string
-      enum:
-      - cron
-      - testtrigger
-      - user
-      - testworkflow
-      - testworkflowexecution
-      - program
+      - paths
     TestWorkflowStep:
       type: object
       properties:
@@ -2025,112 +3370,319 @@ components:
           description: nested steps to run
           items:
             $ref: '#/components/schemas/TestWorkflowStep'
-    PodSecurityContext:
-      type: object
-      properties:
-        seLinuxOptions:
-          $ref: '#/components/schemas/SELinuxOptions'
-        windowsOptions:
-          $ref: '#/components/schemas/WindowsSecurityContextOptions'
-        runAsUser:
-          $ref: '#/components/schemas/TemplatableBoxedInteger'
-        runAsGroup:
-          $ref: '#/components/schemas/TemplatableBoxedInteger'
-        runAsNonRoot:
-          $ref: '#/components/schemas/BoxedBoolean'
-        supplementalGroups:
-          type: array
-          items:
-            type: integer
-            format: int64
-        supplementalGroupsPolicy:
-          $ref: '#/components/schemas/BoxedString'
-        fsGroup:
-          $ref: '#/components/schemas/TemplatableBoxedInteger'
-        sysctls:
-          type: array
-          items:
-            $ref: '#/components/schemas/Sysctl'
-        fsGroupChangePolicy:
-          $ref: '#/components/schemas/BoxedString'
-        seccompProfile:
-          $ref: '#/components/schemas/SeccompProfile'
-        appArmorProfile:
-          $ref: '#/components/schemas/AppArmorProfile'
-        seLinuxChangePolicy:
-          $ref: '#/components/schemas/BoxedString'
-    SeccompProfile:
-      type: object
-      properties:
-        type:
-          type: string
-        localhostProfile:
-          $ref: '#/components/schemas/BoxedString'
-    TestWorkflowStepExecuteTestWorkflowRef:
+    TestWorkflowIndependentStepParallel:
       type: object
       allOf:
+      - $ref: '#/components/schemas/TestWorkflowTemplateSpec'
       - $ref: '#/components/schemas/TestWorkflowStepExecuteStrategy'
+      - $ref: '#/components/schemas/TestWorkflowStepControl'
+      - $ref: '#/components/schemas/TestWorkflowStepOperations'
       - properties:
-          name:
-            type: string
-            description: TestWorkflow name to include
+          parallelism:
+            type: integer
+            description: how many resources could be scheduled in parallel
+          failFast:
+            type: boolean
+            description: abort remaining parallel workers on first failure
           description:
             type: string
-            description: TestWorkflow execution description to display
-          executionName:
-            type: string
-            description: TestWorkflow execution name override
-          tarball:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/TestWorkflowTarballRequest'
-          config:
-            $ref: '#/components/schemas/TestWorkflowConfigValue'
-          selector:
-            $ref: '#/components/schemas/LabelSelector'
-            description: label selector for test workflow
-          target:
-            $ref: '#/components/schemas/ExecutionTarget'
-    TestWorkflowResultSummary:
+            description: worker description to display
+          logs:
+            $ref: '#/components/schemas/BoxedString'
+          transfer:
+            type: array
+            description: list of files to send to parallel steps
+            items:
+              $ref: '#/components/schemas/TestWorkflowStepParallelTransfer'
+          fetch:
+            type: array
+            description: list of files to fetch from parallel steps
+            items:
+              $ref: '#/components/schemas/TestWorkflowStepParallelFetch'
+    TestWorkflowStatusSummary:
+      type: object
+      description: test workflow status
+      properties:
+        health:
+          $ref: '#/components/schemas/TestWorkflowExecutionHealth'
+    TestWorkflowStatus:
+      type: string
+      enum:
+      - queued
+      - assigned
+      - starting
+      - scheduling
+      - running
+      - pausing
+      - paused
+      - resuming
+      - passed
+      - failed
+      - stopping
+      - aborted
+      - canceled
+    TestWorkflowExecutionResourceAggregationsReport:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/TestWorkflowStatus'
-        predictedStatus:
-          $ref: '#/components/schemas/TestWorkflowStatus'
-        queuedAt:
+        global:
+          $ref: '#/components/schemas/TestWorkflowExecutionResourceAggregationsByMeasurement'
+        step:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestWorkflowExecutionStepResourceAggregations'
+      description: 'TestWorkflowExecutionResourceAggregationsReport provides resource usage aggregations
+
+        for an entire TestWorkflowExecution (globally) and also per-step (by measurements).
+
+        '
+    HostAlias:
+      type: object
+      properties:
+        ip:
           type: string
-          format: date-time
-          description: when the pod was created
-        startedAt:
+        hostnames:
+          type: array
+          items:
+            type: string
+    Capabilities:
+      type: object
+      properties:
+        add:
+          type: array
+          items:
+            type: string
+        drop:
+          type: array
+          items:
+            type: string
+    Affinity:
+      type: object
+      properties:
+        nodeAffinity:
+          $ref: '#/components/schemas/NodeAffinity'
+        podAffinity:
+          $ref: '#/components/schemas/PodAffinity'
+        podAntiAffinity:
+          $ref: '#/components/schemas/PodAffinity'
+    SecretVolumeSource:
+      description: 'secret represents a secret that should populate this volume. More info: https://kubernetes.io/docs/concepts/storage/volumes#secret'
+      properties:
+        defaultMode:
+          $ref: '#/components/schemas/BoxedInteger'
+        items:
+          description: items If unspecified, each key-value pair in the Data field of the referenced Secret will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the Secret, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
+          items:
+            description: Maps a string key to a path within a volume.
+            properties:
+              key:
+                description: key is the key to project.
+                type: string
+              mode:
+                $ref: '#/components/schemas/BoxedInteger'
+              path:
+                description: path is the relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.
+                type: string
+            required:
+            - key
+            - path
+            type: object
+          type: array
+        optional:
+          description: optional field specify whether the Secret or its keys must be defined
+          type: boolean
+        secretName:
+          description: 'secretName is the name of the secret in the pod''s namespace to use. More info: https://kubernetes.io/docs/concepts/storage/volumes#secret'
           type: string
-          format: date-time
-          description: when the pod has been successfully assigned
-        finishedAt:
+      type: object
+    TestWorkflowParameterSchema:
+      type: object
+      properties:
+        description:
           type: string
-          format: date-time
-          description: when the pod has been completed
-        duration:
+          description: human-readable description for the property
+        type:
+          $ref: '#/components/schemas/TestWorkflowParameterType'
+        enum:
+          type: array
+          description: list of acceptable values
+          items:
+            type: string
+        example:
           type: string
-          description: Go-formatted (human-readable) duration
-        totalDuration:
+          description: example value for the parameter
+        default:
+          $ref: '#/components/schemas/BoxedString'
+        format:
           type: string
-          description: Go-formatted (human-readable) duration (incl. pause)
-        durationMs:
-          type: integer
-          description: Duration in milliseconds
-        totalDurationMs:
-          type: integer
-          description: Duration in milliseconds (incl. pause)
-        pausedMs:
-          type: integer
-          description: Pause duration in milliseconds
+          description: predefined format for the string
+        pattern:
+          type: string
+          description: regular expression to match
+        minLength:
+          $ref: '#/components/schemas/BoxedInteger'
+        maxLength:
+          $ref: '#/components/schemas/BoxedInteger'
+        minimum:
+          $ref: '#/components/schemas/BoxedInteger'
+        maximum:
+          $ref: '#/components/schemas/BoxedInteger'
+        exclusiveMinimum:
+          $ref: '#/components/schemas/BoxedInteger'
+        exclusiveMaximum:
+          $ref: '#/components/schemas/BoxedInteger'
+        multipleOf:
+          $ref: '#/components/schemas/BoxedInteger'
+        sensitive:
+          type: boolean
+          default: false
+          description: whether this value should be stored in the secret
       required:
-      - status
-      - predictedStatus
-      - durationMs
-      - totalDurationMs
-      - pausedMs
+      - type
+    TestWorkflowStepParallelTransfer:
+      type: object
+      properties:
+        from:
+          type: string
+          description: path to load the files from
+        to:
+          type: string
+          description: path to save the files to
+        files:
+          $ref: '#/components/schemas/TestWorkflowTarballFilePattern'
+        mount:
+          $ref: '#/components/schemas/BoxedBoolean'
+      required:
+      - from
+    Toleration:
+      type: object
+      properties:
+        key:
+          type: string
+        operator:
+          type: string
+        value:
+          type: string
+        effect:
+          type: string
+        tolerationSeconds:
+          $ref: '#/components/schemas/BoxedInteger'
+    PreferredSchedulingTerm:
+      type: object
+      properties:
+        weight:
+          type: integer
+        preference:
+          $ref: '#/components/schemas/NodeSelectorTerm'
+      required:
+      - preference
+    TestWorkflowExecutionResourceAggregations:
+      type: object
+      properties:
+        total:
+          type: number
+          format: float64
+          description: Total sum of the metric.
+        min:
+          type: number
+          format: float64
+          description: Minimum value of the metric.
+        max:
+          type: number
+          format: float64
+          description: Maximum value of the metric.
+        avg:
+          type: number
+          format: float64
+          description: Average value of the metric.
+        stdDev:
+          type: number
+          format: float64
+          description: Standard deviation of the metric.
+      description: 'TestWorkflowExecutionResourceAggregations provides min, max, average, total,
+
+        and standard deviation values for a resource metric.
+
+        '
+    TestWorkflowStepArtifactsCompression:
+      type: object
+      properties:
+        name:
+          type: string
+          description: artifact name
+    EnvVarSource:
+      type: object
+      description: EnvVarSource represents a source for the value of an EnvVar.
+      properties:
+        configMapKeyRef:
+          type: object
+          required:
+          - key
+          description: Selects a key of a ConfigMap.
+          properties:
+            key:
+              description: The key to select.
+              type: string
+            name:
+              description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+              type: string
+            optional:
+              description: Specify whether the ConfigMap or its key must be defined
+              type:
+              - boolean
+              - 'null'
+        fieldRef:
+          $ref: '#/components/schemas/FieldRef'
+        resourceFieldRef:
+          $ref: '#/components/schemas/ResourceFieldRef'
+        secretKeyRef:
+          type: object
+          required:
+          - key
+          description: Selects a key of a secret in the pod's namespace
+          properties:
+            key:
+              description: The key of the secret to select from.  Must be a valid secret key.
+              type: string
+            name:
+              description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+              type: string
+            optional:
+              description: Specify whether the Secret or its key must be defined
+              type:
+              - boolean
+              - 'null'
+    BoxedInteger:
+      type: object
+      properties:
+        value:
+          type: integer
+      required:
+      - value
+    ContentGitAuthType:
+      type: string
+      description: auth type for git requests
+      enum:
+      - basic
+      - header
+      - github
+    CSIVolumeSource:
+      type: object
+      description: Represents a source location of a volume to mount, managed by an external CSI driver
+      properties:
+        driver:
+          type: string
+          description: driver is the name of the CSI driver that handles this volume.
+        readOnly:
+          $ref: '#/components/schemas/BoxedBoolean'
+        fsType:
+          $ref: '#/components/schemas/BoxedString'
+        volumeAttributes:
+          type: object
+          description: volumeAttributes stores driver-specific properties that are passed to the CSI driver. Consult your driver's documentation for supported values.
+          additionalProperties:
+            type: string
+        nodePublishSecretRef:
+          $ref: '#/components/schemas/LocalObjectReference'
     TCPSocketAction:
       type: object
       properties:
@@ -2138,17 +3690,144 @@ components:
           type: string
         host:
           type: string
-    PodAffinity:
+    TestWorkflowTemplateRef:
       type: object
       properties:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          type: array
-          items:
-            $ref: '#/components/schemas/PodAffinityTerm'
-        preferredDuringSchedulingIgnoredDuringExecution:
-          type: array
-          items:
-            $ref: '#/components/schemas/WeightedPodAffinityTerm'
+        name:
+          type: string
+          description: TestWorkflowTemplate name to include
+        config:
+          $ref: '#/components/schemas/TestWorkflowConfigValue'
+      required:
+      - name
+    PersistentVolumeClaimVolumeSource:
+      description: 'persistentVolumeClaimVolumeSource represents a reference to a PersistentVolumeClaim in the same namespace. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims'
+      properties:
+        claimName:
+          description: 'claimName is the name of a PersistentVolumeClaim in the same namespace as the pod using this volume. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims'
+          type: string
+        readOnly:
+          description: readOnly Will force the ReadOnly setting in VolumeMounts. Default false.
+          type: boolean
+      required:
+      - claimName
+      type: object
+    VolumeMount:
+      description: VolumeMount describes a mounting of a Volume within a container.
+      properties:
+        mountPath:
+          description: Path within the container at which the volume should be mounted.  Must not contain ':'.
+          type: string
+        mountPropagation:
+          $ref: '#/components/schemas/BoxedString'
+        name:
+          description: This must match the Name of a Volume.
+          type: string
+        readOnly:
+          description: Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false.
+          type: boolean
+        subPath:
+          description: Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
+          type: string
+        subPathExpr:
+          description: Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
+          type: string
+      required:
+      - mountPath
+      - name
+      type: object
+    Sysctl:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    EmptyDirVolumeSource:
+      description: 'emptyDir represents a temporary directory that shares a pod''s lifetime. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir'
+      properties:
+        medium:
+          description: 'medium represents what type of storage medium should back this directory. The default is "" which means to use the node''s default medium. Must be an empty string (default) or Memory. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir'
+          type: string
+        sizeLimit:
+          $ref: '#/components/schemas/BoxedString'
+      type: object
+    TestWorkflow:
+      type: object
+      properties:
+        name:
+          type: string
+          description: kubernetes resource name
+        namespace:
+          type: string
+          description: kubernetes namespace
+        description:
+          type: string
+          description: human-readable description
+        labels:
+          type: object
+          description: test workflow labels
+          additionalProperties:
+            type: string
+          example:
+            env: prod
+            app: backend
+        annotations:
+          type: object
+          description: test workflow annotations
+          additionalProperties:
+            type: string
+        created:
+          type: string
+          format: date-time
+          example: '2022-07-30T06:54:15Z'
+        updated:
+          type: string
+          format: date-time
+          example: '2022-07-30T06:54:15Z'
+        spec:
+          $ref: '#/components/schemas/TestWorkflowSpec'
+        readOnly:
+          type: boolean
+          description: if test workflow is offline and cannot be executed
+        status:
+          $ref: '#/components/schemas/TestWorkflowStatusSummary'
+        sync:
+          $ref: '#/components/schemas/Syncable'
+    FieldRef:
+      type: object
+      required:
+      - fieldPath
+      description: 'Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels[''<KEY>'']`, `metadata.annotations[''<KEY>'']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.'
+      properties:
+        apiVersion:
+          description: Version of the schema the FieldPath is written in terms of, defaults to "v1".
+          type: string
+        fieldPath:
+          description: Path of the field to select in the specified API version.
+          type: string
+    TypedObjectReference:
+      description: TypedObjectReference contains enough information to let you locate the typed referenced object inside the specified namespace
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/TypedLocalObjectReference'
+      properties:
+        namespace:
+          description: Namespace is the namespace of resource being referenced
+          $ref: '#/components/schemas/BoxedString'
+    LocalObjectReference:
+      description: Reference to Kubernetes object
+      type: object
+      properties:
+        name:
+          type: string
+    TestWorkflowWithExecution:
+      type: object
+      properties:
+        workflow:
+          $ref: '#/components/schemas/TestWorkflow'
+        latestExecution:
+          $ref: '#/components/schemas/TestWorkflowExecution'
     Probe:
       type: object
       description: Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
@@ -2173,6 +3852,140 @@ components:
           $ref: '#/components/schemas/TCPSocketAction'
         grpc:
           $ref: '#/components/schemas/GRPCAction'
+    BoxedStringList:
+      type: object
+      properties:
+        value:
+          type: array
+          items:
+            type: string
+      required:
+      - value
+    TemplatableBoxedInteger:
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+      - value
+    TestWorkflowRunningContextActor:
+      description: running context actor for test workflow execution
+      type: object
+      required:
+      - type
+      properties:
+        name:
+          type: string
+          description: actor name
+        email:
+          type: string
+          description: actor email
+        executionId:
+          type: string
+          description: test workflow execution id
+        executionPath:
+          type: string
+          description: all test workflow execution ids starting from the root
+        executionReference:
+          type: string
+          description: reference test workflow execution id
+        type:
+          $ref: '#/components/schemas/TestWorkflowRunningContextActorType'
+    TestWorkflowPodConfig:
+      type: object
+      properties:
+        labels:
+          type: object
+          description: labels to attach to the pod
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: annotations to attach to the pod
+          additionalProperties:
+            type: string
+        imagePullSecrets:
+          type: array
+          description: secret references for pulling images
+          items:
+            $ref: '#/components/schemas/LocalObjectReference'
+        serviceAccountName:
+          type: string
+          description: default service account name for the containers
+        nodeSelector:
+          type: object
+          description: label selector for node that the pod should land on
+          additionalProperties:
+            type: string
+        volumes:
+          type: array
+          description: volumes to append to the pod
+          items:
+            $ref: '#/components/schemas/Volume'
+        activeDeadlineSeconds:
+          $ref: '#/components/schemas/BoxedInteger'
+        dnsPolicy:
+          type: string
+        nodeName:
+          type: string
+        securityContext:
+          $ref: '#/components/schemas/PodSecurityContext'
+        disableFsGroupDefaulting:
+          $ref: '#/components/schemas/BoxedBoolean'
+        hostname:
+          type: string
+        subdomain:
+          type: string
+        affinity:
+          $ref: '#/components/schemas/Affinity'
+        tolerations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Toleration'
+        hostAliases:
+          type: array
+          items:
+            $ref: '#/components/schemas/HostAlias'
+        priorityClassName:
+          type: string
+        priority:
+          $ref: '#/components/schemas/BoxedInteger'
+        dnsConfig:
+          $ref: '#/components/schemas/PodDNSConfig'
+        preemptionPolicy:
+          $ref: '#/components/schemas/BoxedString'
+        topologySpreadConstraints:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopologySpreadConstraint'
+        schedulingGates:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodSchedulingGate'
+        resourceClaims:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodResourceClaim'
+        hostPID:
+          $ref: '#/components/schemas/BoxedBoolean'
+    TestWorkflowJobConfig:
+      type: object
+      properties:
+        labels:
+          type: object
+          description: labels to attach to the job
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: annotations to attach to the job
+          additionalProperties:
+            type: string
+        namespace:
+          type: string
+          description: namespace for execution of test workflow
+        activeDeadlineSeconds:
+          $ref: '#/components/schemas/BoxedInteger'
     TestWorkflowStepRun:
       type: object
       properties:
@@ -2208,278 +4021,6 @@ components:
           description: volumes to mount to the container
           items:
             $ref: '#/components/schemas/VolumeMount'
-    TestWorkflowEvent:
-      type: object
-      properties:
-        cronjob:
-          $ref: '#/components/schemas/TestWorkflowCronJobConfig'
-    Problem:
-      description: problem response in case of error
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type contains a URI that identifies the problem type.
-          example: https://kubeshop.io/testkube/problems/invalidtestname
-        title:
-          type: string
-          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
-          example: Invalid test name
-        status:
-          type: integer
-          description: HTTP status code for this occurrence of the problem.
-          example: 500
-        detail:
-          type: string
-          description: A human-readable explanation specific to this occurrence of the problem.
-          example: Your test name can't contain forbidden characters like "}}}" passed
-        instance:
-          type: string
-          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
-          example: http://10.23.23.123:8088/tests
-    CephFSVolumeSource:
-      description: cephFS represents a Ceph FS mount on the host that shares a pod's lifetime
-      properties:
-        monitors:
-          description: 'monitors is Required: Monitors is a collection of Ceph monitors More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it'
-          items:
-            type: string
-          type: array
-        path:
-          description: 'path is Optional: Used as the mounted root, rather than the full Ceph tree, default is /'
-          type: string
-        readOnly:
-          description: 'readOnly is Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it'
-          type: boolean
-        secretFile:
-          description: 'secretFile is Optional: SecretFile is the path to key ring for User, default is /etc/ceph/user.secret More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it'
-          type: string
-        secretRef:
-          $ref: '#/components/schemas/LocalObjectReference'
-        user:
-          description: 'user is optional: User is the rados user name, default is admin More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it'
-          type: string
-      required:
-      - monitors
-      type: object
-    VolumeMount:
-      description: VolumeMount describes a mounting of a Volume within a container.
-      properties:
-        mountPath:
-          description: Path within the container at which the volume should be mounted.  Must not contain ':'.
-          type: string
-        mountPropagation:
-          $ref: '#/components/schemas/BoxedString'
-        name:
-          description: This must match the Name of a Volume.
-          type: string
-        readOnly:
-          description: Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false.
-          type: boolean
-        subPath:
-          description: Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
-          type: string
-        subPathExpr:
-          description: Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
-          type: string
-      required:
-      - mountPath
-      - name
-      type: object
-    PodDNSConfig:
-      type: object
-      properties:
-        nameservers:
-          type: array
-          items:
-            type: string
-        searches:
-          type: array
-          items:
-            type: string
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/PodDNSConfigOption'
-    TemplatableBoxedInteger:
-      type: object
-      properties:
-        value:
-          type: string
-      required:
-      - value
-    Affinity:
-      type: object
-      properties:
-        nodeAffinity:
-          $ref: '#/components/schemas/NodeAffinity'
-        podAffinity:
-          $ref: '#/components/schemas/PodAffinity'
-        podAntiAffinity:
-          $ref: '#/components/schemas/PodAffinity'
-    Sysctl:
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-    TestWorkflowExecutionResourceAggregationsReport:
-      type: object
-      properties:
-        global:
-          $ref: '#/components/schemas/TestWorkflowExecutionResourceAggregationsByMeasurement'
-        step:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestWorkflowExecutionStepResourceAggregations'
-      description: 'TestWorkflowExecutionResourceAggregationsReport provides resource usage aggregations
-
-        for an entire TestWorkflowExecution (globally) and also per-step (by measurements).
-
-        '
-    TestWorkflowSummary:
-      type: object
-      properties:
-        name:
-          type: string
-        namespace:
-          type: string
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-        annotations:
-          type: object
-          additionalProperties:
-            type: string
-        health:
-          $ref: '#/components/schemas/TestWorkflowExecutionHealth'
-    ConfigMapRef:
-      required:
-      - name
-      - key
-      type: object
-      description: Testkube internal reference for data in Kubernetes config maps
-      properties:
-        namespace:
-          type: string
-          description: object kubernetes namespace
-        name:
-          type: string
-          description: object name
-        key:
-          type: string
-          description: object key
-    TestWorkflowIndependentStepParallel:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/TestWorkflowTemplateSpec'
-      - $ref: '#/components/schemas/TestWorkflowStepExecuteStrategy'
-      - $ref: '#/components/schemas/TestWorkflowStepControl'
-      - $ref: '#/components/schemas/TestWorkflowStepOperations'
-      - properties:
-          parallelism:
-            type: integer
-            description: how many resources could be scheduled in parallel
-          failFast:
-            type: boolean
-            description: abort remaining parallel workers on first failure
-          description:
-            type: string
-            description: worker description to display
-          logs:
-            $ref: '#/components/schemas/BoxedString'
-          transfer:
-            type: array
-            description: list of files to send to parallel steps
-            items:
-              $ref: '#/components/schemas/TestWorkflowStepParallelTransfer'
-          fetch:
-            type: array
-            description: list of files to fetch from parallel steps
-            items:
-              $ref: '#/components/schemas/TestWorkflowStepParallelFetch'
-    TestWorkflowContentFile:
-      type: object
-      properties:
-        path:
-          type: string
-          description: path where the file should be accessible at
-          minLength: 1
-        content:
-          type: string
-          description: plain-text content to put inside
-        contentFrom:
-          $ref: '#/components/schemas/EnvVarSource'
-        mode:
-          $ref: '#/components/schemas/BoxedInteger'
-      required:
-      - path
-    WindowsSecurityContextOptions:
-      type: object
-      properties:
-        gmsaCredentialSpecName:
-          $ref: '#/components/schemas/BoxedString'
-        gmsaCredentialSpec:
-          $ref: '#/components/schemas/BoxedString'
-        runAsUserName:
-          $ref: '#/components/schemas/BoxedString'
-        hostProcess:
-          $ref: '#/components/schemas/BoxedBoolean'
-    TestWorkflowStepOperations:
-      type: object
-      properties:
-        delay:
-          type: string
-          pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
-          description: delay before the step
-        shell:
-          type: string
-          description: script to run in a default shell for the container
-        run:
-          $ref: '#/components/schemas/TestWorkflowStepRun'
-        execute:
-          $ref: '#/components/schemas/TestWorkflowStepExecute'
-        artifacts:
-          $ref: '#/components/schemas/TestWorkflowStepArtifacts'
-    TestWorkflowExecutionSchema:
-      type: object
-      description: test workflow execution configuration
-      properties:
-        tags:
-          $ref: '#/components/schemas/TestWorkflowTagValue'
-        target:
-          $ref: '#/components/schemas/ExecutionTarget'
-        silent:
-          type: boolean
-          description: indicates that all executions should be silent by default. When true, SilentMode is activated for all executions (Webhooks, Insights, Health, Metrics, Cdevents all set to true).
-          default: false
-    NFSVolumeSource:
-      description: 'nfs represents an NFS mount on the host that shares a pod''s lifetime More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs'
-      properties:
-        path:
-          description: 'path that is exported by the NFS server. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs'
-          type: string
-        readOnly:
-          description: 'readOnly here will force the NFS export to be mounted with read-only permissions. Defaults to false. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs'
-          type: boolean
-        server:
-          description: 'server is the hostname or IP address of the NFS server. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs'
-          type: string
-      required:
-      - path
-      - server
-      type: object
-    EnvFromSource:
-      type: object
-      properties:
-        prefix:
-          type: string
-        configMapRef:
-          $ref: '#/components/schemas/ConfigMapEnvSource'
-        secretRef:
-          $ref: '#/components/schemas/SecretEnvSource'
     ExecutionsTotals:
       type: object
       description: various execution counters
@@ -2506,32 +4047,56 @@ components:
         running:
           type: integer
           description: the total number of running executions available
-    PodAffinityTerm:
+    HTTPHeader:
       type: object
       properties:
-        labelSelector:
-          $ref: '#/components/schemas/LabelSelector'
-        namespaces:
-          type: array
-          items:
-            type: string
-        topologyKey:
+        name:
           type: string
-        namespaceSelector:
-          $ref: '#/components/schemas/LabelSelector'
-    TestWorkflowContent:
+        value:
+          type: string
+    SecretEnvSource:
       type: object
       properties:
-        git:
-          $ref: '#/components/schemas/TestWorkflowContentGit'
-        files:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestWorkflowContentFile'
-        tarball:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestWorkflowContentTarball'
+        name:
+          type: string
+        optional:
+          type:
+          - boolean
+          - 'null'
+          default: false
+      required:
+      - name
+    ClaimSource:
+      type: object
+      properties:
+        resourceClaimName:
+          $ref: '#/components/schemas/BoxedString'
+        resourceClaimTemplateName:
+          $ref: '#/components/schemas/BoxedString'
+    Problem:
+      description: problem response in case of error
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type contains a URI that identifies the problem type.
+          example: https://kubeshop.io/testkube/problems/invalidtestname
+        title:
+          type: string
+          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          example: Invalid test name
+        status:
+          type: integer
+          description: HTTP status code for this occurrence of the problem.
+          example: 500
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem.
+          example: Your test name can't contain forbidden characters like "}}}" passed
+        instance:
+          type: string
+          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
+          example: http://10.23.23.123:8088/tests
     TestWorkflowStepExecuteTestExecutionRequest:
       type: object
       properties:
@@ -2655,1262 +4220,62 @@ components:
         executionNamespace:
           type: string
           description: namespace for test execution (Pro edition only)
-    EnvVarSource:
-      type: object
-      description: EnvVarSource represents a source for the value of an EnvVar.
+    AzureDiskVolumeSource:
+      description: azureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
       properties:
-        configMapKeyRef:
-          type: object
-          required:
-          - key
-          description: Selects a key of a ConfigMap.
-          properties:
-            key:
-              description: The key to select.
-              type: string
-            name:
-              description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
-              type: string
-            optional:
-              description: Specify whether the ConfigMap or its key must be defined
-              type:
-              - boolean
-              - 'null'
-        fieldRef:
-          $ref: '#/components/schemas/FieldRef'
-        resourceFieldRef:
-          $ref: '#/components/schemas/ResourceFieldRef'
-        secretKeyRef:
-          type: object
-          required:
-          - key
-          description: Selects a key of a secret in the pod's namespace
-          properties:
-            key:
-              description: The key of the secret to select from.  Must be a valid secret key.
-              type: string
-            name:
-              description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
-              type: string
-            optional:
-              description: Specify whether the Secret or its key must be defined
-              type:
-              - boolean
-              - 'null'
-    TestWorkflowStepExecute:
-      type: object
-      properties:
-        parallelism:
-          type: integer
-          description: how many resources could be scheduled in parallel
-        async:
-          type: boolean
-          description: only schedule the resources, don't watch for the results (unless it is needed for parallelism)
-        tests:
-          type: array
-          description: tests to schedule
-          items:
-            $ref: '#/components/schemas/TestWorkflowStepExecuteTestRef'
-        workflows:
-          type: array
-          description: workflows to schedule
-          items:
-            $ref: '#/components/schemas/TestWorkflowStepExecuteTestWorkflowRef'
-    TestWorkflowStepArtifacts:
-      type: object
-      properties:
-        workingDir:
+        cachingMode:
           $ref: '#/components/schemas/BoxedString'
-        compress:
-          $ref: '#/components/schemas/TestWorkflowStepArtifactsCompression'
-        paths:
-          type: array
-          description: file paths to fetch from the container
-          items:
-            type: string
-          minItems: 1
-      required:
-      - paths
-    TestWorkflowRetryPolicy:
-      type: object
-      properties:
-        count:
-          type: integer
-          minimum: 1
-          description: how many times at most it should retry
-        until:
+        diskName:
+          description: diskName is the Name of the data disk in the blob storage
           type: string
-          description: until when it should retry (defaults to "passed")
-      required:
-      - count
-    SecretVolumeSource:
-      description: 'secret represents a secret that should populate this volume. More info: https://kubernetes.io/docs/concepts/storage/volumes#secret'
-      properties:
-        defaultMode:
-          $ref: '#/components/schemas/BoxedInteger'
-        items:
-          description: items If unspecified, each key-value pair in the Data field of the referenced Secret will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the Secret, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
-          items:
-            description: Maps a string key to a path within a volume.
-            properties:
-              key:
-                description: key is the key to project.
-                type: string
-              mode:
-                $ref: '#/components/schemas/BoxedInteger'
-              path:
-                description: path is the relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.
-                type: string
-            required:
-            - key
-            - path
-            type: object
-          type: array
-        optional:
-          description: optional field specify whether the Secret or its keys must be defined
-          type: boolean
-        secretName:
-          description: 'secretName is the name of the secret in the pod''s namespace to use. More info: https://kubernetes.io/docs/concepts/storage/volumes#secret'
+        diskURI:
+          description: diskURI is the URI of data disk in the blob storage
           type: string
-      type: object
-    NodeSelectorRequirement:
-      type: object
-      properties:
-        key:
-          type: string
-        operator:
-          type: string
-        values:
-          type: array
-          items:
-            type: string
-    TestWorkflowWithExecutionSummary:
-      type: object
-      properties:
-        workflow:
-          $ref: '#/components/schemas/TestWorkflow'
-        latestExecution:
-          $ref: '#/components/schemas/TestWorkflowExecutionSummary'
-    TestWorkflowResult:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/TestWorkflowStatus'
-        predictedStatus:
-          $ref: '#/components/schemas/TestWorkflowStatus'
-        queuedAt:
-          type: string
-          format: date-time
-          description: when the pod was created
-        startedAt:
-          type: string
-          format: date-time
-          description: when the pod has been successfully assigned
-        finishedAt:
-          type: string
-          format: date-time
-          description: when the pod has been completed
-        duration:
-          type: string
-          description: Go-formatted (human-readable) duration
-        totalDuration:
-          type: string
-          description: Go-formatted (human-readable) total duration (incl. pause)
-        durationMs:
-          type: integer
-          description: Duration in milliseconds
-        pausedMs:
-          type: integer
-          description: Pause duration in milliseconds
-        totalDurationMs:
-          type: integer
-          description: Total duration in milliseconds (incl. pause)
-        pauses:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestWorkflowPause'
-        initialization:
-          $ref: '#/components/schemas/TestWorkflowStepResult'
-        steps:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/TestWorkflowStepResult'
-      required:
-      - status
-      - predictedStatus
-      - durationMs
-      - pausedMs
-      - totalDurationMs
-    TestWorkflowStepParallelTransfer:
-      type: object
-      properties:
-        from:
-          type: string
-          description: path to load the files from
-        to:
-          type: string
-          description: path to save the files to
-        files:
-          $ref: '#/components/schemas/TestWorkflowTarballFilePattern'
-        mount:
-          $ref: '#/components/schemas/BoxedBoolean'
-      required:
-      - from
-    TestWorkflowTemplateSpec:
-      type: object
-      properties:
-        concurrency:
-          $ref: '#/components/schemas/TestWorkflowConcurrencyPolicy'
-        config:
-          $ref: '#/components/schemas/TestWorkflowConfigSchema'
-        system:
-          $ref: '#/components/schemas/TestWorkflowSystem'
-        content:
-          $ref: '#/components/schemas/TestWorkflowContent'
-        services:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/TestWorkflowIndependentServiceSpec'
-        container:
-          $ref: '#/components/schemas/TestWorkflowContainerConfig'
-        job:
-          $ref: '#/components/schemas/TestWorkflowJobConfig'
-        pod:
-          $ref: '#/components/schemas/TestWorkflowPodConfig'
-        setup:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestWorkflowIndependentStep'
-        steps:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestWorkflowIndependentStep'
-        after:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestWorkflowIndependentStep'
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestWorkflowEvent'
-        execution:
-          $ref: '#/components/schemas/TestWorkflowExecutionSchema'
-        timeouts:
-          $ref: '#/components/schemas/TestWorkflowTimeouts'
-        pvcs:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/TestWorkflowPvcConfig'
-    BoxedInteger:
-      type: object
-      properties:
-        value:
-          type: integer
-      required:
-      - value
-    Syncable:
-      description: 'source information about resources that may have been synced from multiple sources.
-
-        An empty source indicates that the source was the UI/API for backwards compatibility.
-
-        '
-      type: object
-      properties:
-        creationSource:
-          description: the original source from which the resource was created
-          $ref: '#/components/schemas/Source'
-        lastModificationSource:
-          description: the source from which the last modification of the resource originated
-          $ref: '#/components/schemas/Source'
-    TestWorkflowPodConfig:
-      type: object
-      properties:
-        labels:
-          type: object
-          description: labels to attach to the pod
-          additionalProperties:
-            type: string
-        annotations:
-          type: object
-          description: annotations to attach to the pod
-          additionalProperties:
-            type: string
-        imagePullSecrets:
-          type: array
-          description: secret references for pulling images
-          items:
-            $ref: '#/components/schemas/LocalObjectReference'
-        serviceAccountName:
-          type: string
-          description: default service account name for the containers
-        nodeSelector:
-          type: object
-          description: label selector for node that the pod should land on
-          additionalProperties:
-            type: string
-        volumes:
-          type: array
-          description: volumes to append to the pod
-          items:
-            $ref: '#/components/schemas/Volume'
-        activeDeadlineSeconds:
-          $ref: '#/components/schemas/BoxedInteger'
-        dnsPolicy:
-          type: string
-        nodeName:
-          type: string
-        securityContext:
-          $ref: '#/components/schemas/PodSecurityContext'
-        disableFsGroupDefaulting:
-          $ref: '#/components/schemas/BoxedBoolean'
-        hostname:
-          type: string
-        subdomain:
-          type: string
-        affinity:
-          $ref: '#/components/schemas/Affinity'
-        tolerations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Toleration'
-        hostAliases:
-          type: array
-          items:
-            $ref: '#/components/schemas/HostAlias'
-        priorityClassName:
-          type: string
-        priority:
-          $ref: '#/components/schemas/BoxedInteger'
-        dnsConfig:
-          $ref: '#/components/schemas/PodDNSConfig'
-        preemptionPolicy:
+        fsType:
           $ref: '#/components/schemas/BoxedString'
-        topologySpreadConstraints:
-          type: array
-          items:
-            $ref: '#/components/schemas/TopologySpreadConstraint'
-        schedulingGates:
-          type: array
-          items:
-            $ref: '#/components/schemas/PodSchedulingGate'
-        resourceClaims:
-          type: array
-          items:
-            $ref: '#/components/schemas/PodResourceClaim'
-        hostPID:
-          $ref: '#/components/schemas/BoxedBoolean'
-    ImagePullPolicy:
-      type: string
-      enum:
-      - Always
-      - Never
-      - IfNotPresent
-    TestWorkflowCronJobConfig:
-      type: object
-      description: cron job configuration
-      required:
-      - cron
-      properties:
-        cron:
-          type: string
-          description: cron schedule to run a test workflow
-          example: '* * * * *'
-        labels:
-          type: object
-          description: labels to attach to the cron job
-          additionalProperties:
-            type: string
-        annotations:
-          type: object
-          description: annotations to attach to the cron job
-          additionalProperties:
-            type: string
-        config:
-          $ref: '#/components/schemas/TestWorkflowConfigValue'
-        target:
-          $ref: '#/components/schemas/ExecutionTarget'
-        timezone:
-          $ref: '#/components/schemas/BoxedString'
-          description: cron timezone
-          example: America/New_York
-    TestWorkflowConfigSchema:
-      type: object
-      description: configuration definition
-      additionalProperties:
-        $ref: '#/components/schemas/TestWorkflowParameterSchema'
-    TestWorkflowServiceSpec:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/TestWorkflowStepExecuteStrategy'
-      - $ref: '#/components/schemas/TestWorkflowIndependentServiceSpec'
-      - properties:
-          use:
-            type: array
-            items:
-              $ref: '#/components/schemas/TestWorkflowTemplateRef'
-    ExecutionsMetrics:
-      type: object
-      properties:
-        passFailRatio:
-          type: number
-          description: Percentage pass to fail ratio
-          example: 50
-        executionDurationP50:
-          type: string
-          description: 50th percentile of all durations
-          example: 7m2.71s
-        executionDurationP50ms:
-          type: integer
-          description: 50th percentile of all durations in milliseconds
-          example: 422
-        executionDurationP90:
-          type: string
-          description: 90th percentile of all durations
-          example: 7m2.71s
-        executionDurationP90ms:
-          type: integer
-          description: 90th percentile of all durations in milliseconds
-          example: 422
-        executionDurationP95:
-          type: string
-          description: 95th percentile of all durations
-          example: 7m2.71s
-        executionDurationP95ms:
-          type: integer
-          description: 95th percentile of all durations in milliseconds
-          example: 422
-        executionDurationP99:
-          type: string
-          description: 99th percentile of all durations
-          example: 7m2.71s
-        executionDurationP99ms:
-          type: integer
-          description: 99th percentile of all durations in milliseconds
-          example: 422
-        totalExecutions:
-          type: integer
-          description: total executions number
-          example: 2
-        failedExecutions:
-          type: integer
-          description: failed executions number
-          example: 1
-        executions:
-          type: array
-          description: List of test/testsuite executions
-          items:
-            $ref: '#/components/schemas/ExecutionsMetricsExecutions'
-    ExecAction:
-      type: object
-      properties:
-        command:
-          type: array
-          description: Command is the command line to execute inside the container, the working directory for the command is root ('/') in the container's filesystem. Exit status of 0 is treated as live/healthy and non-zero is unhealthy.
-          items:
-            type: string
-    TestWorkflowExecution:
-      type: object
-      properties:
-        id:
-          type: string
-          description: unique execution identifier
-          format: bson objectId
-          example: 62f395e004109209b50edfc1
-        groupId:
-          type: string
-          description: identifier for group of correlated executions
-          format: bson objectId
-          example: 62f395e004109209b50edfc1
-        runnerId:
-          type: string
-          description: identifier of the runner where it has been executed
-        runnerTarget:
-          $ref: '#/components/schemas/ExecutionTarget'
-        runnerOriginalTarget:
-          $ref: '#/components/schemas/ExecutionTarget'
-        name:
-          type: string
-          description: execution name
-          example: some-workflow-name-1
-        namespace:
-          type: string
-          description: execution namespace
-          example: my-testkube
-        number:
-          type: integer
-          description: sequence number for the execution
-        scheduledAt:
-          type: string
-          format: date-time
-          description: when the execution has been scheduled to run
-        assignedAt:
-          type: string
-          format: date-time
-          description: when the execution has been assigned to some runner
-        statusAt:
-          type: string
-          format: date-time
-          description: when the execution result's status has changed last time (queued, passed, failed)
-        signature:
-          type: array
-          description: structured tree of steps
-          items:
-            $ref: '#/components/schemas/TestWorkflowSignature'
-        result:
-          $ref: '#/components/schemas/TestWorkflowResult'
-        output:
-          type: array
-          description: additional information from the steps, like referenced executed tests or artifacts
-          items:
-            $ref: '#/components/schemas/TestWorkflowOutput'
-        reports:
-          type: array
-          description: generated reports from the steps, like junit
-          items:
-            $ref: '#/components/schemas/TestWorkflowReport'
-        resourceAggregations:
-          $ref: '#/components/schemas/TestWorkflowExecutionResourceAggregationsReport'
-        workflow:
-          $ref: '#/components/schemas/TestWorkflow'
-        resolvedWorkflow:
-          $ref: '#/components/schemas/TestWorkflow'
-        testWorkflowExecutionName:
-          type: string
-          description: test workflow execution name started the test workflow execution
-        disableWebhooks:
-          type: boolean
-          description: whether webhooks on the execution of this test workflow are disabled
-          default: false
-          example:
-          - true
-          - false
-        silentMode:
-          $ref: '#/components/schemas/SilentMode'
-        tags:
-          $ref: '#/components/schemas/TestWorkflowTagValue'
-        runningContext:
-          description: running context for the test workflow execution (Pro edition only)
-          $ref: '#/components/schemas/TestWorkflowRunningContext'
-        configParams:
-          $ref: '#/components/schemas/TestWorkflowExecutionConfig'
-        runtime:
-          $ref: '#/components/schemas/TestWorkflowExecutionRuntime'
-      required:
-      - id
-      - name
-      - workflow
-    TestWorkflowStepExecuteStrategy:
-      type: object
-      properties:
-        count:
-          $ref: '#/components/schemas/BoxedString'
-        maxCount:
-          $ref: '#/components/schemas/BoxedString'
-        matrix:
-          type: object
-          description: matrix of parameters to spawn instances
-          additionalProperties:
-            description: dynamic expression or static list of values
-            oneOf:
-            - type: string
-            - type: array
-              items:
-                type: string
-        shards:
-          type: object
-          description: parameters that should be distributed across sharded instances
-          additionalProperties:
-            description: dynamic expression or static list of values
-            oneOf:
-            - type: string
-            - type: array
-              items:
-                type: string
-    FieldRef:
-      type: object
-      required:
-      - fieldPath
-      description: 'Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels[''<KEY>'']`, `metadata.annotations[''<KEY>'']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.'
-      properties:
-        apiVersion:
-          description: Version of the schema the FieldPath is written in terms of, defaults to "v1".
-          type: string
-        fieldPath:
-          description: Path of the field to select in the specified API version.
-          type: string
-    PreferredSchedulingTerm:
-      type: object
-      properties:
-        weight:
-          type: integer
-        preference:
-          $ref: '#/components/schemas/NodeSelectorTerm'
-      required:
-      - preference
-    TestWorkflowTagValue:
-      type: object
-      description: tag values to pass to the test workflow execution
-      additionalProperties:
-        type: string
-    ClaimSource:
-      type: object
-      properties:
-        resourceClaimName:
-          $ref: '#/components/schemas/BoxedString'
-        resourceClaimTemplateName:
-          $ref: '#/components/schemas/BoxedString'
-    AzureFileVolumeSource:
-      description: azureFile represents an Azure File Service mount on the host and bind mount to the pod.
-      properties:
-        readOnly:
-          description: readOnly defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
-          type: boolean
-        secretName:
-          description: secretName is the  name of secret that contains Azure Storage Account Name and Key
-          type: string
-        shareName:
-          description: shareName is the azure share Name
-          type: string
-      required:
-      - secretName
-      - shareName
-      type: object
-    Capabilities:
-      type: object
-      properties:
-        add:
-          type: array
-          items:
-            type: string
-        drop:
-          type: array
-          items:
-            type: string
-    TestWorkflowTimeouts:
-      type: object
-      description: configures timeout behavior for a workflow (queue, initialization)
-      properties:
-        queue:
-          type: string
-          description: maximum time the execution may spend in queue before starting (e.g. 30s, 5m)
-        initialization:
-          type: string
-          description: maximum time for initialization/transitioning before steps run (e.g. 60s, 2m)
-    TestWorkflowConfigValue:
-      type: object
-      description: configuration values to pass to the template
-      additionalProperties:
-        type: string
-    HTTPGetAction:
-      type: object
-      properties:
-        path:
-          type: string
-        port:
-          type: string
-        host:
-          type: string
-        scheme:
-          type: string
-        httpHeaders:
-          type: array
-          items:
-            $ref: '#/components/schemas/HTTPHeader'
-    TestWorkflow:
-      type: object
-      properties:
-        name:
-          type: string
-          description: kubernetes resource name
-        namespace:
-          type: string
-          description: kubernetes namespace
-        description:
-          type: string
-          description: human-readable description
-        labels:
-          type: object
-          description: test workflow labels
-          additionalProperties:
-            type: string
-          example:
-            env: prod
-            app: backend
-        annotations:
-          type: object
-          description: test workflow annotations
-          additionalProperties:
-            type: string
-        created:
-          type: string
-          format: date-time
-          example: '2022-07-30T06:54:15Z'
-        updated:
-          type: string
-          format: date-time
-          example: '2022-07-30T06:54:15Z'
-        spec:
-          $ref: '#/components/schemas/TestWorkflowSpec'
-        readOnly:
-          type: boolean
-          description: if test workflow is offline and cannot be executed
-        status:
-          $ref: '#/components/schemas/TestWorkflowStatusSummary'
-        sync:
-          $ref: '#/components/schemas/Syncable'
-    TestWorkflowJobConfig:
-      type: object
-      properties:
-        labels:
-          type: object
-          description: labels to attach to the job
-          additionalProperties:
-            type: string
-        annotations:
-          type: object
-          description: annotations to attach to the job
-          additionalProperties:
-            type: string
-        namespace:
-          type: string
-          description: namespace for execution of test workflow
-        activeDeadlineSeconds:
-          $ref: '#/components/schemas/BoxedInteger'
-    TestWorkflowRunningContext:
-      description: running context for test workflow execution
-      type: object
-      required:
-      - interface
-      - actor
-      properties:
-        interface:
-          $ref: '#/components/schemas/TestWorkflowRunningContextInterface'
-        actor:
-          $ref: '#/components/schemas/TestWorkflowRunningContextActor'
-    TestWorkflowSystem:
-      type: object
-      properties:
-        pureByDefault:
-          $ref: '#/components/schemas/BoxedBoolean'
-        isolatedContainers:
-          $ref: '#/components/schemas/BoxedBoolean'
-    TestWorkflowExecutionsResult:
-      type: object
-      properties:
-        totals:
-          $ref: '#/components/schemas/ExecutionsTotals'
-        filtered:
-          $ref: '#/components/schemas/ExecutionsTotals'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestWorkflowExecutionSummary'
-      required:
-      - totals
-      - filtered
-      - results
-    TestWorkflowExecutionConfig:
-      type: object
-      description: map of configuration values used in the test workflow execution
-      additionalProperties:
-        $ref: '#/components/schemas/TestWorkflowExecutionConfigValue'
-    TestWorkflowExecutionResourceAggregations:
-      type: object
-      properties:
-        total:
-          type: number
-          format: float64
-          description: Total sum of the metric.
-        min:
-          type: number
-          format: float64
-          description: Minimum value of the metric.
-        max:
-          type: number
-          format: float64
-          description: Maximum value of the metric.
-        avg:
-          type: number
-          format: float64
-          description: Average value of the metric.
-        stdDev:
-          type: number
-          format: float64
-          description: Standard deviation of the metric.
-      description: 'TestWorkflowExecutionResourceAggregations provides min, max, average, total,
-
-        and standard deviation values for a resource metric.
-
-        '
-    TestWorkflowStatus:
-      type: string
-      enum:
-      - queued
-      - assigned
-      - starting
-      - scheduling
-      - running
-      - pausing
-      - paused
-      - resuming
-      - passed
-      - failed
-      - stopping
-      - aborted
-      - canceled
-    NodeSelectorTerm:
-      type: object
-      properties:
-        matchExpressions:
-          type: array
-          items:
-            $ref: '#/components/schemas/NodeSelectorRequirement'
-        matchFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/NodeSelectorRequirement'
-    SilentMode:
-      type: object
-      description: controls what aspects of an execution should be silent (not tracked/processed)
-      properties:
-        webhooks:
-          type: boolean
-          description: disable webhooks for this execution
-          default: false
-        insights:
-          type: boolean
-          description: exclude from insights and analytics dashboards
-          default: false
-        health:
-          type: boolean
-          description: exclude from health and flakiness calculations
-          default: false
-        metrics:
-          type: boolean
-          description: exclude from prometheus metrics
-          default: false
-        cdevents:
-          type: boolean
-          description: disable CDEvents for this execution
-          default: false
-    ConfigMapVolumeSource:
-      description: configMap represents a configMap that should populate this volume
-      properties:
-        defaultMode:
-          $ref: '#/components/schemas/BoxedInteger'
-        items:
-          description: items if unspecified, each key-value pair in the Data field of the referenced ConfigMap will be projected into the volume as a file whose name is the key and content is the value. If specified, the listed keys will be projected into the specified paths, and unlisted keys will not be present. If a key is specified which is not present in the ConfigMap, the volume setup will error unless it is marked optional. Paths must be relative and may not contain the '..' path or start with '..'.
-          items:
-            description: Maps a string key to a path within a volume.
-            properties:
-              key:
-                description: key is the key to project.
-                type: string
-              mode:
-                $ref: '#/components/schemas/BoxedInteger'
-              path:
-                description: path is the relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.
-                type: string
-            required:
-            - key
-            - path
-            type: object
-          type: array
-        name:
-          description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
-          type: string
-        optional:
-          description: optional specify whether the ConfigMap or its keys must be defined
-          type: boolean
-      type: object
-    ConfigMapEnvSource:
-      type: object
-      properties:
-        name:
-          type: string
-        optional:
-          type:
-          - boolean
-          - 'null'
-          default: false
-      required:
-      - name
-    LabelSelector:
-      type: object
-      properties:
-        matchLabels:
-          type: object
-          additionalProperties:
-            type: string
-        matchExpressions:
-          type: array
-          items:
-            $ref: '#/components/schemas/LabelSelectorRequirement'
-    TestWorkflowIndependentServiceSpec:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/TestWorkflowStepExecuteStrategy'
-      - $ref: '#/components/schemas/TestWorkflowStepRun'
-      - properties:
-          description:
-            type: string
-            description: service description to display
-          timeout:
-            type: string
-            description: maximum time until reaching readiness
-          transfer:
-            type: array
-            description: list of files to send to parallel steps
-            items:
-              $ref: '#/components/schemas/TestWorkflowStepParallelTransfer'
-          content:
-            $ref: '#/components/schemas/TestWorkflowContent'
-          pod:
-            $ref: '#/components/schemas/TestWorkflowPodConfig'
-          logs:
-            $ref: '#/components/schemas/BoxedString'
-          restartPolicy:
-            type: string
-          readinessProbe:
-            $ref: '#/components/schemas/Probe'
-          pvcs:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/TestWorkflowPvcConfig'
-    NodeAffinity:
-      type: object
-      properties:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          $ref: '#/components/schemas/NodeSelector'
-        preferredDuringSchedulingIgnoredDuringExecution:
-          type: array
-          items:
-            $ref: '#/components/schemas/PreferredSchedulingTerm'
-    TestWorkflowStatusSummary:
-      type: object
-      description: test workflow status
-      properties:
-        health:
-          $ref: '#/components/schemas/TestWorkflowExecutionHealth'
-    TestWorkflowTarballFilePattern:
-      type: object
-      description: dynamic expression or static list of file patterns to pack
-      properties:
-        static:
-          type: array
-          items: {}
-        expression:
-          type: string
-    EnvReference:
-      description: Reference to env resource
-      type: object
-      required:
-      - reference
-      properties:
-        reference:
-          $ref: '#/components/schemas/LocalObjectReference'
-        mount:
-          type: boolean
-          description: whether we shoud mount resource
-          example: /etc/data
-        mountPath:
-          type: string
-          description: where we shoud mount resource
-        mapToVariables:
-          type: boolean
-          description: whether we shoud map to variables from resource
-          default: false
-    TestWorkflowResourcesList:
-      type: object
-      properties:
-        cpu:
-          type: string
-          description: number of CPUs
-          pattern: ^[0-9]+m?$
-        memory:
-          type: string
-          description: size of RAM memory
-          pattern: ^[0-9]+[GMK]i$
-        storage:
-          type: string
-          description: storage size
-          pattern: ^[0-9]+[GMK]i$
-        ephemeral-storage:
-          type: string
-          description: ephemeral storage size
-          pattern: ^[0-9]+[GMK]i$
-    LabelSelectorRequirement:
-      type: object
-      properties:
-        key:
-          type: string
-        operator:
-          type: string
-        values:
-          type: array
-          items:
-            type: string
-    BoxedBoolean:
-      type: object
-      properties:
-        value:
-          type: boolean
-      required:
-      - value
-    TestWorkflowOutput:
-      type: object
-      properties:
-        ref:
-          type: string
-          description: step reference
-        name:
-          type: string
-          description: output kind name
-        value:
-          type: object
-          additionalProperties: {}
-          description: value returned
-    TestWorkflowIndependentStep:
-      type: object
-      properties:
-        id:
-          type: string
-          description: stable identifier for referencing this step in expressions
-        name:
-          type: string
-          description: readable name for the step
-        condition:
-          type: string
-          description: expression to declare under which conditions the step should be run; defaults to "passed", except artifacts where it defaults to "always"
-        pure:
-          $ref: '#/components/schemas/BoxedBoolean'
-        paused:
-          type: boolean
-          description: should the step be paused initially
-        negative:
-          type: boolean
-          description: is the step expected to fail
-        optional:
-          type: boolean
-          description: is the step optional, so the failure won't affect the TestWorkflow result
-        retry:
-          $ref: '#/components/schemas/TestWorkflowRetryPolicy'
-        timeout:
-          type: string
-          description: maximum time this step may take
-        delay:
-          type: string
-          pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
-          description: delay before the step
-        content:
-          $ref: '#/components/schemas/TestWorkflowContent'
-        services:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/TestWorkflowIndependentServiceSpec'
-        shell:
-          type: string
-          description: script to run in a default shell for the container
-        run:
-          $ref: '#/components/schemas/TestWorkflowStepRun'
-        workingDir:
-          $ref: '#/components/schemas/BoxedString'
-        container:
-          $ref: '#/components/schemas/TestWorkflowContainerConfig'
-        execute:
-          $ref: '#/components/schemas/TestWorkflowStepExecute'
-        artifacts:
-          $ref: '#/components/schemas/TestWorkflowStepArtifacts'
-        parallel:
-          $ref: '#/components/schemas/TestWorkflowIndependentStepParallel'
-        setup:
-          type: array
-          description: nested setup steps to run
-          items:
-            $ref: '#/components/schemas/TestWorkflowIndependentStep'
-        steps:
-          type: array
-          description: nested steps to run
-          items:
-            $ref: '#/components/schemas/TestWorkflowIndependentStep'
-    HTTPHeader:
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-    TypedObjectReference:
-      description: TypedObjectReference contains enough information to let you locate the typed referenced object inside the specified namespace
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/TypedLocalObjectReference'
-      properties:
-        namespace:
-          description: Namespace is the namespace of resource being referenced
-          $ref: '#/components/schemas/BoxedString'
-    LocalObjectReference:
-      description: Reference to Kubernetes object
-      type: object
-      properties:
-        name:
-          type: string
-    EnvVar:
-      type: object
-      properties:
-        global:
-          $ref: '#/components/schemas/BoxedBoolean'
-        name:
-          type: string
-        value:
-          type: string
-        valueFrom:
-          $ref: '#/components/schemas/EnvVarSource'
-    TestWorkflowSignature:
-      type: object
-      properties:
-        ref:
-          type: string
-          description: step reference
-        id:
-          type: string
-          description: stable step identifier for expressions
-        name:
-          type: string
-          description: step name
-        category:
-          type: string
-          description: step category, that may be used as name fallback
-        optional:
-          type: boolean
-          description: is the step/group meant to be optional
-        negative:
-          type: boolean
-          description: is the step/group meant to be negative
-        children:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestWorkflowSignature'
-    ContentGitAuthType:
-      type: string
-      description: auth type for git requests
-      enum:
-      - basic
-      - header
-      - github
-    TestWorkflowReport:
-      type: object
-      properties:
-        ref:
-          type: string
-          description: step reference
         kind:
-          type: string
-          enum:
-          - junit
-          description: report kind/type
-          example: junit
-        file:
-          type: string
-          description: file path to full report in artifact storage
-        summary:
-          $ref: '#/components/schemas/TestWorkflowReportSummary'
-    TestWorkflowExecutionRuntime:
-      description: runtime configuration for a specific test workflow execution
-      type: object
-      properties:
-        variables:
-          type: object
-          additionalProperties:
-            type: string
-          description: runtime variables passed to the test workflow execution
-    GRPCAction:
-      type: object
-      properties:
-        port:
-          type: integer
-        service:
           $ref: '#/components/schemas/BoxedString'
-    TestWorkflowParameterType:
-      type: string
-      description: type of the config parameter
-      enum:
-      - string
-      - integer
-      - number
-      - boolean
-    TestWorkflowStepExecuteTestRef:
+        readOnly:
+          description: readOnly Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
+          type: boolean
+      required:
+      - diskName
+      - diskURI
       type: object
-      allOf:
-      - $ref: '#/components/schemas/TestWorkflowStepExecuteStrategy'
-      - properties:
-          name:
-            type: string
-            description: test name to schedule
-          description:
-            type: string
-            description: test execution description to display
-          count:
-            $ref: '#/components/schemas/BoxedString'
-          maxCount:
-            $ref: '#/components/schemas/BoxedString'
-          executionRequest:
-            $ref: '#/components/schemas/TestWorkflowStepExecuteTestExecutionRequest'
-          tarball:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/TestWorkflowTarballRequest'
-    TestWorkflowContainerConfig:
+    Volume:
       type: object
-      properties:
-        workingDir:
-          $ref: '#/components/schemas/BoxedString'
-        image:
-          type: string
-          description: image to be used for the container
-        imagePullPolicy:
-          $ref: '#/components/schemas/ImagePullPolicy'
-        env:
-          type: array
-          description: environment variables to append to the container
-          items:
-            $ref: '#/components/schemas/EnvVar'
-        envFrom:
-          type: array
-          description: external environment variables to append to the container
-          items:
-            $ref: '#/components/schemas/EnvFromSource'
-        command:
-          $ref: '#/components/schemas/BoxedStringList'
-        args:
-          $ref: '#/components/schemas/BoxedStringList'
-        resources:
-          $ref: '#/components/schemas/TestWorkflowResources'
-        securityContext:
-          $ref: '#/components/schemas/SecurityContext'
-        volumeMounts:
-          type: array
-          description: volumes to mount to the container
-          items:
-            $ref: '#/components/schemas/VolumeMount'
-    PodResourceClaim:
-      type: object
+      description: Volume represents a named volume in a pod that may be accessed by any container in the pod.
       properties:
         name:
           type: string
-        source:
-          $ref: '#/components/schemas/ClaimSource'
-    HostPathVolumeSource:
-      description: 'hostPath represents a pre-existing file or directory on the host machine that is directly exposed to the container. This is generally used for system agents or other privileged things that are allowed to see the host machine. Most containers will NOT need this. More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath --- TODO(jonesdl) We need to restrict who can use host directory mounts and who can/can not mount host directories as read/write.'
-      properties:
-        path:
-          description: 'path of the directory on the host. If the path is a symlink, it will follow the link to the real path. More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath'
-          type: string
-        type:
-          $ref: '#/components/schemas/BoxedString'
+        hostPath:
+          $ref: '#/components/schemas/HostPathVolumeSource'
+        emptyDir:
+          $ref: '#/components/schemas/EmptyDirVolumeSource'
+        gcePersistentDisk:
+          $ref: '#/components/schemas/GCEPersistentDiskVolumeSource'
+        awsElasticBlockStore:
+          $ref: '#/components/schemas/AWSElasticBlockStoreVolumeSource'
+        secret:
+          $ref: '#/components/schemas/SecretVolumeSource'
+        nfs:
+          $ref: '#/components/schemas/NFSVolumeSource'
+        persistentVolumeClaim:
+          $ref: '#/components/schemas/PersistentVolumeClaimVolumeSource'
+        cephfs:
+          $ref: '#/components/schemas/CephFSVolumeSource'
+        azureFile:
+          $ref: '#/components/schemas/AzureFileVolumeSource'
+        azureDisk:
+          $ref: '#/components/schemas/AzureDiskVolumeSource'
+        configMap:
+          $ref: '#/components/schemas/ConfigMapVolumeSource'
+        csi:
+          $ref: '#/components/schemas/CSIVolumeSource'
+        projected:
+          $ref: '#/components/schemas/ProjectedVolumeSource'
       required:
-      - path
-      type: object
+      - name
     TestWorkflowExecutionSummary:
       type: object
       properties:
@@ -3990,470 +4355,188 @@ components:
           type: array
           items:
             type: string
-    TestWorkflowStepParallelFetch:
+    TestWorkflowServiceSpec:
       type: object
-      properties:
-        from:
-          type: string
-          description: path to fetch files from
-        to:
-          type: string
-          description: path to save the files to
-        files:
-          $ref: '#/components/schemas/TestWorkflowTarballFilePattern'
-      required:
-      - from
-    TestWorkflowExecutionHealth:
-      type: object
-      properties:
-        passRate:
-          type: number
-          format: float64
-          description: 'Recency-weighted fraction of executions that passed (value between 0.0 and 1.0).
-
-            '
-        flipRate:
-          type: number
-          format: float64
-          description: "Fraction of status changes among consecutive executions without recency weighting \n(value between 0.0 and 1.0).\n"
-        overallHealth:
-          type: number
-          format: float64
-          description: 'Combined health score, computed as passRate * (1 - flipRate)
-
-            (value between 0.0 and 1.0).
-
-            '
-      required:
-      - passRate
-      - flipRate
-      - overallHealth
-    AzureDiskVolumeSource:
-      description: azureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
-      properties:
-        cachingMode:
-          $ref: '#/components/schemas/BoxedString'
-        diskName:
-          description: diskName is the Name of the data disk in the blob storage
-          type: string
-        diskURI:
-          description: diskURI is the URI of data disk in the blob storage
-          type: string
-        fsType:
-          $ref: '#/components/schemas/BoxedString'
-        kind:
-          $ref: '#/components/schemas/BoxedString'
-        readOnly:
-          description: readOnly Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
-          type: boolean
-      required:
-      - diskName
-      - diskURI
-      type: object
-    TestWorkflowResources:
-      type: object
-      properties:
-        limits:
-          $ref: '#/components/schemas/TestWorkflowResourcesList'
-        requests:
-          $ref: '#/components/schemas/TestWorkflowResourcesList'
-    EmptyDirVolumeSource:
-      description: 'emptyDir represents a temporary directory that shares a pod''s lifetime. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir'
-      properties:
-        medium:
-          description: 'medium represents what type of storage medium should back this directory. The default is "" which means to use the node''s default medium. Must be an empty string (default) or Memory. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir'
-          type: string
-        sizeLimit:
-          $ref: '#/components/schemas/BoxedString'
-      type: object
-    TestWorkflowStepArtifactsCompression:
+      allOf:
+      - $ref: '#/components/schemas/TestWorkflowStepExecuteStrategy'
+      - $ref: '#/components/schemas/TestWorkflowIndependentServiceSpec'
+      - properties:
+          use:
+            type: array
+            items:
+              $ref: '#/components/schemas/TestWorkflowTemplateRef'
+    TestWorkflowSummary:
       type: object
       properties:
         name:
           type: string
-          description: artifact name
-    TestWorkflowConcurrencyPolicy:
-      type: object
-      description: configuration to control concurrent executions.
-      properties:
-        group:
-          type: string
-          description: Group ongoing executions by this identifier instead of by workflow name. Use the group identifier if you want the control concurrency across workflows.
-        max:
-          type: integer
-          description: The maximum amount of concurrent executions for this workflow or group. The scheduler will check the amount of ongoing executions for this workflow or group and only schedule this workflow when the amount is below its given maximum. When using a group identifier, it is recommended to keep the maximum in sync through a WorkflowTemplate.
-        cancelInProgress:
-          type: boolean
-          description: Whether the oldest in progress execution should be cancelled to be replaced with the latest queued one.
-          default: false
-    AWSElasticBlockStoreVolumeSource:
-      description: 'awsElasticBlockStore represents an AWS Disk resource that is attached to a kubelet''s host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore'
-      properties:
-        fsType:
-          description: 'fsType is the filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore TODO: how do we prevent errors in the filesystem from compromising the machine'
-          type: string
-        partition:
-          description: 'partition is the partition in the volume that you want to mount. If omitted, the default is to mount by volume name. Examples: For volume /dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).'
-          format: int32
-          type: integer
-        readOnly:
-          description: 'readOnly value true will force the readOnly setting in VolumeMounts. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore'
-          type: boolean
-        volumeID:
-          description: 'volumeID is unique ID of the persistent disk resource in AWS (Amazon EBS volume). More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore'
-          type: string
-      required:
-      - volumeID
-      type: object
-    TestWorkflowContentTarball:
-      type: object
-      properties:
-        url:
-          type: string
-          description: url for the tarball to extract
-        path:
-          type: string
-          description: path where the tarball should be extracted
-        mount:
-          $ref: '#/components/schemas/BoxedBoolean'
-      required:
-      - url
-      - path
-    ExecutionsMetricsExecutions:
-      type: object
-      properties:
-        executionId:
-          type: string
-        groupId:
-          type: string
-        duration:
-          type: string
-        durationMs:
-          type: integer
-        status:
-          type: string
-        name:
-          type: string
-        startTime:
-          type: string
-          format: date-time
-        runnerId:
-          type: string
-    GCEPersistentDiskVolumeSource:
-      description: 'gcePersistentDisk represents a GCE Disk resource that is attached to a kubelet''s host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk'
-      properties:
-        fsType:
-          description: 'fsType is filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk TODO: how do we prevent errors in the filesystem from compromising the machine'
-          type: string
-        partition:
-          description: 'partition is the partition in the volume that you want to mount. If omitted, the default is to mount by volume name. Examples: For volume /dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty). More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk'
-          format: int32
-          type: integer
-        pdName:
-          description: 'pdName is unique name of the PD resource in GCE. Used to identify the disk in GCE. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk'
-          type: string
-        readOnly:
-          description: 'readOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk'
-          type: boolean
-      required:
-      - pdName
-      type: object
-    ResourceFieldRef:
-      type: object
-      required:
-      - resource
-      description: 'Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.'
-      properties:
-        containerName:
-          description: 'Container name: required for volumes, optional for env vars'
-          type: string
-        divisor:
-          type: string
-          pattern: ^[0-9]+(m|[GMK]i)$
-        resource:
-          description: 'Required: resource to select'
-          type: string
-    Variables:
-      type: object
-      description: execution variables passed to executor converted to vars for usage in tests
-      additionalProperties:
-        $ref: '#/components/schemas/Variable'
-      example:
-        var1:
-          name: var1
-          type: basic
-          value: value1
-        secret1:
-          name: secret1
-          type: secret
-          value: secretvalue1
-    SecurityContext:
-      type: object
-      properties:
-        capabilities:
-          $ref: '#/components/schemas/Capabilities'
-        privileged:
-          $ref: '#/components/schemas/BoxedBoolean'
-        seLinuxOptions:
-          $ref: '#/components/schemas/SELinuxOptions'
-        windowsOptions:
-          $ref: '#/components/schemas/WindowsSecurityContextOptions'
-        runAsUser:
-          $ref: '#/components/schemas/TemplatableBoxedInteger'
-        runAsGroup:
-          $ref: '#/components/schemas/TemplatableBoxedInteger'
-        runAsNonRoot:
-          $ref: '#/components/schemas/BoxedBoolean'
-        readOnlyRootFilesystem:
-          $ref: '#/components/schemas/BoxedBoolean'
-        allowPrivilegeEscalation:
-          $ref: '#/components/schemas/BoxedBoolean'
-        procMount:
-          $ref: '#/components/schemas/BoxedString'
-        seccompProfile:
-          $ref: '#/components/schemas/SeccompProfile'
-        appArmorProfile:
-          $ref: '#/components/schemas/AppArmorProfile'
-    TestWorkflowPvcConfig:
-      type: object
-      properties:
-        accessModes:
-          description: 'Access mode for claim storage. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes'
-          type: array
-          items:
-            type: string
-        volumeMode:
-          description: 'Volume mode indicates the consumption of the volume as either a filesystem or block device. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#volume-mode'
-          $ref: '#/components/schemas/BoxedString'
-        resources:
-          description: Resources required for pvc
-          $ref: '#/components/schemas/TestWorkflowResources'
-        storageClassName:
-          description: 'Storage class name specifies the name of a StorageClass. More info: https://kubernetes.io/docs/concepts/storage/storage-classes/'
-          $ref: '#/components/schemas/BoxedString'
-        volumeName:
-          description: Volume name is used to identify the volume
-          type: string
-        selector:
-          description: Only the volumes whose labels match the selector can be bound to the claim
-          $ref: '#/components/schemas/LabelSelector'
-        dataSource:
-          description: 'Data source field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot) * An existing PVC (PersistentVolumeClaim)'
-          $ref: '#/components/schemas/TypedLocalObjectReference'
-        dataSourceRef:
-          description: Data source reference specifies the object from which to populate the volume with data, if a non-empty volume is desired
-          $ref: '#/components/schemas/TypedObjectReference'
-        volumeAttributesClassName:
-          description: 'Volume attributes class name may be used to set the VolumeAttributesClass used by this claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#volumeattributesclass'
-          $ref: '#/components/schemas/BoxedString'
-    TestWorkflowRunningContextActor:
-      description: running context actor for test workflow execution
-      type: object
-      required:
-      - type
-      properties:
-        name:
-          type: string
-          description: actor name
-        email:
-          type: string
-          description: actor email
-        executionId:
-          type: string
-          description: test workflow execution id
-        executionPath:
-          type: string
-          description: all test workflow execution ids starting from the root
-        executionReference:
-          type: string
-          description: reference test workflow execution id
-        type:
-          $ref: '#/components/schemas/TestWorkflowRunningContextActorType'
-    TestWorkflowExecutionStepResourceAggregations:
-      type: object
-      description: Step-based resource metrics aggregations (by measurement and field)
-      properties:
-        ref:
-          type: string
-          description: step reference
-        aggregations:
-          $ref: '#/components/schemas/TestWorkflowExecutionResourceAggregationsByMeasurement'
-    Source:
-      description: synchronisation sources
-      type: string
-      enum:
-      - kubernetes
-    Toleration:
-      type: object
-      properties:
-        key:
-          type: string
-        operator:
-          type: string
-        value:
-          type: string
-        effect:
-          type: string
-        tolerationSeconds:
-          $ref: '#/components/schemas/BoxedInteger'
-    Artifact:
-      type: object
-      description: API server artifact
-      properties:
-        name:
-          type: string
-          description: artifact file path
-        size:
-          type: integer
-          description: file size in bytes
-        executionName:
-          type: string
-          description: execution name that produced the artifact
-          example: test-1
-        status:
-          type: string
-          enum:
-          - ready
-          - processing
-          - failed
-    BoxedString:
-      type: object
-      properties:
-        value:
-          type: string
-      required:
-      - value
-    TestWorkflowTemplate:
-      type: object
-      properties:
-        name:
-          type: string
-          description: kubernetes resource name
         namespace:
           type: string
-          description: kubernetes namespace
-        description:
-          type: string
-          description: human-readable description
         labels:
           type: object
-          description: test workflow labels
           additionalProperties:
             type: string
-          example:
-            env: prod
-            app: backend
         annotations:
           type: object
-          description: test workflow annotations
           additionalProperties:
             type: string
-        created:
-          type: string
-          format: date-time
-          example: '2022-07-30T06:54:15Z'
-        updated:
-          type: string
-          format: date-time
-          example: '2022-07-30T06:54:15Z'
-        spec:
-          $ref: '#/components/schemas/TestWorkflowTemplateSpec'
-        sync:
-          $ref: '#/components/schemas/Syncable'
-    TypedLocalObjectReference:
-      description: TypedLocalObjectReference contains enough information to let you locate the typed referenced object inside the same namespace
+        health:
+          $ref: '#/components/schemas/TestWorkflowExecutionHealth'
+    ExecutionsMetrics:
       type: object
       properties:
-        apiGroup:
-          description: api group is the group for the resource being referenced
-          $ref: '#/components/schemas/BoxedString'
-        kind:
-          description: kind is the type of resource being referenced
+        passFailRatio:
+          type: number
+          description: Percentage pass to fail ratio
+          example: 50
+        executionDurationP50:
           type: string
-        name:
-          description: name is the name of resource being referenced
+          description: 50th percentile of all durations
+          example: 7m2.71s
+        executionDurationP50ms:
+          type: integer
+          description: 50th percentile of all durations in milliseconds
+          example: 422
+        executionDurationP90:
           type: string
-    TestWorkflowReportSummary:
-      type: object
-      properties:
-        tests:
+          description: 90th percentile of all durations
+          example: 7m2.71s
+        executionDurationP90ms:
           type: integer
-          description: total number of test cases
-        passed:
+          description: 90th percentile of all durations in milliseconds
+          example: 422
+        executionDurationP95:
+          type: string
+          description: 95th percentile of all durations
+          example: 7m2.71s
+        executionDurationP95ms:
           type: integer
-          description: number of passed test cases
-        failed:
+          description: 95th percentile of all durations in milliseconds
+          example: 422
+        executionDurationP99:
+          type: string
+          description: 99th percentile of all durations
+          example: 7m2.71s
+        executionDurationP99ms:
           type: integer
-          description: number of failed test cases
-        skipped:
+          description: 99th percentile of all durations in milliseconds
+          example: 422
+        totalExecutions:
           type: integer
-          description: number of skipped test cases
-        errored:
+          description: total executions number
+          example: 2
+        failedExecutions:
           type: integer
-          description: number of error test cases
-        duration:
-          type: integer
-          format: int64
-          description: total duration of all test cases in milliseconds
-    ExecutionTarget:
-      type: object
-      properties:
-        match:
-          type: object
-          description: runner labels to match
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        not:
-          type: object
-          description: runner labels to NOT match
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        replicate:
+          description: failed executions number
+          example: 1
+        executions:
           type: array
-          description: list of runner labels to replicate the executions
+          description: List of test/testsuite executions
           items:
-            type: string
-    SecretRef:
-      required:
-      - name
-      - key
-      type: object
-      description: Testkube internal reference for secret storage in Kubernetes secrets
-      properties:
-        namespace:
-          type: string
-          description: object kubernetes namespace
-        name:
-          type: string
-          description: object name
-        key:
-          type: string
-          description: object key
-    AppArmorProfile:
+            $ref: '#/components/schemas/ExecutionsMetricsExecutions'
+    Syncable:
+      description: 'source information about resources that may have been synced from multiple sources.
+
+        An empty source indicates that the source was the UI/API for backwards compatibility.
+
+        '
       type: object
       properties:
-        type:
-          type: string
-        localhostProfile:
-          $ref: '#/components/schemas/BoxedString'
-    Variable:
+        creationSource:
+          description: the original source from which the resource was created
+          $ref: '#/components/schemas/Source'
+        lastModificationSource:
+          description: the source from which the last modification of the resource originated
+          $ref: '#/components/schemas/Source'
+    TestWorkflowExecutionConfig:
       type: object
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-        type:
-          $ref: '#/components/schemas/VariableType'
-        secretRef:
-          $ref: '#/components/schemas/SecretRef'
-        configMapRef:
-          $ref: '#/components/schemas/ConfigMapRef'
+      description: map of configuration values used in the test workflow execution
+      additionalProperties:
+        $ref: '#/components/schemas/TestWorkflowExecutionConfigValue'
   parameters:
+    TestWorkflowNames:
+      in: query
+      name: testWorkflowNames
+      schema:
+        items:
+          type: string
+        type: array
+    SkipDeleteCRD:
+      in: query
+      name: skipDeleteCRD
+      schema:
+        type: boolean
+        default: false
+      description: dont delete CRD
+      required: false
+    ActorName:
+      in: query
+      name: actorName
+      schema:
+        type: string
+        description: Test workflow running conntext actor name
+    TestWorkflowExecutionName:
+      in: query
+      name: testWorkflowExecutionName
+      schema:
+        type: string
+        description: test workflow execution name stated the test workflow execution
+    ForceAgent:
+      in: query
+      name: forceAgent
+      schema:
+        type: boolean
+        default: false
+      description: force cancellation using agent
+      required: false
+    Mask:
+      in: query
+      name: mask
+      schema:
+        type: string
+        description: mask to filter files
+      required: false
+    ConcurrencyLevel:
+      in: query
+      name: concurrency
+      schema:
+        type: integer
+        default: 10
+    SkipDeleteExecutions:
+      in: query
+      name: skipDeleteExecutions
+      schema:
+        type: boolean
+        default: false
+      description: dont delete executions
+      required: false
+    executionID:
+      in: path
+      name: executionID
+      schema:
+        type: string
+      required: true
+      description: unique id of the object execution
+    ActorType:
+      in: query
+      name: actorType
+      schema:
+        type: string
+        description: Test workflow running conntext actor type
+    TagSelector:
+      in: query
+      name: tagSelector
+      schema:
+        type: string
+        description: Test workflow execution tags
+    InlineTemplates:
+      in: query
+      name: inline
+      schema:
+        type: boolean
+        default: false
+      description: should inline templates in the resolved workflow
+      required: false
     Filename:
       in: path
       name: filename
@@ -4468,95 +4551,12 @@ components:
         type: string
       required: true
       description: unique id of the object
-    executionID:
-      in: path
-      name: executionID
-      schema:
-        type: string
-      required: true
-      description: unique id of the object execution
     Selector:
       in: query
       name: selector
       schema:
         type: string
         description: Labels to filter by
-    SkipDeleteCRD:
-      in: query
-      name: skipDeleteCRD
-      schema:
-        type: boolean
-        default: false
-      description: dont delete CRD
-      required: false
-    Mask:
-      in: query
-      name: mask
-      schema:
-        type: string
-        description: mask to filter files
-      required: false
-    ActorName:
-      in: query
-      name: actorName
-      schema:
-        type: string
-        description: Test workflow running conntext actor name
-    ConcurrencyLevel:
-      in: query
-      name: concurrency
-      schema:
-        type: integer
-        default: 10
-    TestWorkflowNames:
-      in: query
-      name: testWorkflowNames
-      schema:
-        items:
-          type: string
-        type: array
-    SkipDeleteExecutions:
-      in: query
-      name: skipDeleteExecutions
-      schema:
-        type: boolean
-        default: false
-      description: dont delete executions
-      required: false
-    TagSelector:
-      in: query
-      name: tagSelector
-      schema:
-        type: string
-        description: Test workflow execution tags
-    ForceAgent:
-      in: query
-      name: forceAgent
-      schema:
-        type: boolean
-        default: false
-      description: force cancellation using agent
-      required: false
-    InlineTemplates:
-      in: query
-      name: inline
-      schema:
-        type: boolean
-        default: false
-      description: should inline templates in the resolved workflow
-      required: false
-    TestWorkflowExecutionName:
-      in: query
-      name: testWorkflowExecutionName
-      schema:
-        type: string
-        description: test workflow execution name stated the test workflow execution
-    ActorType:
-      in: query
-      name: actorType
-      schema:
-        type: string
-        description: Test workflow running conntext actor type
 externalDocs:
   description: Find out more about Testkube
   url: https://testkube.kubeshop.io/

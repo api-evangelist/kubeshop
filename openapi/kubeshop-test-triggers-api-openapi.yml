@@ -291,129 +291,6 @@ paths:
                   $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    FieldRef:
-      type: object
-      required:
-      - fieldPath
-      description: 'Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels[''<KEY>'']`, `metadata.annotations[''<KEY>'']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.'
-      properties:
-        apiVersion:
-          description: Version of the schema the FieldPath is written in terms of, defaults to "v1".
-          type: string
-        fieldPath:
-          description: Path of the field to select in the specified API version.
-          type: string
-    TestTriggerProbeSpec:
-      type: object
-      properties:
-        probes:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestTriggerProbe'
-          description: list of test trigger probes
-        timeout:
-          type: integer
-          format: int32
-          description: duration in seconds the test trigger waits for probes, until its stopped
-          example: 1
-        delay:
-          type: integer
-          format: int32
-          description: duration in seconds the test trigger waits between probes
-          example: 1
-    TestWorkflowTagValue:
-      type: object
-      description: tag values to pass to the test workflow execution
-      additionalProperties:
-        type: string
-    TestWorkflowConfigValue:
-      type: object
-      description: configuration values to pass to the template
-      additionalProperties:
-        type: string
-    TestTriggerSelector:
-      type: object
-      properties:
-        name:
-          type: string
-          description: kubernetes resource name selector
-          example: nginx
-        nameRegex:
-          type: string
-          description: kubernetes resource name regex
-          example: nginx.*
-        namespace:
-          type: string
-          description: resource namespace
-          example: testkube
-        namespaceRegex:
-          type: string
-          description: kubernetes resource namespace regex
-          example: test*
-        labelSelector:
-          $ref: https://raw.githubusercontent.com/garethr/kubernetes-json-schema/master/v1.7.8/_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.LabelSelector
-          description: label selector for Kubernetes resources
-    Problem:
-      description: problem response in case of error
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type contains a URI that identifies the problem type.
-          example: https://kubeshop.io/testkube/problems/invalidtestname
-        title:
-          type: string
-          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
-          example: Invalid test name
-        status:
-          type: integer
-          description: HTTP status code for this occurrence of the problem.
-          example: 500
-        detail:
-          type: string
-          description: A human-readable explanation specific to this occurrence of the problem.
-          example: Your test name can't contain forbidden characters like "}}}" passed
-        instance:
-          type: string
-          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
-          example: http://10.23.23.123:8088/tests
-    TestTriggerContentSelector:
-      type: object
-      properties:
-        git:
-          $ref: '#/components/schemas/TestTriggerContentGit'
-    TestTriggerActions:
-      description: supported actions for test triggers
-      type: string
-      enum:
-      - run
-    TestTriggerResources:
-      description: supported kubernetes resources for test triggers
-      type: string
-      enum:
-      - pod
-      - deployment
-      - statefulset
-      - daemonset
-      - service
-      - ingress
-      - event
-      - configmap
-      - content
-    TestTriggerFieldCondition:
-      type: object
-      required:
-      - path
-      - operator
-      properties:
-        path:
-          type: string
-          description: Dot-path to the field in the watched resource, e.g. ".spec.replicas".
-        operator:
-          $ref: '#/components/schemas/TestTriggerFieldOperator'
-        value:
-          type: string
-          description: Value to compare against for value-based operators.
     TestTriggerContentGitPullRequest:
       type: object
       description: Pull request trigger configuration for GitHub API polling.
@@ -433,19 +310,11 @@ components:
           description: Base branch name patterns to exclude (glob supported). Takes precedence over branches.
           items:
             type: string
-    ObjectRef:
-      required:
-      - name
+    TestTriggerContentSelector:
       type: object
       properties:
-        namespace:
-          type: string
-          description: object kubernetes namespace
-          example: testkube
-        name:
-          type: string
-          description: object name
-          example: name
+        git:
+          $ref: '#/components/schemas/TestTriggerContentGit'
     TestTriggerConditionSpec:
       type: object
       properties:
@@ -464,213 +333,6 @@ components:
           format: int32
           description: duration in seconds the test trigger waits between condition checks
           example: 1
-    TestTriggerExecutions:
-      description: supported test resources for test triggers
-      type: string
-      enum:
-      - test
-      - testsuite
-      - testworkflow
-    TestTriggerConditionStatuses:
-      description: supported kubernetes condition statuses for test triggers
-      type: string
-      enum:
-      - 'True'
-      - 'False'
-      - Unknown
-    ResourceFieldRef:
-      type: object
-      required:
-      - resource
-      description: 'Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.'
-      properties:
-        containerName:
-          description: 'Container name: required for volumes, optional for env vars'
-          type: string
-        divisor:
-          type: string
-          pattern: ^[0-9]+(m|[GMK]i)$
-        resource:
-          description: 'Required: resource to select'
-          type: string
-    TestTriggerResourceRef:
-      type: object
-      required:
-      - kind
-      properties:
-        group:
-          type: string
-          description: Group is the API group (empty for core resources like Pod, Service).
-          example: apps
-        version:
-          type: string
-          description: Version is the API version.
-          example: v1
-        kind:
-          type: string
-          description: Kind is the resource kind.
-          example: Deployment
-    EnvVarSource:
-      type: object
-      description: EnvVarSource represents a source for the value of an EnvVar.
-      properties:
-        configMapKeyRef:
-          type: object
-          required:
-          - key
-          description: Selects a key of a ConfigMap.
-          properties:
-            key:
-              description: The key to select.
-              type: string
-            name:
-              description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
-              type: string
-            optional:
-              description: Specify whether the ConfigMap or its key must be defined
-              type:
-              - boolean
-              - 'null'
-        fieldRef:
-          $ref: '#/components/schemas/FieldRef'
-        resourceFieldRef:
-          $ref: '#/components/schemas/ResourceFieldRef'
-        secretKeyRef:
-          type: object
-          required:
-          - key
-          description: Selects a key of a secret in the pod's namespace
-          properties:
-            key:
-              description: The key of the secret to select from.  Must be a valid secret key.
-              type: string
-            name:
-              description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
-              type: string
-            optional:
-              description: Specify whether the Secret or its key must be defined
-              type:
-              - boolean
-              - 'null'
-    TestTriggerConcurrencyPolicies:
-      description: supported concurrency policies for test triggers
-      type: string
-      enum:
-      - allow
-      - forbid
-      - replace
-    TestTriggerActionParameters:
-      description: supported action parameters for test triggers
-      type: object
-      properties:
-        config:
-          $ref: '#/components/schemas/TestWorkflowConfigValue'
-        tags:
-          $ref: '#/components/schemas/TestWorkflowTagValue'
-        target:
-          $ref: '#/components/schemas/ExecutionTarget'
-    TestTriggerProbe:
-      description: supported probe for test triggers
-      type: object
-      properties:
-        scheme:
-          type: string
-          description: test trigger condition probe scheme to connect to host, default is http
-          example: http
-        host:
-          type: string
-          description: test trigger condition probe host, default is pod ip or service name
-          example: testkube-api-server
-        path:
-          type: string
-          description: test trigger condition probe path to check, default is /
-          example: /
-        port:
-          type: integer
-          format: int32
-          description: test trigger condition probe port to connect
-          example: 80
-        headers:
-          type: object
-          description: test trigger condition probe headers to submit
-          additionalProperties:
-            type: string
-          example:
-            Content-Type: application/xml
-    Source:
-      description: synchronisation sources
-      type: string
-      enum:
-      - kubernetes
-    TestTriggerCondition:
-      description: supported condition for test triggers
-      type: object
-      required:
-      - status
-      - type
-      properties:
-        status:
-          $ref: '#/components/schemas/TestTriggerConditionStatuses'
-        type:
-          type: string
-          description: test trigger condition
-          example: Progressing
-        reason:
-          type: string
-          description: test trigger condition reason
-          example: NewReplicaSetAvailable
-        ttl:
-          type: integer
-          format: int32
-          description: duration in seconds in the past from current time when the condition is still valid
-          example: 1
-    TestTriggerFieldOperator:
-      type: string
-      description: supported comparison operators for TestTrigger match conditions
-      enum:
-      - equals
-      - not_equals
-      - exists
-      - not_exists
-      - changed
-      - changed_to
-      - changed_from
-    ExecutionTarget:
-      type: object
-      properties:
-        match:
-          type: object
-          description: runner labels to match
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        not:
-          type: object
-          description: runner labels to NOT match
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        replicate:
-          type: array
-          description: list of runner labels to replicate the executions
-          items:
-            type: string
-    Syncable:
-      description: 'source information about resources that may have been synced from multiple sources.
-
-        An empty source indicates that the source was the UI/API for backwards compatibility.
-
-        '
-      type: object
-      properties:
-        creationSource:
-          description: the original source from which the resource was created
-          $ref: '#/components/schemas/Source'
-        lastModificationSource:
-          description: the source from which the last modification of the resource originated
-          $ref: '#/components/schemas/Source'
     TestTriggerContentGit:
       type: object
       required:
@@ -731,6 +393,203 @@ components:
           - header
         pullRequest:
           $ref: '#/components/schemas/TestTriggerContentGitPullRequest'
+    TestTriggerProbe:
+      description: supported probe for test triggers
+      type: object
+      properties:
+        scheme:
+          type: string
+          description: test trigger condition probe scheme to connect to host, default is http
+          example: http
+        host:
+          type: string
+          description: test trigger condition probe host, default is pod ip or service name
+          example: testkube-api-server
+        path:
+          type: string
+          description: test trigger condition probe path to check, default is /
+          example: /
+        port:
+          type: integer
+          format: int32
+          description: test trigger condition probe port to connect
+          example: 80
+        headers:
+          type: object
+          description: test trigger condition probe headers to submit
+          additionalProperties:
+            type: string
+          example:
+            Content-Type: application/xml
+    TestTriggerExecutions:
+      description: supported test resources for test triggers
+      type: string
+      enum:
+      - test
+      - testsuite
+      - testworkflow
+    TestWorkflowTagValue:
+      type: object
+      description: tag values to pass to the test workflow execution
+      additionalProperties:
+        type: string
+    EnvVarSource:
+      type: object
+      description: EnvVarSource represents a source for the value of an EnvVar.
+      properties:
+        configMapKeyRef:
+          type: object
+          required:
+          - key
+          description: Selects a key of a ConfigMap.
+          properties:
+            key:
+              description: The key to select.
+              type: string
+            name:
+              description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+              type: string
+            optional:
+              description: Specify whether the ConfigMap or its key must be defined
+              type:
+              - boolean
+              - 'null'
+        fieldRef:
+          $ref: '#/components/schemas/FieldRef'
+        resourceFieldRef:
+          $ref: '#/components/schemas/ResourceFieldRef'
+        secretKeyRef:
+          type: object
+          required:
+          - key
+          description: Selects a key of a secret in the pod's namespace
+          properties:
+            key:
+              description: The key of the secret to select from.  Must be a valid secret key.
+              type: string
+            name:
+              description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+              type: string
+            optional:
+              description: Specify whether the Secret or its key must be defined
+              type:
+              - boolean
+              - 'null'
+    ExecutionTarget:
+      type: object
+      properties:
+        match:
+          type: object
+          description: runner labels to match
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        not:
+          type: object
+          description: runner labels to NOT match
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        replicate:
+          type: array
+          description: list of runner labels to replicate the executions
+          items:
+            type: string
+    TestTriggerConcurrencyPolicies:
+      description: supported concurrency policies for test triggers
+      type: string
+      enum:
+      - allow
+      - forbid
+      - replace
+    TestTriggerCondition:
+      description: supported condition for test triggers
+      type: object
+      required:
+      - status
+      - type
+      properties:
+        status:
+          $ref: '#/components/schemas/TestTriggerConditionStatuses'
+        type:
+          type: string
+          description: test trigger condition
+          example: Progressing
+        reason:
+          type: string
+          description: test trigger condition reason
+          example: NewReplicaSetAvailable
+        ttl:
+          type: integer
+          format: int32
+          description: duration in seconds in the past from current time when the condition is still valid
+          example: 1
+    FieldRef:
+      type: object
+      required:
+      - fieldPath
+      description: 'Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels[''<KEY>'']`, `metadata.annotations[''<KEY>'']`, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.'
+      properties:
+        apiVersion:
+          description: Version of the schema the FieldPath is written in terms of, defaults to "v1".
+          type: string
+        fieldPath:
+          description: Path of the field to select in the specified API version.
+          type: string
+    TestTriggerProbeSpec:
+      type: object
+      properties:
+        probes:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestTriggerProbe'
+          description: list of test trigger probes
+        timeout:
+          type: integer
+          format: int32
+          description: duration in seconds the test trigger waits for probes, until its stopped
+          example: 1
+        delay:
+          type: integer
+          format: int32
+          description: duration in seconds the test trigger waits between probes
+          example: 1
+    ObjectRef:
+      required:
+      - name
+      type: object
+      properties:
+        namespace:
+          type: string
+          description: object kubernetes namespace
+          example: testkube
+        name:
+          type: string
+          description: object name
+          example: name
+    TestTriggerActions:
+      description: supported actions for test triggers
+      type: string
+      enum:
+      - run
+    Source:
+      description: synchronisation sources
+      type: string
+      enum:
+      - kubernetes
+    TestTriggerFieldOperator:
+      type: string
+      description: supported comparison operators for TestTrigger match conditions
+      enum:
+      - equals
+      - not_equals
+      - exists
+      - not_exists
+      - changed
+      - changed_to
+      - changed_from
     TestTrigger:
       type: object
       required:
@@ -819,6 +678,87 @@ components:
           - false
         sync:
           $ref: '#/components/schemas/Syncable'
+    TestTriggerSelector:
+      type: object
+      properties:
+        name:
+          type: string
+          description: kubernetes resource name selector
+          example: nginx
+        nameRegex:
+          type: string
+          description: kubernetes resource name regex
+          example: nginx.*
+        namespace:
+          type: string
+          description: resource namespace
+          example: testkube
+        namespaceRegex:
+          type: string
+          description: kubernetes resource namespace regex
+          example: test*
+        labelSelector:
+          $ref: https://raw.githubusercontent.com/garethr/kubernetes-json-schema/master/v1.7.8/_definitions.json#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.LabelSelector
+          description: label selector for Kubernetes resources
+    ResourceFieldRef:
+      type: object
+      required:
+      - resource
+      description: 'Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.'
+      properties:
+        containerName:
+          description: 'Container name: required for volumes, optional for env vars'
+          type: string
+        divisor:
+          type: string
+          pattern: ^[0-9]+(m|[GMK]i)$
+        resource:
+          description: 'Required: resource to select'
+          type: string
+    TestTriggerResources:
+      description: supported kubernetes resources for test triggers
+      type: string
+      enum:
+      - pod
+      - deployment
+      - statefulset
+      - daemonset
+      - service
+      - ingress
+      - event
+      - configmap
+      - content
+    Problem:
+      description: problem response in case of error
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type contains a URI that identifies the problem type.
+          example: https://kubeshop.io/testkube/problems/invalidtestname
+        title:
+          type: string
+          description: Title is a short, human-readable summary of the problem type. This title SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+          example: Invalid test name
+        status:
+          type: integer
+          description: HTTP status code for this occurrence of the problem.
+          example: 500
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem.
+          example: Your test name can't contain forbidden characters like "}}}" passed
+        instance:
+          type: string
+          description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
+          example: http://10.23.23.123:8088/tests
+    TestTriggerConditionStatuses:
+      description: supported kubernetes condition statuses for test triggers
+      type: string
+      enum:
+      - 'True'
+      - 'False'
+      - Unknown
     TestTriggerUpsertRequest:
       description: test trigger create or update request body
       type: object
@@ -830,14 +770,67 @@ components:
       allOf:
       - $ref: '#/components/schemas/TestTrigger'
       - $ref: '#/components/schemas/ObjectRef'
-  parameters:
-    Namespace:
-      in: query
-      name: namespace
-      schema:
+    Syncable:
+      description: 'source information about resources that may have been synced from multiple sources.
+
+        An empty source indicates that the source was the UI/API for backwards compatibility.
+
+        '
+      type: object
+      properties:
+        creationSource:
+          description: the original source from which the resource was created
+          $ref: '#/components/schemas/Source'
+        lastModificationSource:
+          description: the source from which the last modification of the resource originated
+          $ref: '#/components/schemas/Source'
+    TestTriggerFieldCondition:
+      type: object
+      required:
+      - path
+      - operator
+      properties:
+        path:
+          type: string
+          description: Dot-path to the field in the watched resource, e.g. ".spec.replicas".
+        operator:
+          $ref: '#/components/schemas/TestTriggerFieldOperator'
+        value:
+          type: string
+          description: Value to compare against for value-based operators.
+    TestTriggerResourceRef:
+      type: object
+      required:
+      - kind
+      properties:
+        group:
+          type: string
+          description: Group is the API group (empty for core resources like Pod, Service).
+          example: apps
+        version:
+          type: string
+          description: Version is the API version.
+          example: v1
+        kind:
+          type: string
+          description: Kind is the resource kind.
+          example: Deployment
+    TestTriggerActionParameters:
+      description: supported action parameters for test triggers
+      type: object
+      properties:
+        config:
+          $ref: '#/components/schemas/TestWorkflowConfigValue'
+        tags:
+          $ref: '#/components/schemas/TestWorkflowTagValue'
+        target:
+          $ref: '#/components/schemas/ExecutionTarget'
+    TestWorkflowConfigValue:
+      type: object
+      description: configuration values to pass to the template
+      additionalProperties:
         type: string
-        default: testkube
-        description: Namespace of the object
+  parameters:
     ID:
       in: path
       name: id
@@ -845,6 +838,13 @@ components:
         type: string
       required: true
       description: unique id of the object
+    Namespace:
+      in: query
+      name: namespace
+      schema:
+        type: string
+        default: testkube
+        description: Namespace of the object
     Selector:
       in: query
       name: selector

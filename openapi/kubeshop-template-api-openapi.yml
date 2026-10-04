@@ -205,22 +205,6 @@ paths:
                   $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    TemplateType:
-      description: template type by purpose
-      type: string
-      enum:
-      - job
-      - container
-      - cronjob
-      - scraper
-      - pvc
-      - webhook
-      - pod
-    TemplateCreateRequest:
-      description: template create request body
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Template'
     Template:
       description: Golang based template
       type: object
@@ -251,6 +235,22 @@ components:
           example:
             env: prod
             app: backend
+    TemplateType:
+      description: template type by purpose
+      type: string
+      enum:
+      - job
+      - container
+      - cronjob
+      - scraper
+      - pvc
+      - webhook
+      - pod
+    TemplateCreateRequest:
+      description: template create request body
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Template'
     Problem:
       description: problem response in case of error
       type: object
@@ -283,6 +283,12 @@ components:
       allOf:
       - $ref: '#/components/schemas/Template'
   parameters:
+    Selector:
+      in: query
+      name: selector
+      schema:
+        type: string
+        description: Labels to filter by
     ID:
       in: path
       name: id
@@ -290,12 +296,6 @@ components:
         type: string
       required: true
       description: unique id of the object
-    Selector:
-      in: query
-      name: selector
-      schema:
-        type: string
-        description: Labels to filter by
 externalDocs:
   description: Find out more about Testkube
   url: https://testkube.kubeshop.io/

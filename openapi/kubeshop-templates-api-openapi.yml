@@ -50,17 +50,6 @@ paths:
                   $ref: '#/components/schemas/Problem'
 components:
   schemas:
-    TemplateType:
-      description: template type by purpose
-      type: string
-      enum:
-      - job
-      - container
-      - cronjob
-      - scraper
-      - pvc
-      - webhook
-      - pod
     Template:
       description: Golang based template
       type: object
@@ -115,6 +104,17 @@ components:
           type: string
           description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
           example: http://10.23.23.123:8088/tests
+    TemplateType:
+      description: template type by purpose
+      type: string
+      enum:
+      - job
+      - container
+      - cronjob
+      - scraper
+      - pvc
+      - webhook
+      - pod
   parameters:
     Selector:
       in: query

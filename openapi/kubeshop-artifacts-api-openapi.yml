@@ -242,13 +242,6 @@ paths:
                   $ref: '#/components/schemas/Problem'
 components:
   parameters:
-    ID:
-      in: path
-      name: id
-      schema:
-        type: string
-      required: true
-      description: unique id of the object
     executionID:
       in: path
       name: executionID
@@ -270,7 +263,34 @@ components:
         type: string
       required: true
       description: filename of the object usually used for artifacts
+    ID:
+      in: path
+      name: id
+      schema:
+        type: string
+      required: true
+      description: unique id of the object
   schemas:
+    Artifact:
+      type: object
+      description: API server artifact
+      properties:
+        name:
+          type: string
+          description: artifact file path
+        size:
+          type: integer
+          description: file size in bytes
+        executionName:
+          type: string
+          description: execution name that produced the artifact
+          example: test-1
+        status:
+          type: string
+          enum:
+          - ready
+          - processing
+          - failed
     Problem:
       description: problem response in case of error
       type: object
@@ -295,26 +315,6 @@ components:
           type: string
           description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
           example: http://10.23.23.123:8088/tests
-    Artifact:
-      type: object
-      description: API server artifact
-      properties:
-        name:
-          type: string
-          description: artifact file path
-        size:
-          type: integer
-          description: file size in bytes
-        executionName:
-          type: string
-          description: execution name that produced the artifact
-          example: test-1
-        status:
-          type: string
-          enum:
-          - ready
-          - processing
-          - failed
 externalDocs:
   description: Find out more about Testkube
   url: https://testkube.kubeshop.io/
