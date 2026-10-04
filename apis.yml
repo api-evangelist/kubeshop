@@ -48,6 +48,10 @@ x-tier-reason: three-published-openapi-plus-hosted-mcp
 specificationVersion: '0.23'
 created: '2026-07-17'
 modified: '2026-09-16'
+x-docs-platform: docusaurus
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
+x-docs-hosting: vercel
 tags:
 - Company
 - Testing
@@ -515,6 +519,8 @@ apis:
   humanURL: https://docs.testkube.io/openapi/overview
   baseURL: https://api.testkube.io
   tags:
+  - PRO
+  tags_raw:
   - pro
   properties:
   - type: OpenAPI
@@ -526,6 +532,9 @@ apis:
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
 common:
+- type: CapabilityMap
+  url: capabilities/kubeshop-capability-edges.yml
+  name: Kubeshop Business Capability Map
 - type: Overlay
   url: overlays/kubeshop-testkube-agent-overlay.yaml
 - type: IssueTracker
