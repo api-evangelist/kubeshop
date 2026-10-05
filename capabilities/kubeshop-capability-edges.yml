@@ -1,0 +1,103 @@
+slug: kubeshop
+provider: Kubeshop
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 9
+edges:
+- tag: Test Suites
+  spec_file: kubeshop-test-suites-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.92
+  evidence: POST /test-suites  createTestSuite  Create new test suite; POST /test-suites/{id}/executions  executeTestSuite  Starts
+    new test suite execution
+  reason: Definition, grouping and execution of automated test suites with execution results (TestSuiteStepExecutionResult,
+    ExecutionsTotals) is directly automated test suite stewardship under Software Quality Engineering.
+- tag: Tests
+  spec_file: kubeshop-tests-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.92
+  evidence: POST /executions  executeTests  Starts new test executions; GET /tests/{id}/metrics  getTestMetrics  Get
+    test metrics
+  reason: Test definition CRUD, execution orchestration and test metrics (ExecutionsResult, ExecutionsMetricsExecutions)
+    are test strategy and automated test suite stewardship — Software Quality Engineering.
+- tag: Executions
+  spec_file: kubeshop-executions-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.88
+  evidence: POST /test-suites/{id}/executions executeTestSuite 'Starts new test suite execution'; 'Aborts
+    testsuite execution'; schemas TestSuiteExecutionRequest, ExecutionStepResult
+  reason: Orchestration of test suite and test executions with results and step outcomes is automated
+    test execution/stewardship — Software Quality Engineering.
+- tag: test-workflows
+  spec_file: kubeshop-test-workflows-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.88
+  evidence: POST /test-workflows  createTestWorkflow  Create test workflow; POST /test-workflows/{id}/executions  executeTestWorkflow
+  reason: Core surface for defining, validating, executing and reporting on automated test workflows —
+    directly realises test strategy and automated test suite stewardship.
+- tag: pro
+  spec_file: kubeshop-pro-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.8
+  evidence: POST /test-workflows/{id}/executions  executeTestWorkflow  Execute test workflow; GET /test-workflows/{id}/metrics  getTestWorkflowMetrics
+  reason: Despite the generic 'pro' tag, the operations define, execute and report on automated test workflows
+    — automated test suite stewardship and quality engineering for software.
+- tag: Secrets
+  spec_file: kubeshop-secrets-api-openapi.yml
+  capability_id: BC-4210.60
+  capability_id_l1: BC-4210
+  capability_name: Configuration & Secrets Management
+  confidence: 0.78
+  evidence: 'POST /secrets  createSecret  Create secret; schemas: SecretOwner, Secret, SecretInput, SecretUpdate'
+  reason: Full CRUD lifecycle over secrets consumed by the platform's runtime, which is squarely Configuration
+    & Secrets Management. Some chance this is better read as generic IAM plumbing, hence not higher.
+- tag: test-sources
+  spec_file: kubeshop-test-sources-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.78
+  evidence: 'POST /test-sources  createTestSource  Create new test source; schemas: TestSource, TestContent,
+    Repository'
+  reason: Manages the git/content sources from which automated tests are loaded — part of automated test
+    suite stewardship within software quality engineering.
+- tag: Artifacts
+  spec_file: kubeshop-artifacts-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.72
+  evidence: GET /executions/{id}/artifacts getExecutionArtifacts 'Get execution's artifacts by ID'; GET
+    /test-workflow-executions/{executionID}/artifacts
+  reason: Artifacts here are outputs of test executions in a test orchestration platform, part of automated
+    test suite stewardship and results handling (software quality engineering), not build artefacts for
+    release.
+- tag: test-triggers
+  spec_file: kubeshop-test-triggers-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.72
+  evidence: 'POST /triggers  createTestTrigger  Create new test trigger; schemas: TestTriggerExecutions,
+    TestTriggerConditionSpec'
+  reason: Defines conditions under which automated test executions are launched in the cluster; this is
+    test automation orchestration, i.e. software quality engineering rather than generic eventing.
