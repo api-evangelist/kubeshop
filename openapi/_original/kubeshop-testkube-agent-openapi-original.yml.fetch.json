@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.testkube.io/assets/files/testkube-agent-openapi-06772fa03112aba5f9e479661aaf009e.yaml",
+ "requested_url": "https://docs.testkube.io/assets/files/testkube-agent-openapi-06772fa03112aba5f9e479661aaf009e.yaml",
+ "status": 200,
+ "content_type": "text/yaml; charset=utf-8",
+ "bytes": 298904,
+ "sha256": "1efdd62e84abe02233abba2bac1492ccfd8905eac8c580e49fa6b3f1a678148d",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}

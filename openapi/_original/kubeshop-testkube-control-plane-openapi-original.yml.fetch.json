@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.testkube.io/assets/files/testkube-control-plane-openapi-a3dbc4a821370520fb71158b736ab369.yaml",
+ "requested_url": "https://docs.testkube.io/assets/files/testkube-control-plane-openapi-a3dbc4a821370520fb71158b736ab369.yaml",
+ "status": 200,
+ "content_type": "text/yaml; charset=utf-8",
+ "bytes": 577624,
+ "sha256": "87f27a71709e6312c4b0a80424799a9e03e9ad258d5f1c7c017b749ea59284e8",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
