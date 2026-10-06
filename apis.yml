@@ -47,7 +47,7 @@ x-tier: enriched
 x-tier-reason: three-published-openapi-plus-hosted-mcp
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-09-16'
+modified: '2026-10-06'
 x-docs-platform: docusaurus
 x-docs-platform-confidence: medium
 x-docs-platform-checked: 2026-10-03
@@ -532,6 +532,8 @@ apis:
   - type: SourceCode
     url: https://github.com/kubeshop/testkube
 common:
+- url: https://testkube.io/blog/rss.xml
+  type: BlogRSS
 - type: CapabilityMap
   url: capabilities/kubeshop-capability-edges.yml
   name: Kubeshop Business Capability Map
