@@ -205,6 +205,24 @@ paths:
                   $ref: '#/components/schemas/Problem'
 components:
   schemas:
+    TemplateUpdateRequest:
+      description: template update request body
+      type:
+      - object
+      - 'null'
+      allOf:
+      - $ref: '#/components/schemas/Template'
+    TemplateType:
+      description: template type by purpose
+      type: string
+      enum:
+      - job
+      - container
+      - cronjob
+      - scraper
+      - pvc
+      - webhook
+      - pod
     Template:
       description: Golang based template
       type: object
@@ -235,22 +253,6 @@ components:
           example:
             env: prod
             app: backend
-    TemplateType:
-      description: template type by purpose
-      type: string
-      enum:
-      - job
-      - container
-      - cronjob
-      - scraper
-      - pvc
-      - webhook
-      - pod
-    TemplateCreateRequest:
-      description: template create request body
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Template'
     Problem:
       description: problem response in case of error
       type: object
@@ -275,20 +277,12 @@ components:
           type: string
           description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
           example: http://10.23.23.123:8088/tests
-    TemplateUpdateRequest:
-      description: template update request body
-      type:
-      - object
-      - 'null'
+    TemplateCreateRequest:
+      description: template create request body
+      type: object
       allOf:
       - $ref: '#/components/schemas/Template'
   parameters:
-    Selector:
-      in: query
-      name: selector
-      schema:
-        type: string
-        description: Labels to filter by
     ID:
       in: path
       name: id
@@ -296,6 +290,12 @@ components:
         type: string
       required: true
       description: unique id of the object
+    Selector:
+      in: query
+      name: selector
+      schema:
+        type: string
+        description: Labels to filter by
 externalDocs:
   description: Find out more about Testkube
   url: https://testkube.kubeshop.io/

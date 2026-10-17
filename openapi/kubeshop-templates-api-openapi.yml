@@ -49,37 +49,14 @@ paths:
                 items:
                   $ref: '#/components/schemas/Problem'
 components:
+  parameters:
+    Selector:
+      in: query
+      name: selector
+      schema:
+        type: string
+        description: Labels to filter by
   schemas:
-    Template:
-      description: Golang based template
-      type: object
-      required:
-      - name
-      - type
-      - body
-      properties:
-        name:
-          type: string
-          description: template name for reference
-          example: webhook-template
-        namespace:
-          type: string
-          description: template namespace
-          example: testkube
-        type:
-          $ref: '#/components/schemas/TemplateType'
-        body:
-          type: string
-          description: template body to use
-          example: '{"id": "{{ .Id }}"}'
-        labels:
-          type: object
-          description: template labels
-          additionalProperties:
-            type: string
-          example:
-            env: prod
-            app: backend
     Problem:
       description: problem response in case of error
       type: object
@@ -115,13 +92,36 @@ components:
       - pvc
       - webhook
       - pod
-  parameters:
-    Selector:
-      in: query
-      name: selector
-      schema:
-        type: string
-        description: Labels to filter by
+    Template:
+      description: Golang based template
+      type: object
+      required:
+      - name
+      - type
+      - body
+      properties:
+        name:
+          type: string
+          description: template name for reference
+          example: webhook-template
+        namespace:
+          type: string
+          description: template namespace
+          example: testkube
+        type:
+          $ref: '#/components/schemas/TemplateType'
+        body:
+          type: string
+          description: template body to use
+          example: '{"id": "{{ .Id }}"}'
+        labels:
+          type: object
+          description: template labels
+          additionalProperties:
+            type: string
+          example:
+            env: prod
+            app: backend
 externalDocs:
   description: Find out more about Testkube
   url: https://testkube.kubeshop.io/

@@ -249,20 +249,6 @@ components:
         type: string
       required: true
       description: unique id of the object execution
-    Mask:
-      in: query
-      name: mask
-      schema:
-        type: string
-        description: mask to filter files
-      required: false
-    Filename:
-      in: path
-      name: filename
-      schema:
-        type: string
-      required: true
-      description: filename of the object usually used for artifacts
     ID:
       in: path
       name: id
@@ -270,27 +256,21 @@ components:
         type: string
       required: true
       description: unique id of the object
+    Filename:
+      in: path
+      name: filename
+      schema:
+        type: string
+      required: true
+      description: filename of the object usually used for artifacts
+    Mask:
+      in: query
+      name: mask
+      schema:
+        type: string
+        description: mask to filter files
+      required: false
   schemas:
-    Artifact:
-      type: object
-      description: API server artifact
-      properties:
-        name:
-          type: string
-          description: artifact file path
-        size:
-          type: integer
-          description: file size in bytes
-        executionName:
-          type: string
-          description: execution name that produced the artifact
-          example: test-1
-        status:
-          type: string
-          enum:
-          - ready
-          - processing
-          - failed
     Problem:
       description: problem response in case of error
       type: object
@@ -315,6 +295,26 @@ components:
           type: string
           description: A URI that identifies the specific occurrence of the problem. This URI may or may not yield further information if de-referenced.
           example: http://10.23.23.123:8088/tests
+    Artifact:
+      type: object
+      description: API server artifact
+      properties:
+        name:
+          type: string
+          description: artifact file path
+        size:
+          type: integer
+          description: file size in bytes
+        executionName:
+          type: string
+          description: execution name that produced the artifact
+          example: test-1
+        status:
+          type: string
+          enum:
+          - ready
+          - processing
+          - failed
 externalDocs:
   description: Find out more about Testkube
   url: https://testkube.kubeshop.io/

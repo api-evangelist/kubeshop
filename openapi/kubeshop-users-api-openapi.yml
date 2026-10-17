@@ -64,67 +64,7 @@ paths:
       tags:
       - Users
 components:
-  requestBodies:
-    SettingUpsert:
-      description: Settings upsert request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Setting'
-      required: true
-    Preferences:
-      description: User preferences upsert
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserPreferences'
-  responses:
-    BadRequestError:
-      description: 400 Bad Request
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    InternalServerError:
-      description: 500 Internal Server Error
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    NoContent:
-      description: No content after resource created
-    MethodNotAllowedError:
-      description: 405 Method Not Allowed
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    Setting:
-      description: Setting for organization/environment/user
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Setting'
-    UnauthorizedError:
-      description: 401 Unauthorized
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    ForbiddenError:
-      description: 403 Forbidden
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-    Settings:
-      description: Settings for organization/environment/user
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Settings'
   schemas:
-    Any: {}
     Setting:
       description: Generic Settings
       type: object
@@ -176,15 +116,6 @@ components:
       required:
       - key
       - valueType
-    Settings:
-      type: object
-      properties:
-        elements:
-          type: array
-          items:
-            $ref: '#/components/schemas/Setting'
-      required:
-      - elements
     Problem:
       description: problem response in case of error
       type: object
@@ -232,6 +163,75 @@ components:
       required:
       - id
       - values
+    Any: {}
+    Settings:
+      type: object
+      properties:
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Setting'
+      required:
+      - elements
+  requestBodies:
+    SettingUpsert:
+      description: Settings upsert request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Setting'
+      required: true
+    Preferences:
+      description: User preferences upsert
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserPreferences'
+  responses:
+    UnauthorizedError:
+      description: 401 Unauthorized
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    ForbiddenError:
+      description: 403 Forbidden
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    MethodNotAllowedError:
+      description: 405 Method Not Allowed
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Setting:
+      description: Setting for organization/environment/user
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Setting'
+    NoContent:
+      description: No content after resource created
+    BadRequestError:
+      description: 400 Bad Request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Settings:
+      description: Settings for organization/environment/user
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Settings'
   parameters:
     ID:
       name: id
