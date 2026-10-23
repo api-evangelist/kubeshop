@@ -487,3 +487,9 @@ components:
 externalDocs:
   description: Find out more about Testkube
   url: https://testkube.kubeshop.io/
+x-provenance:
+  method: harvested
+  publisher: Kubeshop
+  source: https://docs.testkube.io/assets/files/testkube-agent-openapi-06772fa03112aba5f9e479661aaf009e.yaml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
